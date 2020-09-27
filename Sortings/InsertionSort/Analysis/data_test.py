@@ -1,6 +1,6 @@
 from colorama import Fore   
 import random as R
-import threading as T
+import threading as TR
 import datetime 
 import time as T
 from statistics import mean as avg
@@ -64,7 +64,7 @@ if( __name__=='__main__'):
     print("\n>> Run\n")
 
     for i in range(0, THREADS):
-        t = T.Thread(target=create_sorter, args=(i,))
+        t = TR.Thread(target=create_sorter, args=(i,))
         t.start()
 
     print(Fore.RED,end="")
