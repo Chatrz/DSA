@@ -3,13 +3,16 @@ import random as R
 import threading as TR
 import datetime 
 import time as T
-from statistics import mean as avg
 
+DONE_FLAG = 0	
 START = 0
 STOP = 999999
-max_num = 100
+max_num = 200
 THREADS = 20
 compare_numbers = []
+
+def average(lst): 
+    return sum(lst) / len(lst) 
 
 def insertion_sort(numbers):
     comparisons = 0
@@ -40,6 +43,7 @@ def numbers_generator():
 
 def create_sorter(thread_id):
     global compare_numbers
+    global DONE_FLAG
     start_time = datetime.datetime.now()
 
     numbers = numbers_generator()
@@ -57,6 +61,7 @@ def create_sorter(thread_id):
     print(Fore.GREEN+"",end="")  
     print(f"<< Sorter {thread_id + 1} is done. Time: {total_time} seconds / Comparisons: {compare}")
     print(Fore.RESET,end="")
+    DONE_FLAG += 1
 
 
 if( __name__=='__main__'):
@@ -70,8 +75,11 @@ if( __name__=='__main__'):
     print(Fore.RED,end="")
     print("\n>> Done\n") 
 
-    T.sleep(5)
-
+    while True:
+    	if DONE_FLAG == THREADS:
+    		break
+    print(">> Threads Finish")		
+    	
     print("\n")
     print(Fore.YELLOW,end="")
-    print(f"Totally {THREADS} threads tested with average comparisons of {round(avg(compare_numbers), 2)}")
+    print(f"Totally {THREADS} threads tested with average comparisons of {round(average(compare_numbers), 2)}")
