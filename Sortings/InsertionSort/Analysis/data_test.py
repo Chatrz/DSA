@@ -1,9 +1,9 @@
 from colorama import Fore   
-import random 
-import threading
+import random as R
+import threading as T
 import datetime 
-import time
-from statistics import mean 
+import time as T
+from statistics import mean as avg
 
 START = 0
 STOP = 999999
@@ -36,7 +36,7 @@ def insertion_sort(numbers):
 
 def numbers_generator():
     global max_num
-    return [random.randint(START, STOP) for i in range(0, max_num)]
+    return [R.randint(START, STOP) for i in range(0, max_num)]
 
 def create_sorter(thread_id):
     global compare_numbers
@@ -64,14 +64,14 @@ if( __name__=='__main__'):
     print("\n>> Run\n")
 
     for i in range(0, THREADS):
-        t = threading.Thread(target=create_sorter, args=(i,))
+        t = T.Thread(target=create_sorter, args=(i,))
         t.start()
 
     print(Fore.RED,end="")
     print("\n>> Done\n") 
 
-    time.sleep(5)
-    
+    T.sleep(5)
+
     print("\n")
     print(Fore.YELLOW,end="")
-    print(f"Totally {THREADS} threads tested with average comparisons of {round(mean(compare_numbers), 2)}")
+    print(f"Totally {THREADS} threads tested with average comparisons of {round(avg(compare_numbers), 2)}")
