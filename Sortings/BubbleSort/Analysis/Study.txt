@@ -1,0 +1,60 @@
+Pseudocode:
+start bubble sort(A)
+    do n <= len(A) 
+
+    for i from 1 to n+1 do
+
+        for j from 1 to n-i do
+
+            if A[j] > A[j+1]  
+                swap(A[j], A[j+1])
+            endif
+     
+        endfor
+
+    endfor
+finish bubble sort
+
+Running-time functions:
+	Best case function = 0
+	Worst case function = n^2
+	Order of growth = O(n^2)
+
+Correctness :
+Input : a1, a2, a3, a4, .... an
+Output : a`1 < a`2 < ... < a`n
+
+Out Loop invariant :
+	Each time the out loop iterates, the biggest number in A[1, 2, ... i] is at A[i], and 
+	A[i, i+1, .... n] are sorted.
+
+Inner Loop :
+	Inner Loop invariant :
+		In each iteration the j (index) is on the highest number of A[1, 2, ... j].
+	Each time the inner loop runs it swaps two numbers A[p] and A[p+1] if A[p] > A[p+1].
+	So the basic work is just moving the the highest number to the end (j = n - i), then we 
+	don't need a profe for this loop, its clear what it does is right.
+
+Initialization :
+	At the beginning, i is 1 so n+1-i is n.
+	The inner loop starts from A[1] and each time moves the highest number
+	of comparison between two numbers in row.
+	Now we know that j is always on the highest number so this means at the end
+	the highest number is at j=n+1-i which is n.
+	So A[n] is the highest number so far.
+
+Maintenance :
+	Now with the first step and loop invariant lets get to maintenance.
+	Imagine i = p (p < n), so we are somewhere at the middle of loop iterations.
+	Base on what we said we know that number A[p+1, p+2, .... n] are sorted in order
+	and the biggest number is now A[p].
+	j starts from 0 to n+1-i which is n+1-p, just one number befor A[p]. In this iteration we
+	know that all numbers from A[1, 2, .. p-1] are lower than A[p] so the order of the rest
+	of A[p, ... n] will not change. The inner loop will bring the highest number of A[1, 2, ..... p-1]
+	to A[p-1]. So now the highest number is at the end of the subarray, and the rest is sorted, now 
+	we can go to the next iteration.
+
+Termination :
+	By the end when i reaches n+1 the loop terminates. Now we have all the array sorted from 
+	lowest to highest. And it proves from the loop invariant and the profe of it.
+                

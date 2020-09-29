@@ -1,0 +1,43 @@
+Pseudocode:
+start insertion sort(A[n])
+	for i from 2 to n+1
+		do key <= A[i]
+		do j <= i-1
+		do while(j>=0 and A[j]>=key):
+			A[j+1]=A[j]
+			j-=1
+		endwhile
+		do A[j+1] <= key
+	endfor
+finish insertion sort
+
+Running-time functions:
+	Best case function = an + b
+	Worst case function = an^2 + bn + c
+	Order of growth = O(n^2)
+
+Correctness :
+Input : a1, a2, a3, a4, .... an
+Output : a`1 < a`2 < ... < a`n
+
+Out Loop invariant :
+	Every time each iteration starts subarray A[1, 2, .. j-1]
+	is sorted.
+	
+Inner Loop :
+	The inner loop just swaps the places to move the key to a place,
+	so it doesn't need any profes.
+
+Initialization :
+	Just after starting we have only one item A[1] which
+	is sorted itself.
+
+Maintenance :
+	Every time we iterate we know the subarray A[1, 2, .. j-1] is sorted.
+	So we just move the new number A[j] in the subarray to find a suitable
+	place where it is higher than all of the numbers on its left.
+	So after iteration we have A[1, 2, .. j] in sorted.
+
+Termination :
+	By the end when i reaches n+1 the loop terminates, and we have all the numbers in order.
+                
