@@ -1,0 +1,42 @@
+
+Pseudocode:
+start linear search (A, key)
+    do n <= len(A) 
+
+    for i from 1 to n+1 do
+
+        if A[i] == key 
+            finish linear search with True
+        endif
+     
+    endfor
+finish linear search with False
+
+Running-time functions:
+	Best case function = 0
+	Worst case function = an+b
+	Order of growth = O(n)
+
+Correctness :
+Input : a1, a2, a3, a4, .... an, key
+Output : Is key in A[1, ..., n] ?
+
+Loop invariant :
+        Each time loop iterates and the algorithem is not terminated,
+        we are sure that key is not among A[1, 2, ...., j-1].
+
+Initialization :
+        At the beginning the i is 1. So we just check if the key is equal
+        to A[1], if it is equal then the algorithm terminates, if not then we are sure
+        key is not in A[1, .., i] which is A[1].
+
+Maintenance :
+	Now lets image that i is p and the loop is not terminated yet.
+        We are sure that key is not among A[1, 2, ..., p-1].
+        Now we check A[p] and key, if they are equal then the algorithm finishes with Treu, if not
+        then we know that key is not among A[1, 2, ..., p] which leads us to next step of iteration.
+
+Termination :
+        If the loop finishes with False then we know the key is not in A,
+        if the loop terminates with True then it proves that key is in A.
+        This proves the correctness of Linear Search Algorithem.
