@@ -38,8 +38,11 @@ void LinearSearch(int threadid, int target) {
 
 int main(){
     srand((unsigned) time(0));
+    vector <thread> threads;
     for( int i = 0; i < THREADS; i++) {
         thread t(LinearSearch, i+100, (rand() % (STOP - START)) + START);
-        t.join();
+        threads.push_back(move(t));
     }
+    for( int j = 0; j < THREADS; j++)
+        threads[j].join();
 }
