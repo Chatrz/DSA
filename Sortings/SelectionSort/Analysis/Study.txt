@@ -1,0 +1,58 @@
+Pseudocode:
+start selection sort(A)
+    do n <= len(A) 
+
+    for i from 1 to n+1 do
+        do min <= i
+
+        for j from i+1 to n+1 do
+
+            if A[j] < A[min]  
+                do min <= j
+            endif
+     
+        endfor
+        
+        swap(A[i], A[min])
+
+    endfor
+finish bubble sort
+
+Running-time functions:
+	Best case function = 0
+	Worst case function = n^2 / 4
+	Order of growth = O(n^2)
+
+Correctness :
+Input : a1, a2, a3, a4, .... an
+Output : a`1 < a`2 < ... < a`n
+
+Out Loop invariant :
+	After each iteration when we are at A[i], the subarray A[1, 2, 3, ..., i]
+	is sorted.
+
+Inner Loop :
+	Inner Loop invariant :
+		In each iteration the j (as index container) holdes the index of least number
+		among A[i+1, ...... , n].
+	The inner loop just changes the index of the numbers in a subarray of A to find the index
+	of the minimun number in that subarray.
+	Its clear so we provide getting into it.
+
+Initialization :
+	When we start the i is 1 ; so j iterates throuth the subarray of A[2, ..... n] and finds the
+	least number index (based on what we said for what inner loop does). Now it swaps the
+	place of the least number with the place of A[i] which is A[1]. So now the subarray 
+	A[1] is sorted.
+
+Maintenance :
+	Each time we get in the beginnig of iteration, subarray A[1,2, ....p] is sorted.
+	Now we start from p+1 and go till n to find the least number index. The we swap it to the
+	A[p+1]. Since the numbers on the right of the p are higher than A[p], so the current subarray
+	(A[1, 2, .... p+1]) is sorted from smallest to highest, so we can go to next iteration by this profe.
+
+Termination :
+	At the end, when i reaches n+1, the loop terminates and the subarray A[1, 2, ..., n] is sorted
+	from smallest to highest. So the algorithem did the task and it got terminated at the end.
+	This proves the correctness of our algorithem.
+                

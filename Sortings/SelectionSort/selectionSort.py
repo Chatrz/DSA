@@ -1,12 +1,4 @@
-def findMinIndex(lis):
-    min=lis[0]
-    minIndex=0
-    for i in range(0,len(lis)):
-        if(lis[i]<=min):
-            minIndex=i
-    return minIndex
-
-def selectionSort(lis,size):
+def selectionSort(lis):
     for i in range(0,len(lis)-1):
         minIndex=i
         for j in range(i+1,len(lis)):
