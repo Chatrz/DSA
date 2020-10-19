@@ -1,8 +1,9 @@
 #include <iostream>
 
 using namespace std;
+#define maximum(a,b) ( (a) > (b) ? (a) : (b))
 
-// Each link object is a node that we define in this class
+// Each tree object is a node that we define in this class
 class Node
 {
     public:
@@ -21,7 +22,7 @@ Node::Node(int newKey)
 // Head address as a global variable
 Node* head = NULL;
 
-// Methods of list :
+// Methods of tree :
 // Create a node in memory and return the address
 Node* create_node(int newkey)
 {
@@ -78,67 +79,8 @@ void insert(int newKey)
         {
             current = current->right;
             continue;
-        }
-        
+        } 
     }
-}
-
-// Do the deleting process
-void do_delete(Node* parrent_side, Node* current)
-{
-    if (current->right == NULL)
-    {
-        parrent_side = current->left;
-        if (current->left != NULL)
-        {
-            current->left->parrent = current->parrent;
-        }
-    } else {
-        parrent_side = current->right;
-        Node* right = current->right;
-        while (right->left != NULL)
-        {
-            right = right->left;
-        }
-        right->left = current->left;
-        if (current->left != NULL)
-        {
-            current->left->parrent = right;
-        }
-        current->right->parrent = current->parrent;
-    }
-    delete current;
-    return;
-}
-
-// Removes the node at the head
-void remove(int target)
-{
-    if (head == NULL)
-    {
-        return;
-    }
-    Node* current = head;
-    while (current != NULL)
-    {
-        if (current->key == target)
-        {
-            if (current->parrent->left == current)
-            {
-                do_delete(current->parrent->left, current);
-            } else {
-                do_delete(current->parrent->right, current);
-            }
-            return;
-        }  
-        if (current->key < target)
-        {
-            current = current->left;
-        } else {
-            current = current->right;
-        }
-    }
-    
 }
 
 // Returns the size of the linked list
@@ -149,33 +91,62 @@ int size(Node* start, int x)
     return 1 + size(start->right, x) + size(start->left, x);
 }
 
-// Prints the linked list objects
-void print(Node* current)
+// Returns the minimum number in tree
+int min(Node* root)
 {
-    if (current == NULL)
-    {
-        return;
-    }
-    cout << "Self " << current->key << " [ ";
-    cout << "Left ";
-    print(current->left);
-    cout << "Right ";
-    print(current->right);
-    cout << "] ";
-    return;
+    return root->key;
 }
+
+// Returns the maximum number in tree
+int max(Node* root)
+{
+    if (root->left == NULL && root->right == NULL)
+        return root->key; 
+    if (root->left != NULL)
+        return max(root->left);
+    else
+        return max(root->right);     
+}
+
+// Returns the hight of the tree
+int hight(Node * root, int x)
+{
+    if (root == 0)
+        return x;
+    return 1 + maximum(hight(root->right, x), hight(root->left, x));
+}
+
+// Prints the linked list objects
+void printBT(const std::string& prefix, Node* node, bool isLeft)
+{
+    if( node != NULL )
+    {
+        cout << prefix;
+        cout << (isLeft ? "|__" : "|__" );
+        // print the value of the node
+        cout << node->key << "\n" <<endl;
+        // enter the next tree level - left and right branch
+        printBT( prefix + (isLeft ? "|   " : "    "), node->right, true);
+        printBT( prefix + (isLeft ? "|   " : "    "), node->left, false);
+    }
+}
+
 
 // A test case
 int main() 
 {
     insert(2);
-    insert(4);
-    insert(3);
-    print(head);
-    cout << endl;
+    insert(10);
+    insert(5);
     insert(8);
     insert(5);
-    print(head);
-    cout << "Size = " << size(head, 0) << endl;
+    insert(20);
+    insert(12);
+    insert(16);
+    insert(100);
+    printBT("", head, false);
+    cout << "\nTree Size = " << size(head, 0) << endl;
+    cout << "Tree min = " << min(head) << " max = " << max(head) << endl;
+    cout << "Tree hight = " << hight(head, 0);
     return 0;
 }
