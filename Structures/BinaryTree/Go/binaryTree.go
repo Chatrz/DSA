@@ -1,6 +1,5 @@
 package binarytree
 
-//todo add max, min functions and check new methods
 type Node struct {
 	parent      *Node
 	left, right *Node
@@ -27,24 +26,28 @@ func (n *Node) SubSearch(value int) *Node {
 	return search(value, n)
 }
 
+func (n *Node) SubMin() *Node {
+	return min(n)
+}
+
+func (n *Node) SubMax() *Node {
+	return max(n)
+}
+
 func (n *Node) Seccessor() *Node {
-	curr := n.Right()
+	curr := n.right
 	if curr == nil {
 		return nil
 	}
-	for ; curr.Left() != nil; curr = curr.Left() {
-	}
-	return curr
+	return min(curr)
 }
 
 func (n *Node) Predecessor() *Node {
-	curr := n.Left()
+	curr := n.left
 	if curr == nil {
 		return nil
 	}
-	for ; curr.Right() != nil; curr = curr.Right() {
-	}
-	return curr
+	return max(curr)
 }
 
 type BT struct {
@@ -75,23 +78,17 @@ func (b *BT) Root() *Node {
 }
 
 func (b *BT) Max() *Node {
-	var curr *Node
-	for curr = b.root; curr.Right() != nil; curr = curr.Right() {
-	}
-	return curr
+	return max(b.root)
 }
 
 func (b *BT) Min() *Node {
-	var curr *Node
-	for curr = b.root; curr.Left() != nil; curr = curr.Left() {
-	}
-	return curr
+	return min(b.root)
 }
 
 func insert(value int, parent *Node) {
 	if value < parent.Value {
-		if parent.Left() != nil {
-			insert(value, parent.Left())
+		if parent.left != nil {
+			insert(value, parent.left)
 			return
 		}
 		n := new(Node)
@@ -99,8 +96,8 @@ func insert(value int, parent *Node) {
 		n.Value = value
 		parent.left = n
 	} else {
-		if parent.Right() != nil {
-			insert(value, parent.Right())
+		if parent.right != nil {
+			insert(value, parent.right)
 			return
 		}
 		n := new(Node)
@@ -115,8 +112,20 @@ func search(key int, node *Node) *Node {
 		return node
 	}
 	if key < node.Value {
-		return search(key, node.Left())
+		return search(key, node.left)
 	} else {
-		return search(key, node.Right())
+		return search(key, node.right)
 	}
+}
+
+func min(node *Node) *Node {
+	for ; node.left != nil; node = node.left {
+	}
+	return node
+}
+
+func max(node *Node) *Node {
+	for ; node.right != nil; node = node.right {
+	}
+	return node
 }
