@@ -1,5 +1,7 @@
 package binarytree
 
+import "fmt"
+
 type Node struct {
 	parent      *Node
 	left, right *Node
@@ -50,6 +52,10 @@ func (n *Node) Predecessor() *Node {
 	return max(curr)
 }
 
+func (n *Node) SubPrint() {
+	print("", n, false)
+}
+
 type BT struct {
 	root *Node
 	size int
@@ -83,6 +89,10 @@ func (b *BT) Max() *Node {
 
 func (b *BT) Min() *Node {
 	return min(b.root)
+}
+
+func (b *BT) Print() {
+	print("", b.root, false)
 }
 
 func insert(value int, parent *Node) {
@@ -128,4 +138,20 @@ func max(node *Node) *Node {
 	for ; node.right != nil; node = node.right {
 	}
 	return node
+}
+
+func print(prefix string, n *Node, isLeft bool) {
+	if n != nil {
+		var s1, s2 string
+		if isLeft {
+			s1 = fmt.Sprint(prefix, "|-- ", n.Value)
+			s2 = fmt.Sprint(prefix, "|   ")
+		} else {
+			s1 = fmt.Sprint(prefix, "\\-- ", n.Value)
+			s2 = fmt.Sprint(prefix, "    ")
+		}
+		fmt.Println(s1)
+		print(s2, n.left, true)
+		print(s2, n.right, false)
+	}
 }
