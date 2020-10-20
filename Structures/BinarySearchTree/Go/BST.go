@@ -1,6 +1,9 @@
 package binarysearchtree
 
-import "fmt"
+import (
+	"fmt"
+	"math"
+)
 
 type Node struct {
 	parent      *Node
@@ -14,6 +17,10 @@ func (n *Node) IsLeaf() bool {
 
 func (n *Node) IsParent() bool {
 	return n.parent == nil
+}
+
+func (n *Node) IsSubBalanced() bool {
+	return isBalanced(n)
 }
 
 func (n *Node) Left() *Node {
@@ -85,6 +92,10 @@ func (b *BST) Insert(values ...int) {
 
 func (b *BST) Search(key int) *Node {
 	return search(key, b.root)
+}
+
+func (b *BST) IsBalanced() bool {
+	return isBalanced(b.root)
 }
 
 func (b *BST) Root() *Node {
@@ -169,6 +180,18 @@ func depth(node *Node) int {
 		return left + 1
 	}
 
+}
+
+func isBalanced(root *Node) bool {
+	if root == nil {
+		return true
+	}
+	left := depth(root.left)
+	right := depth(root.right)
+	if math.Abs(float64(left-right)) > 1 {
+		return false
+	}
+	return isBalanced(root.left) && isBalanced(root.right)
 }
 
 /*
