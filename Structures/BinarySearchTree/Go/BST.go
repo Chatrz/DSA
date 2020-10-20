@@ -63,6 +63,10 @@ func (n *Node) SubDepth() int {
 	return depth(n)
 }
 
+func (n *Node) inorder() {
+	inorder(n)
+}
+
 func (n *Node) SubPrint() {
 	//print("", n, false)
 	pprint(n, 0)
@@ -116,6 +120,10 @@ func (b *BST) Depth() int {
 
 func (b *BST) Size() int {
 	return b.size
+}
+
+func (b *BST) Inorder() {
+	inorder(b.root)
 }
 
 func (b *BST) Print() {
@@ -182,16 +190,24 @@ func depth(node *Node) int {
 
 }
 
-func isBalanced(root *Node) bool {
-	if root == nil {
+func isBalanced(node *Node) bool {
+	if node == nil {
 		return true
 	}
-	left := depth(root.left)
-	right := depth(root.right)
+	left := depth(node.left)
+	right := depth(node.right)
 	if math.Abs(float64(left-right)) > 1 {
 		return false
 	}
-	return isBalanced(root.left) && isBalanced(root.right)
+	return isBalanced(node.left) && isBalanced(node.right)
+}
+
+func inorder(node *Node) {
+	if node != nil {
+		inorder(node.left)
+		fmt.Println(node.Value)
+		inorder(node.right)
+	}
 }
 
 /*
