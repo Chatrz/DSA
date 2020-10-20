@@ -53,7 +53,8 @@ func (n *Node) Predecessor() *Node {
 }
 
 func (n *Node) SubPrint() {
-	print("", n, false)
+	//print("", n, false)
+	pprint(n, 0)
 }
 
 type BT struct {
@@ -65,14 +66,16 @@ func NewBT() *BT {
 	return new(BT)
 }
 
-func (b *BT) Insert(value int) {
-	if b.root == nil {
-		n := new(Node)
-		n.Value = value
-		b.root = n
-		return
+func (b *BT) Insert(values ...int) {
+	for _, v := range values {
+		if b.root == nil {
+			n := new(Node)
+			n.Value = v
+			b.root = n
+			continue
+		}
+		insert(v, b.root)
 	}
-	insert(value, b.root)
 }
 
 func (b *BT) Search(key int) *Node {
@@ -92,7 +95,8 @@ func (b *BT) Min() *Node {
 }
 
 func (b *BT) Print() {
-	print("", b.root, false)
+	//print("", b.root, false)
+	pprint(b.root, 0)
 }
 
 func insert(value int, parent *Node) {
@@ -140,6 +144,7 @@ func max(node *Node) *Node {
 	return node
 }
 
+/*
 func print(prefix string, n *Node, isLeft bool) {
 	if n != nil {
 		var s1, s2 string
@@ -154,4 +159,18 @@ func print(prefix string, n *Node, isLeft bool) {
 		print(s2, n.left, true)
 		print(s2, n.right, false)
 	}
+} */
+
+func pprint(node *Node, space int) {
+	if node == nil {
+		return
+	}
+	space += 7
+	pprint(node.right, space)
+	fmt.Println()
+	for i := 7; i < space; i++ {
+		fmt.Print(" ")
+	}
+	fmt.Println(node.Value)
+	pprint(node.left, space)
 }
