@@ -1,4 +1,4 @@
-package binarytree
+package binarysearchtree
 
 import "testing"
 
@@ -13,11 +13,11 @@ func TestDepth(t *testing.T) {
 		},
 	}
 	for _, v := range testCases {
-		bt := NewBT()
-		bt.Insert(v.values...)
-		bt.Print()
-		if bt.Depth() != v.res {
-			t.Errorf("%v != %v", bt.Depth(), v.res)
+		bst := NewBST()
+		bst.Insert(v.values...)
+		bst.Print()
+		if bst.Depth() != v.res {
+			t.Errorf("%v != %v", bst.Depth(), v.res)
 		}
 	}
 }

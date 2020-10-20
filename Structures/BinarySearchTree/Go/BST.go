@@ -1,4 +1,4 @@
-package binarytree
+package binarysearchtree
 
 import "fmt"
 
@@ -61,17 +61,18 @@ func (n *Node) SubPrint() {
 	pprint(n, 0)
 }
 
-type BT struct {
+type BST struct {
 	root *Node
 	size int
 }
 
-func NewBT() *BT {
-	return new(BT)
+func NewBST() *BST {
+	return new(BST)
 }
 
-func (b *BT) Insert(values ...int) {
+func (b *BST) Insert(values ...int) {
 	for _, v := range values {
+		b.size++
 		if b.root == nil {
 			n := new(Node)
 			n.Value = v
@@ -82,27 +83,31 @@ func (b *BT) Insert(values ...int) {
 	}
 }
 
-func (b *BT) Search(key int) *Node {
+func (b *BST) Search(key int) *Node {
 	return search(key, b.root)
 }
 
-func (b *BT) Root() *Node {
+func (b *BST) Root() *Node {
 	return b.root
 }
 
-func (b *BT) Max() *Node {
+func (b *BST) Max() *Node {
 	return max(b.root)
 }
 
-func (b *BT) Min() *Node {
+func (b *BST) Min() *Node {
 	return min(b.root)
 }
 
-func (b *BT) Depth() int {
+func (b *BST) Depth() int {
 	return depth(b.root)
 }
 
-func (b *BT) Print() {
+func (b *BST) Size() int {
+	return b.size
+}
+
+func (b *BST) Print() {
 	//print("", b.root, false)
 	pprint(b.root, 0)
 }
@@ -117,7 +122,7 @@ func insert(value int, parent *Node) {
 		n.parent = parent
 		n.Value = value
 		parent.left = n
-	} else {
+	} else if value > parent.Value {
 		if parent.right != nil {
 			insert(value, parent.right)
 			return
