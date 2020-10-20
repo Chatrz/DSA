@@ -52,6 +52,10 @@ func (n *Node) Predecessor() *Node {
 	return max(curr)
 }
 
+func (n *Node) SubDepth() int {
+	return depth(n)
+}
+
 func (n *Node) SubPrint() {
 	//print("", n, false)
 	pprint(n, 0)
@@ -92,6 +96,10 @@ func (b *BT) Max() *Node {
 
 func (b *BT) Min() *Node {
 	return min(b.root)
+}
+
+func (b *BT) Depth() int {
+	return depth(b.root)
 }
 
 func (b *BT) Print() {
@@ -142,6 +150,20 @@ func max(node *Node) *Node {
 	for ; node.right != nil; node = node.right {
 	}
 	return node
+}
+
+func depth(node *Node) int {
+	if node == nil {
+		return 0
+	}
+	right := depth(node.right)
+	left := depth(node.left)
+	if right > left {
+		return right + 1
+	} else {
+		return left + 1
+	}
+
 }
 
 /*
