@@ -2,7 +2,7 @@ package stack
 
 import "errors"
 
-const LIMIT = 1000
+const limit = 1000
 
 type Stack struct {
 	stack []int
@@ -20,7 +20,7 @@ func (s *Stack) IsEmpty() bool {
 }
 
 func (s *Stack) Push(key int) error {
-	if s.Size() > LIMIT {
+	if s.Size() >= limit {
 		return errors.New("stack overflow error")
 	}
 	s.top++
@@ -29,6 +29,7 @@ func (s *Stack) Push(key int) error {
 	} else {
 		s.stack[s.top] = key
 	}
+	return nil
 }
 
 func (s *Stack) Pop() (int, error) {
