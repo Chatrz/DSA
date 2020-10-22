@@ -44,19 +44,17 @@ func (n *Node) SubMax() *Node {
 }
 
 func (n *Node) Seccessor() *Node {
-	curr := n.right
-	if curr == nil {
+	if n.right == nil {
 		return nil
 	}
-	return min(curr)
+	return min(n.right)
 }
 
 func (n *Node) Predecessor() *Node {
-	curr := n.left
-	if curr == nil {
+	if n.left == nil {
 		return nil
 	}
-	return max(curr)
+	return max(n.left)
 }
 
 func (n *Node) SubDepth() int {
@@ -153,14 +151,26 @@ func insert(value int, parent *Node) {
 	}
 }
 
-func search(key int, node *Node) *Node {
-	if node == nil || node.Value == key {
-		return node
+//todo
+/*
+func remove(key int, root *Node) *Node {
+	node := search(key, root)
+	if node == nil {
+		return nil
 	}
-	if key < node.Value {
-		return search(key, node.left)
+	if node.IsLeaf() {
+
+	}
+} */
+
+func search(key int, root *Node) *Node {
+	if root == nil || root.Value == key {
+		return root
+	}
+	if key < root.Value {
+		return search(key, root.left)
 	} else {
-		return search(key, node.right)
+		return search(key, root.right)
 	}
 }
 
