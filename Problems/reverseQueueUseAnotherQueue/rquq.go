@@ -12,7 +12,7 @@ func main() {
 		q.Enqueue(i)
 	}
 	res := reverse(q)
-	for x, err := res.Dequeue(); err == nil;x, err = res.Dequeue() {
+	for x, err := res.Dequeue(); err == nil; x, err = res.Dequeue() {
 		fmt.Printf("%v, ", x)
 	}
 }
