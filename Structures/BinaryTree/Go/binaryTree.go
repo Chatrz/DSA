@@ -97,6 +97,10 @@ func (tree *Tree) Remove(key int) bool {
 		return false
 	} else {
 		if node.Left != nil {
+			node.Left.Parent = node.Parent
+		}
+		if node.Right != nil {
+			node.Right.Parent = node.Parent
 		}
 		return true
 	}
@@ -112,7 +116,7 @@ func main() {
 	tree.Insert(6)
 	tree.Insert(-1)
 	tree.Insert(-6)
-	fmt.Println(tree.Root.Left.key)
-	fmt.Println(tree.Root.Search(4).Parent.key)
-	fmt.Println(tree.GetMin())
+	fmt.Println(tree.Root.Search(4).key)
+	tree.Remove(4)
+	fmt.Println(tree.Root.Search(5).Parent.key)
 }
