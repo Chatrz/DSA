@@ -1,3 +1,11 @@
+/*
+ * +------------------------------------+
+ * | Author:        hadi abbasi			|
+ * |									|
+ * | Link:          github.com/hawwwdi  |
+ * +------------------------------------+
+ */
+
 package binarysearchtree
 
 import (

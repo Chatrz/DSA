@@ -1,3 +1,11 @@
+/*
+ * +------------------------------------+
+ * | Author:        hadi abbasi			|
+ * |									|
+ * | Link:          github.com/hawwwdi  |
+ * +------------------------------------+
+ */
+
 package queue
 
 import "errors"
