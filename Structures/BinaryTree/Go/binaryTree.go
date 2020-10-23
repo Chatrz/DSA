@@ -1,6 +1,8 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+)
 
 type Node struct {
 	Parent *Node
@@ -89,7 +91,6 @@ func (tree *Tree) GetMin() int {
 	}
 }
 
-//TODO completing remove and adding show
 func (tree *Tree) Remove(key int) bool {
 	node := tree.Root.Search(key)
 	if node == nil {
@@ -106,17 +107,26 @@ func (tree *Tree) Remove(key int) bool {
 	}
 }
 
+func (node *Node) Show() {
+	if node != nil {
+		fmt.Println(node.key)
+		node.Left.Show()
+		node.Right.Show()
+	}
+}
+
 func main() {
 	tree := CreateTree()
+	tree.Insert(-100)
 	tree.Insert(1)
 	tree.Insert(2)
 	tree.Insert(3)
+	tree.Insert(-60)
 	tree.Insert(4)
 	tree.Insert(5)
 	tree.Insert(6)
 	tree.Insert(-1)
 	tree.Insert(-6)
-	fmt.Println(tree.Root.Search(4).key)
-	tree.Remove(4)
-	fmt.Println(tree.Root.Search(5).Parent.key)
+	tree.Root.Show()
+	fmt.Println(tree.GetMin())
 }
