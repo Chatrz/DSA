@@ -128,5 +128,5 @@ func main() {
 	tree.Insert(-1)
 	tree.Insert(-6)
 	tree.Root.Show()
-	fmt.Println(tree.GetMin())
 }
+//TODO adding successor and predecessor finder for keys (after saturday class)
