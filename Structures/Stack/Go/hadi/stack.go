@@ -1,7 +1,7 @@
 /*
  * +------------------------------------+
- * | Author:        hadi abbasi			|
- * |									|
+ * | Author:        hadi abbasi	        |
+ * |                                    |
  * | Link:          github.com/hawwwdi  |
  * +------------------------------------+
  */
