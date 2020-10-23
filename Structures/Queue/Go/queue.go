@@ -59,3 +59,7 @@ func (q *Queue) IsFull() bool {
 func (q *Queue) IsEmpty() bool {
 	return q.size == 0
 }
+
+func (q *Queue) Size() int {
+	return q.size
+}
