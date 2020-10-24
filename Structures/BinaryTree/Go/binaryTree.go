@@ -152,6 +152,34 @@ func DisplayTree(res *TreePicture, padding string, pointer string, node *Node) {
 	}
 }
 
+func (tree *Tree)Delete(key int) bool  {
+	node:= tree.Root.Search(key)
+	if node==nil{
+		return false
+	}else {
+		if node.IsLeaf(){//node has no children
+
+		}else if node.Right==nil || node.Left==nil{//node has one children
+
+		}else {//node has two children
+
+		}
+		return true
+	}
+}
+
+func (node *Node)IsLeaf() bool  {
+	if node.Right==nil && node.Left==nil{
+		return true
+	}
+	return false
+}
+func (node *Node)IsRightChild() bool {
+	if node.key > node.Parent.key{
+		return true
+	}
+	return false
+}
 //TODO adding successor and predecessor finder for keys (after saturday class)
 //correcting remove
 
