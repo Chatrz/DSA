@@ -1,4 +1,4 @@
-package main
+package binaryTree
 
 import (
 	"fmt"
@@ -230,11 +230,6 @@ func main() {
 	tree.Insert(12)
 	tree.Insert(5)
 	pic := &TreePicture{pic: ""}
-	DisplayTree(pic, "", "", tree.Root)
-	fmt.Println(pic.pic)
-	fmt.Println("&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&7")
-	tree.DeleteUseKey(10)
-	pic.pic = ""
 	DisplayTree(pic, "", "", tree.Root)
 	fmt.Println(pic.pic)
 }
