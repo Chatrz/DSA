@@ -60,6 +60,10 @@ func (tree *Tree) Insert(data int) {
 }
 
 func (node *Node) Search(key int) *Node {
+	/*fmt.Print("SEARCHING FOR : ")
+	fmt.Println(key)
+	fmt.Print("ON KEY ")
+	fmt.Println(node.key)*/
 	if node == nil {
 		fmt.Println("KEY DOES NOT EXIST !")
 		return nil
@@ -151,61 +155,86 @@ func DisplayTree(res *TreePicture, padding string, pointer string, node *Node) {
 		DisplayTree(res, paddingForBoth, pointerForRight, node.Right)
 	}
 }
-
-func (tree *Tree)Delete(key int) bool  {
-	node:= tree.Root.Search(key)
-	if node==nil{
+func (tree *Tree) DeleteUseKey(key int) {
+	node := tree.Root.Search(key)
+	node.DeleteNode()
+}
+func (node *Node) DeleteNode() bool {
+	if node == nil {
 		return false
-	}else {
-		if node.IsLeaf(){//node has no children
+	} else {
+		if node.IsLeaf() { //node has no children
+			if node.IsRightChild() {
+				node.Parent.Left = nil
 
-		}else if node.Right==nil || node.Left==nil{//node has one children
-
-		}else {//node has two children
-
+			} else {
+				node.Parent.Right = nil
+			}
+			node.Parent = nil
+		} else if node.Right != nil && node.Left == nil { //node has one children at right
+			node.Right.Parent = node.Parent
+			if node.IsRightChild() {
+				node.Parent.Right = node.Right
+			} else {
+				node.Parent.Left = node.Right
+			}
+		} else if node.Left != nil && node.Right == nil { //node has one children at left
+			node.Left.Parent = node.Parent
+			if node.IsRightChild() {
+				node.Parent.Right = node.Left
+			} else {
+				node.Parent.Left = node.Left
+			}
+		} else { //node has two children
+			sucNod := node.GetSuccessor()
+			fmt.Println(sucNod.key)
+			holder := sucNod.key
+			sucNod.key = node.key
+			node.key = holder
+			fmt.Println(sucNod.key)
+			sucNod.DeleteNode()
 		}
 		return true
 	}
 }
 
-func (node *Node)IsLeaf() bool  {
-	if node.Right==nil && node.Left==nil{
+func (node *Node) IsLeaf() bool {
+	if node.Right == nil && node.Left == nil {
 		return true
 	}
 	return false
 }
-func (node *Node)IsRightChild() bool {
-	if node.key > node.Parent.key{
+func (node *Node) IsRightChild() bool {
+	if node.key > node.Parent.key {
 		return true
 	}
 	return false
 }
-//TODO adding successor and predecessor finder for keys (after saturday class)
-//correcting remove
+
 
 func main() {
 	tree := CreateTree()
-	tree.Insert(-300)
-	tree.Insert(1)
-	tree.Insert(2)
-	tree.Insert(-65)
-	tree.Insert(3)
-	tree.Insert(-60)
-	tree.Insert(4)
+	tree.Insert(20)
+	tree.Insert(25)
+	tree.Insert(24)
+	tree.Insert(40)
+	tree.Insert(50)
+	tree.Insert(30)
+	tree.Insert(23)
+	tree.Insert(27)
+	tree.Insert(15)
+	tree.Insert(17)
+	tree.Insert(18)
+	tree.Insert(19)
+	tree.Insert(10)
+	tree.Insert(12)
 	tree.Insert(5)
-	tree.Insert(6)
-	tree.Insert(8)
-	tree.Insert(9)
-	tree.Insert(-70)
-	tree.Insert(-69)
-	tree.Insert(-400)
-	tree.Insert(-1)
-	tree.Insert(-6)
-	tree.Insert(-200)
-	tree.Insert(7)
 	pic := &TreePicture{pic: ""}
 	DisplayTree(pic, "", "", tree.Root)
 	fmt.Println(pic.pic)
-	fmt.Println(tree.Root.Search(-60).GetPredecessor().key)
-	fmt.Println(tree.Root.Search(-400).GetSuccessor().key)
+	fmt.Println("&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&7")
+	tree.DeleteUseKey(10)
+	pic.pic = ""
+	DisplayTree(pic, "", "", tree.Root)
+	fmt.Println(pic.pic)
 }
