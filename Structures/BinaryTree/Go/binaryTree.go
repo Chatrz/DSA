@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"strconv"
 )
 
 type Node struct {
@@ -13,6 +14,10 @@ type Node struct {
 
 type Tree struct {
 	Root *Node
+}
+
+type TreePicture struct {
+	pic string
 }
 
 func CreateTree() *Tree {
@@ -107,11 +112,30 @@ func (tree *Tree) Remove(key int) bool {
 	}
 }
 
-func (node *Node) Show() {
+
+
+//TODO adding successor and predecessor finder for keys (after saturday class)
+//correcting remove
+
+func DisplayTree(res *TreePicture, padding string, pointer string, node *Node) {
 	if node != nil {
-		fmt.Println(node.key)
-		node.Left.Show()
-		node.Right.Show()
+		res.pic = res.pic + padding
+		res.pic = res.pic + pointer
+		res.pic = res.pic + strconv.Itoa(node.key)
+		res.pic = res.pic + "\n"
+
+		paddingBuilder := padding + "│  "
+		paddingForBoth := paddingBuilder
+		pointerForRight := "└──"
+		pointerForLeft := ""
+		if node.Right != nil {
+			pointerForLeft = "├──"
+		} else {
+			pointerForLeft = "└──"
+		}
+
+		DisplayTree(res, paddingForBoth, pointerForLeft, node.Left)
+		DisplayTree(res, paddingForBoth, pointerForRight, node.Right)
 	}
 }
 
@@ -125,8 +149,13 @@ func main() {
 	tree.Insert(4)
 	tree.Insert(5)
 	tree.Insert(6)
+	tree.Insert(8)
+	tree.Insert(9)
 	tree.Insert(-1)
 	tree.Insert(-6)
-	tree.Root.Show()
+	tree.Insert(-200)
+	tree.Insert(7)
+	pic := &TreePicture{pic: ""}
+	DisplayTree(pic, "", "", tree.Root)
+	fmt.Println(pic.pic)
 }
-//TODO adding successor and predecessor finder for keys (after saturday class)
