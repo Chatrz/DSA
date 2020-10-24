@@ -97,6 +97,36 @@ func (root *Node) GetMin() *Node{
 }
 
 
+func (node *Node)GetPredecessor() *Node  {
+	if node.Left!=nil{
+		return node.Left.GetMax()
+	}else {
+		tmp:=node
+		tmp2:=tmp.Parent
+		for ;tmp2!=nil;{
+			if tmp!=tmp2.Left{
+				break
+			}
+			tmp = tmp2
+			tmp2 = tmp2.Parent
+		}
+		return tmp2
+	}
+}
+
+/*func (node *Node)GetSuccessor() *Node  {
+	if node.Right!=nil{
+		return node.Right.GetMin()
+	}else {
+		tmp:=node
+		for {
+			tmp= tmp.Parent
+			if tmp.Parent
+		}
+		return
+	}
+}
+*/
 func DisplayTree(res *TreePicture, padding string, pointer string, node *Node) {
 	if node != nil {
 		res.pic = res.pic + padding
@@ -119,10 +149,6 @@ func DisplayTree(res *TreePicture, padding string, pointer string, node *Node) {
 	}
 }
 
-/*func (node *Node)GetPredecessor() *Node  {
-
-}*/
-
 
 //TODO adding successor and predecessor finder for keys (after saturday class)
 //correcting remove
@@ -130,9 +156,10 @@ func DisplayTree(res *TreePicture, padding string, pointer string, node *Node) {
 
 func main() {
 	tree := CreateTree()
-	tree.Insert(-100)
+	tree.Insert(-300)
 	tree.Insert(1)
 	tree.Insert(2)
+	tree.Insert(-65)
 	tree.Insert(3)
 	tree.Insert(-60)
 	tree.Insert(4)
@@ -140,6 +167,8 @@ func main() {
 	tree.Insert(6)
 	tree.Insert(8)
 	tree.Insert(9)
+	tree.Insert(-70)
+	tree.Insert(-69)
 	tree.Insert(-1)
 	tree.Insert(-6)
 	tree.Insert(-200)
@@ -147,5 +176,5 @@ func main() {
 	pic := &TreePicture{pic: ""}
 	DisplayTree(pic, "", "", tree.Root)
 	fmt.Println(pic.pic)
-	fmt.Println(tree.Root.GetMax().key)
+	fmt.Println(tree.Root.Search(-60).GetPredecessor().key)
 }
