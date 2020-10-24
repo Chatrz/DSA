@@ -85,8 +85,8 @@ func (root *Node) GetMax() *Node {
 	}
 }
 
-func (root *Node) GetMin() *Node{
-	tmp :=root
+func (root *Node) GetMin() *Node {
+	tmp := root
 	for {
 		holder := tmp
 		tmp = tmp.Left
@@ -96,15 +96,14 @@ func (root *Node) GetMin() *Node{
 	}
 }
 
-
-func (node *Node)GetPredecessor() *Node  {
-	if node.Left!=nil{
+func (node *Node) GetPredecessor() *Node {
+	if node.Left != nil {
 		return node.Left.GetMax()
-	}else {
-		tmp:=node
-		tmp2:=tmp.Parent
-		for ;tmp2!=nil;{
-			if tmp!=tmp2.Left{
+	} else {
+		tmp := node
+		tmp2 := tmp.Parent
+		for ; tmp2 != nil; {
+			if tmp != tmp2.Left {
 				break
 			}
 			tmp = tmp2
@@ -114,19 +113,23 @@ func (node *Node)GetPredecessor() *Node  {
 	}
 }
 
-/*func (node *Node)GetSuccessor() *Node  {
-	if node.Right!=nil{
+func (node *Node) GetSuccessor() *Node {
+	if node.Right != nil {
 		return node.Right.GetMin()
-	}else {
-		tmp:=node
-		for {
-			tmp= tmp.Parent
-			if tmp.Parent
+	} else {
+		tmp := node
+		tmp2 := tmp.Parent
+		for ; tmp2 != nil; {
+			if tmp != tmp2.Right {
+				break
+			}
+			tmp = tmp2
+			tmp2 = tmp2.Parent
 		}
-		return
+		return tmp2
 	}
 }
-*/
+
 func DisplayTree(res *TreePicture, padding string, pointer string, node *Node) {
 	if node != nil {
 		res.pic = res.pic + padding
@@ -149,10 +152,8 @@ func DisplayTree(res *TreePicture, padding string, pointer string, node *Node) {
 	}
 }
 
-
 //TODO adding successor and predecessor finder for keys (after saturday class)
 //correcting remove
-
 
 func main() {
 	tree := CreateTree()
@@ -169,6 +170,7 @@ func main() {
 	tree.Insert(9)
 	tree.Insert(-70)
 	tree.Insert(-69)
+	tree.Insert(-400)
 	tree.Insert(-1)
 	tree.Insert(-6)
 	tree.Insert(-200)
@@ -177,4 +179,5 @@ func main() {
 	DisplayTree(pic, "", "", tree.Root)
 	fmt.Println(pic.pic)
 	fmt.Println(tree.Root.Search(-60).GetPredecessor().key)
+	fmt.Println(tree.Root.Search(-400).GetSuccessor().key)
 }
