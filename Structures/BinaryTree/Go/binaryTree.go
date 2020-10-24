@@ -134,7 +134,7 @@ func (node *Node) GetSuccessor() *Node {
 	}
 }
 
-func DisplayTree(res *TreePicture, padding string, pointer string, node *Node) {
+func GetTreePic(res *TreePicture, padding string, pointer string, node *Node) {
 	if node != nil {
 		res.pic = res.pic + padding
 		res.pic = res.pic + pointer
@@ -151,10 +151,18 @@ func DisplayTree(res *TreePicture, padding string, pointer string, node *Node) {
 			pointerForLeft = "└──"
 		}
 
-		DisplayTree(res, paddingForBoth, pointerForLeft, node.Left)
-		DisplayTree(res, paddingForBoth, pointerForRight, node.Right)
+		GetTreePic(res, paddingForBoth, pointerForLeft, node.Left)
+		GetTreePic(res, paddingForBoth, pointerForRight, node.Right)
 	}
 }
+
+func (tree *Tree)DisplayTree()  {
+	pic := &TreePicture{pic: ""}
+	GetTreePic(pic, "", "", tree.Root)
+	fmt.Println(pic.pic)
+}
+
+
 func (tree *Tree) DeleteUseKey(key int) {
 	node := tree.Root.Search(key)
 	node.DeleteNode()
@@ -229,7 +237,5 @@ func main() {
 	tree.Insert(10)
 	tree.Insert(12)
 	tree.Insert(5)
-	pic := &TreePicture{pic: ""}
-	DisplayTree(pic, "", "", tree.Root)
-	fmt.Println(pic.pic)
+
 }

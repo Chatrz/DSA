@@ -110,6 +110,7 @@ func TestNode_IsRightChild(t *testing.T) {
 	if !tree.Root.Right.IsRightChild(){
 		t.Error("IsRightChild not working !!")
 	}
+
 }
 
 func TestTree_DeleteUseKey(t *testing.T) {
@@ -134,3 +135,4 @@ func TestTree_DeleteUseKey(t *testing.T) {
 		t.Error("DeleteUseKey not working !!")
 	}
 }
+
