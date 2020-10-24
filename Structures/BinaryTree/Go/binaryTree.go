@@ -96,26 +96,6 @@ func (tree *Tree) GetMin() int {
 	}
 }
 
-func (tree *Tree) Remove(key int) bool {
-	node := tree.Root.Search(key)
-	if node == nil {
-		fmt.Println("KEY DOES NOT EXIST !")
-		return false
-	} else {
-		if node.Left != nil {
-			node.Left.Parent = node.Parent
-		}
-		if node.Right != nil {
-			node.Right.Parent = node.Parent
-		}
-		return true
-	}
-}
-
-
-
-//TODO adding successor and predecessor finder for keys (after saturday class)
-//correcting remove
 
 func DisplayTree(res *TreePicture, padding string, pointer string, node *Node) {
 	if node != nil {
@@ -138,6 +118,12 @@ func DisplayTree(res *TreePicture, padding string, pointer string, node *Node) {
 		DisplayTree(res, paddingForBoth, pointerForRight, node.Right)
 	}
 }
+
+
+
+//TODO adding successor and predecessor finder for keys (after saturday class)
+//correcting remove
+
 
 func main() {
 	tree := CreateTree()
