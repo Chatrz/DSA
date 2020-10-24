@@ -64,6 +64,21 @@ void insert(int newKey)
     }
 }
 
+// An iteration from low to high in tree
+void tree_walk(Node* start)
+{
+    if (start->left != NULL)
+    {
+        tree_walk(start->left);
+    }
+    cout << start->key << " ";
+    if (start->right != NULL)
+    {
+        tree_walk(start->right);
+    }
+    return;
+}
+
 // Returns the size of the linked list
 int size(Node* start, int x)
 {
@@ -136,6 +151,7 @@ int main()
     printBT("", head, false);
     cout << "\nTree Size = " << size(head, 0) << endl;
     cout << "Tree min = " << min(head) << " max = " << max(head) << endl;
-    cout << "Tree hight = " << hight(head, 0);
+    cout << "Tree hight = " << hight(head, 0) << endl;
+    tree_walk(head);
     return 0;
 }
