@@ -50,6 +50,7 @@ void insert(int newKey)
             if (current->left == NULL)
             {
                 current->left = temp;
+                temp->parrent = current;
                 break;
             }
             current = current->left;
@@ -57,11 +58,46 @@ void insert(int newKey)
             if (current->right == NULL)
             {
                 current->right = temp;
+                temp->parrent = current;
                 break;
             }
             current = current->right;
         }
     }
+}
+
+// To find a special node
+Node* search(int target)
+{
+    Node* current = head;
+    while (current != NULL)
+    {
+        if (current->key == target)
+            break;
+        if (current-> key > target)
+        {
+            current = current->left;
+        } else
+        {
+            current = current->right;
+        }   
+    }
+    return current;
+}
+
+// An iteration from low to high in tree
+void tree_walk(Node* start)
+{
+    if (start->left != NULL)
+    {
+        tree_walk(start->left);
+    }
+    cout << start->key << " ";
+    if (start->right != NULL)
+    {
+        tree_walk(start->right);
+    }
+    return;
 }
 
 // Returns the size of the linked list
@@ -90,6 +126,52 @@ int max(Node* root)
         root = root->right;
     }
     return root->key;
+}
+
+// Succesors of a node
+void succesore(int target)
+{
+    Node* current = search(target);
+    if (current == NULL)
+    {
+        return;
+    }
+    if (current->right != NULL)
+    {
+        cout << min(current->right) << endl;
+    } else {
+        Node* x = current->parrent;
+        Node* y = current;
+        while (x->parrent != NULL && y == x->right)
+        {
+            y = x;
+            x = x->parrent;
+        }
+        cout << x->key << endl;
+    }
+}
+
+// Predecessor of a node
+void predecessor(int target)
+{
+    Node* current = search(target);
+    if (current == NULL)
+    {
+        return;
+    }
+    if (current->left != NULL)
+    {
+        cout << max(current->left) << endl;
+    } else {
+        Node* x = current->parrent;
+        Node* y = current;
+        while (x->parrent != NULL && y == x->left)
+        {
+            y = x;
+            x = x->parrent;
+        }
+        cout << x->key << endl;
+    }
 }
 
 // Returns the hight of the tree
@@ -136,6 +218,11 @@ int main()
     printBT("", head, false);
     cout << "\nTree Size = " << size(head, 0) << endl;
     cout << "Tree min = " << min(head) << " max = " << max(head) << endl;
-    cout << "Tree hight = " << hight(head, 0);
+    cout << "Tree hight = " << hight(head, 0) << endl;
+    tree_walk(head);
+    cout << "\nSuccesore of 12 is : ";
+    succesore(12);
+    cout << "Succesore of 12 is : ";
+    predecessor(12);
     return 0;
 }
