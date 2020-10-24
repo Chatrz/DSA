@@ -74,24 +74,24 @@ func (node *Node) Search(key int) *Node {
 	}
 }
 
-func (tree *Tree) GetMax() int {
-	tmp := tree.Root
+func (root *Node) GetMax() *Node {
+	tmp := root
 	for {
 		holder := tmp
 		tmp = tmp.Right
 		if tmp == nil {
-			return holder.key
+			return holder
 		}
 	}
 }
 
-func (tree *Tree) GetMin() int {
-	tmp := tree.Root
+func (root *Node) GetMin() *Node{
+	tmp :=root
 	for {
 		holder := tmp
 		tmp = tmp.Left
 		if tmp == nil {
-			return holder.key
+			return holder
 		}
 	}
 }
@@ -119,6 +119,9 @@ func DisplayTree(res *TreePicture, padding string, pointer string, node *Node) {
 	}
 }
 
+/*func (node *Node)GetPredecessor() *Node  {
+
+}*/
 
 
 //TODO adding successor and predecessor finder for keys (after saturday class)
@@ -144,4 +147,5 @@ func main() {
 	pic := &TreePicture{pic: ""}
 	DisplayTree(pic, "", "", tree.Root)
 	fmt.Println(pic.pic)
+	fmt.Println(tree.Root.GetMax().key)
 }
