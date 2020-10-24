@@ -137,7 +137,32 @@ func (b *BST) Print() {
 	pprint(b.root, 0)
 }
 
-func insert(value int, parent *Node) {
+func insert(value int, root *Node) {
+	var curr, next *Node
+	next = root
+	for next != nil {
+		curr = next
+		if value > next.Value {
+			next = next.right
+		} else if value < next.Value {
+			next = next.left
+		} else {
+			break
+		}
+	}
+	n := new(Node)
+	n.Value = value
+	if value > curr.Value {
+		curr.right = n
+	} else if value < curr.Value {
+		curr.left = n
+	} else {
+		return
+	}
+	n.parent = curr
+}
+
+/* func rinsert(value int, parent *Node) {
 	if value < parent.Value {
 		if parent.left != nil {
 			insert(value, parent.left)
@@ -158,7 +183,7 @@ func insert(value int, parent *Node) {
 		parent.right = n
 	}
 }
-
+*/
 //todo
 /*
 func remove(key int, root *Node) *Node {
