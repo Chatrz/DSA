@@ -1,7 +1,7 @@
+// This is just BST but only with two usages of inserting and deleting
 #include <iostream>
 
 using namespace std;
-#define maximum(a,b) ( (a) > (b) ? (a) : (b))
 
 // Each tree object is a node that we define in this class
 class Node
@@ -38,30 +38,27 @@ void insert(int newKey)
 {
     Node* temp = create_node(newKey);
     Node* current = head;
-    if (head == NULL)
+    Node* parrent = NULL;
+    while (current != NULL)
     {
-        head = temp;
-        return;
-    }
-    while (true)
-    {
-        if (current->key >= newKey)
+        parrent = current;
+        if (newKey <= current->key)
         {
-            if (current->left == NULL)
-            {
-                current->left = temp;
-                temp->parrent = current;
-                break;
-            }
             current = current->left;
         } else {
-            if (current->right == NULL)
-            {
-                current->right = temp;
-                temp->parrent = current;
-                break;
-            }
             current = current->right;
+        }
+    }
+    temp->parrent = parrent;
+    if (parrent == NULL)
+    {
+        head = temp;
+    } else {
+        if (newKey <= parrent->key)
+        {
+            parrent->left = temp;
+        } else {
+            parrent->right = temp;
         }
     }
 }
@@ -85,60 +82,27 @@ Node* search(int target)
     return current;
 }
 
-// An iteration from low to high in tree
-void tree_walk(Node* start)
-{
-    if (start->left != NULL)
-    {
-        tree_walk(start->left);
-    }
-    cout << start->key << " ";
-    if (start->right != NULL)
-    {
-        tree_walk(start->right);
-    }
-    return;
-}
-
-// Returns the size of the linked list
-int size(Node* start, int x)
-{
-    if (start == NULL)
-        return x; 
-    return 1 + size(start->right, x) + size(start->left, x);
-}
-
 // Gets the minimum number in tree
-int min(Node* root)
+Node* min(Node* root)
 {
     while (root->left != NULL)
     {
         root = root->left;
     }
-    return root->key;
-}
-
-// Gets the maximum number in tree
-int max(Node* root)
-{
-    while (root->right != NULL)
-    {
-        root = root->right;
-    }
-    return root->key;
+    return root;
 }
 
 // Succesors of a node
-void succesore(int target)
+Node* succesore(int target)
 {
     Node* current = search(target);
     if (current == NULL)
     {
-        return;
+        return NULL;
     }
     if (current->right != NULL)
     {
-        cout << min(current->right) << endl;
+        return min(current->right);
     } else {
         Node* x = current->parrent;
         Node* y = current;
@@ -147,39 +111,58 @@ void succesore(int target)
             y = x;
             x = x->parrent;
         }
-        cout << x->key << endl;
+        return x;
     }
 }
 
-// Predecessor of a node
-void predecessor(int target)
+// Removing a node from binary search tree
+void deletion(int target)
 {
-    Node* current = search(target);
-    if (current == NULL)
+    Node* temp = search(target);
+    if (temp == NULL)
     {
         return;
     }
-    if (current->left != NULL)
+    if (temp->left == NULL && temp->right == NULL)
     {
-        cout << max(current->left) << endl;
-    } else {
-        Node* x = current->parrent;
-        Node* y = current;
-        while (x->parrent != NULL && y == x->left)
+        if (temp == temp->parrent->left)
         {
-            y = x;
-            x = x->parrent;
+            temp->parrent->left = NULL;
+        } else {
+            temp->parrent->right = NULL;
         }
-        cout << x->key << endl;
+        delete temp;
+        return;
+    } else {
+        if (temp->right == NULL && temp->left != NULL)
+        {
+            if (temp == temp->parrent->left)
+            {
+                temp->parrent->left = temp->left;
+                temp->left->parrent = temp->parrent;
+            } else {
+                temp->parrent->right = temp->left;
+                temp->left->parrent = temp->parrent;
+            }
+            delete temp;
+        } else if (temp->left == NULL && temp->right != NULL) 
+        {
+            if (temp == temp->parrent->left)
+            {
+                temp->parrent->left = temp->right;
+                temp->right->parrent = temp->parrent;
+            } else {
+                temp->parrent->right = temp->right;
+                temp->right->parrent = temp->parrent;
+            }
+            delete temp;
+        } else {
+            Node* current_succesore = succesore(target);
+            int holder = current_succesore->key;
+            deletion(holder);
+            temp->key = holder;
+        }
     }
-}
-
-// Returns the hight of the tree
-int hight(Node * root, int x)
-{
-    if (root == 0)
-        return x;
-    return 1 + maximum(hight(root->right, x), hight(root->left, x));
 }
 
 // Prints the linked list objects
@@ -216,13 +199,8 @@ int main()
     insert(16);
     insert(100);
     printBT("", head, false);
-    cout << "\nTree Size = " << size(head, 0) << endl;
-    cout << "Tree min = " << min(head) << " max = " << max(head) << endl;
-    cout << "Tree hight = " << hight(head, 0) << endl;
-    tree_walk(head);
-    cout << "\nSuccesore of 12 is : ";
-    succesore(12);
-    cout << "Succesore of 12 is : ";
-    predecessor(12);
-    return 0;
+    deletion(20);
+    printBT("", head, false);
+    deletion(100);
+    printBT("", head, false);
 }
