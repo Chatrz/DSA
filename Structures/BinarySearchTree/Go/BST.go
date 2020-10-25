@@ -56,7 +56,7 @@ func (n *Node) Seccessor() *Node {
 }
 
 func (n *Node) Predecessor() *Node {
-	preDecessor(n)
+	return preDecessor(n)
 }
 
 func (n *Node) SubDepth() int {
