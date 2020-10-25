@@ -52,17 +52,11 @@ func (n *Node) SubMax() *Node {
 }
 
 func (n *Node) Seccessor() *Node {
-	if n.right == nil {
-		return nil
-	}
-	return min(n.right)
+	return seccessor(n)
 }
 
 func (n *Node) Predecessor() *Node {
-	if n.left == nil {
-		return nil
-	}
-	return max(n.left)
+	preDecessor(n)
 }
 
 func (n *Node) SubDepth() int {
@@ -211,6 +205,26 @@ func min(node *Node) *Node {
 	for ; node.left != nil; node = node.left {
 	}
 	return node
+}
+
+func seccessor(node *Node) *Node {
+	if node.right != nil {
+		return min(node.right)
+	}
+	curr := node.parent
+	for ; curr != nil && curr.Value < node.Value; curr = curr.parent {
+	}
+	return curr
+}
+
+func preDecessor(node *Node) *Node {
+	if node.left != nil {
+		return max(node.left)
+	}
+	curr := node.parent
+	for ; curr != nil && curr.Value > node.Value; curr = curr.parent {
+	}
+	return curr
 }
 
 func max(node *Node) *Node {
