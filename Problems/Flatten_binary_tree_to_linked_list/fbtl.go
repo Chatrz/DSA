@@ -5,6 +5,7 @@
  * | Link:          github.com/hawwwdi  |
  * +------------------------------------+
  */
+//this is my solution for https://leetcode.com/problems/flatten-binary-tree-to-linked-list/
 
 package Flatten_binary_tree_to_linked_list
 
