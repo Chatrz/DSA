@@ -1,6 +1,9 @@
 package binarysearchtree
 
-import "testing"
+import (
+	"fmt"
+	"testing"
+)
 
 func TestDepth(t *testing.T) {
 	testCases := []struct {
@@ -88,4 +91,20 @@ func TestPredecessor(t *testing.T) {
 			}
 		}
 	}
+}
+
+func TestRemove(t *testing.T) {
+	bst := NewBST()
+	bst.Insert(20, 8, 22, 4, 12, 10, 14)
+	bst.Print()
+	bst.Remove(22)
+	fmt.Println("after 22")
+	bst.Print()
+	bst.Remove(12)
+	fmt.Println("after 12")
+	bst.Print()
+	//fmt.Println("root value is:", bst.Search(20).Value)
+	bst.Remove(20)
+	fmt.Println("after all")
+	//bst.Print()
 }
