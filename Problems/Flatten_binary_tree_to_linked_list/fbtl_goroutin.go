@@ -7,7 +7,9 @@
  */
 //this is my solution for https://leetcode.com/problems/flatten-binary-tree-to-linked-list/
 
-package Flatten_binary_tree_to_linked_list
+package fbtl
+
+import "sync"
 
 type TreeNode struct {
 	Val   int
@@ -15,10 +17,16 @@ type TreeNode struct {
 	Right *TreeNode
 }
 
-func flatten(root *TreeNode) {
+func flatter(root *TreeNode, wg *sync.WaitGroup) {
+	if wg != nil {
+		defer wg.Done()
+	}
 	if root != nil && !(root.Left == nil && root.Right == nil) {
-		flatter(root.Right)
-		flatter(root.Left)
+		var cwg sync.WaitGroup
+		cwg.Add(2)
+		go flatter(root.Right, &cwg)
+		go flatter(root.Left, &cwg)
+		cwg.Wait()
 		if tmp := root.Left; tmp != nil {
 			for ; tmp.Right != nil; tmp = tmp.Right {
 			}
@@ -27,4 +35,8 @@ func flatten(root *TreeNode) {
 			root.Left = nil
 		}
 	}
+}
+
+func flatten(root *TreeNode) {
+	flatter(root, nil)
 }
