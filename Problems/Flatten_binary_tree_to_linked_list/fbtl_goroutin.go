@@ -21,11 +21,16 @@ func flatter(root *TreeNode, wg *sync.WaitGroup) {
 	if wg != nil {
 		defer wg.Done()
 	}
-	if root != nil && !(root.Left == nil && root.Right == nil) {
+	if root != nil {
 		var cwg sync.WaitGroup
-		cwg.Add(2)
-		go flatter(root.Right, &cwg)
-		go flatter(root.Left, &cwg)
+		if root.Right != nil {
+			cwg.Add(1)
+			go flatter(root.Right, &cwg)
+		}
+		if root.Left != nil {
+			cwg.Add(1)
+			go flatter(root.Left, &cwg)
+		}
 		cwg.Wait()
 		if tmp := root.Left; tmp != nil {
 			for ; tmp.Right != nil; tmp = tmp.Right {
