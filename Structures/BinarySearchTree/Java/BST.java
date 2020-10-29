@@ -64,6 +64,27 @@ public class BST{
         return currentNode;
     }
     //delete
+    public void deleteNode(int value){
+        deleteNode(root,null,value);
+    }
+    public void deleteNode(Node currentNode,Node parentNode, int value){
+        if(currentNode==null)return;
+        if(currentNode.value>value)deleteNode(currentNode.left,currentNode, value);
+        else if(currentNode.value<value)deleteNode(currentNode.right,currentNode,value);
+        else{
+            //handles the node with only one or zero child
+            if(currentNode.left==null || currentNode.right==null){
+                Node childNode= currentNode.left==null?currentNode.right:currentNode.left;
+                if(parentNode.left==currentNode)parentNode.left=childNode;
+                else parentNode.right=childNode;
+            }
+
+            //handle the node with 2 children
+            Node successor=findSuccessor(currentNode);
+            currentNode.value=successor.value;
+            deleteNode(currentNode.right, currentNode, successor.value);
+        }
+    }
     //convert list to bst
     //tree traversals
     //presessor 
