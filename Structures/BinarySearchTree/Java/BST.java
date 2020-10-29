@@ -53,7 +53,16 @@ public class BST{
         if(root.value<value)return recursiveInsert(root.right,value);
         else return recursiveInsert(root.left,value);
     }
-
+    public Node findMin(){
+        Node currentNode=root;
+        while(currentNode.left!=null)currentNode=currentNode.left;
+        return currentNode;
+    }
+    public Node findMax(){
+        Node currentNode=root;
+        while(currentNode.right!=null)currentNode=currentNode.right;
+        return currentNode;
+    }
     //delete
     //convert list to bst
     //tree traversals
