@@ -68,4 +68,19 @@ public class BST{
     //tree traversals
     //presessor 
     //successor
+    public Node findSuccessor(Node targetNode){
+        if (targetNode.right!=null) return findMin();
+        int baseValue=targetNode.value;
+        Node currentNode=root;
+        Node successor=new Node(-1);
+        while(currentNode!=null){
+            if(currentNode.value<baseValue)currentNode=currentNode.right;
+            else if(currentNode.value>baseValue){
+                successor=currentNode;
+                currentNode=currentNode.left;
+            }
+            else break;
+        }
+        return successor;
+    }
 }
