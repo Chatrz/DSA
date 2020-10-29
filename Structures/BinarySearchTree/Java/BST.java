@@ -53,12 +53,12 @@ public class BST{
         if(root.value<value)return recursiveInsert(root.right,value);
         else return recursiveInsert(root.left,value);
     }
-    public Node findMin(){
+    public Node findMin(Node root){
         Node currentNode=root;
         while(currentNode.left!=null)currentNode=currentNode.left;
         return currentNode;
     }
-    public Node findMax(){
+    public Node findMax(Node root){
         Node currentNode=root;
         while(currentNode.right!=null)currentNode=currentNode.right;
         return currentNode;
@@ -67,9 +67,24 @@ public class BST{
     //convert list to bst
     //tree traversals
     //presessor 
+    public Node findPredecessor(Node targetNode){
+        if(targetNode.left!=null) return findMax(targetNode.left);
+        int baseValue=targetNode.value;
+        Node currentNode=root;
+        Node predecessor=new Node(-1);
+        while(currentNode!=null){
+            if(currentNode.value>baseValue)currentNode=currentNode.left;
+            else if(currentNode.value<baseValue){
+                predecessor=currentNode;
+                currentNode=currentNode.right;
+            }
+            else break;
+        }
+        return predecessor;
+    }
     //successor
     public Node findSuccessor(Node targetNode){
-        if (targetNode.right!=null) return findMin();
+        if (targetNode.right!=null) return findMin(targetNode.right);
         int baseValue=targetNode.value;
         Node currentNode=root;
         Node successor=new Node(-1);
