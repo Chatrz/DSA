@@ -17,8 +17,8 @@ type TreeNode struct {
 
 func flatten(root *TreeNode) {
 	if root != nil && !(root.Left == nil && root.Right == nil) {
-		flatter(root.Right)
-		flatter(root.Left)
+		flatten(root.Right)
+		flatten(root.Left)
 		if tmp := root.Left; tmp != nil {
 			for ; tmp.Right != nil; tmp = tmp.Right {
 			}
