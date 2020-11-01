@@ -9,11 +9,9 @@ public class BST{
     public BST(Node root){
         this.root=root;
     }
-
-
-
     //search
     public Node search(int value){
+        if(root==null)return null;
         Node currentNode=root;
         while(currentNode!=null){
             if(currentNode.value==value) return currentNode;
@@ -33,6 +31,10 @@ public class BST{
     }
     //insert
     public Node Insert(int value){
+        if(root==null){
+            root=new Node(value);
+            return root;
+        }
         Node currentNode=root;
         while(currentNode!=null){
             if(currentNode.value<value)currentNode=currentNode.right;
@@ -42,6 +44,10 @@ public class BST{
         return currentNode;
     }
     public Node recursiveInsert(int value){
+        if(root==null){
+            root=new Node(value);
+            return root;
+        }
         return recursiveInsert(root,value);
     }
     public Node recursiveInsert(Node root,int value){
@@ -49,9 +55,10 @@ public class BST{
             root=new Node(value);
             return root;
         }
+        if(root.value<value)root.right=recursiveInsert(root.right,value);
+        else root.left=recursiveInsert(root.left,value);
 
-        if(root.value<value)return recursiveInsert(root.right,value);
-        else return recursiveInsert(root.left,value);
+        return root;
     }
     public Node findMin(Node root){
         Node currentNode=root;
@@ -88,8 +95,7 @@ public class BST{
     //convert list to bst
     //tree traversals
     public String preorderTraversal(){
-
-        return preorderTraversal(root).trim();
+        return this.preorderTraversal(root);
     }
     public String preorderTraversal(Node root){
         if(root==null)return "";
