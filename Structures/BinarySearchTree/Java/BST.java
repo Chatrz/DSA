@@ -30,18 +30,18 @@ public class BST{
         else return recursiveSearch(root.left, value);
     }
     //insert
-    public Node Insert(int value){
-        if(root==null){
-            root=new Node(value);
-            return root;
-        }
-        Node currentNode=root;
-        while(currentNode!=null){
-            if(currentNode.value<value)currentNode=currentNode.right;
-            else currentNode=currentNode.left;
-        }
-        currentNode=new Node(value);
-        return currentNode;
+    // public Node Insert(int value){
+    //     if(root==null){
+    //         root=new Node(value);
+    //         return root;
+    //     }
+    //     Node currentNode=root;
+    //     while(currentNode!=null){
+    //         if(currentNode.value<value)currentNode=currentNode.right;
+    //         else currentNode=currentNode.left;
+    //     }
+    //     currentNode=new Node(value);
+    //     return currentNode;
     }
     public Node recursiveInsert(int value){
         if(root==null){
