@@ -87,6 +87,18 @@ public class BST{
     }
     //convert list to bst
     //tree traversals
+    public String preorderTraversal(){
+
+        return preorderTraversal(root).trim();
+    }
+    public String preorderTraversal(Node root){
+        if(root==null)return "";
+        String repr="";
+        repr+=preorderTraversal(root.left);
+        repr+=Integer.toString(root.value)+ " ";
+        repr+=preorderTraversal(root.right);
+        return repr;
+    }
     //presessor 
     public Node findPredecessor(Node targetNode){
         if(targetNode.left!=null) return findMax(targetNode.left);
