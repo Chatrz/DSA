@@ -1,6 +1,9 @@
 package binarysearchtree
 
-import "testing"
+import (
+	"fmt"
+	"testing"
+)
 
 func TestDepth(t *testing.T) {
 	testCases := []struct {
@@ -15,7 +18,7 @@ func TestDepth(t *testing.T) {
 	for _, v := range testCases {
 		bst := NewBST()
 		bst.Insert(v.values...)
-		bst.Print()
+		//bst.Print()
 		if bst.Depth() != v.res {
 			t.Errorf("%v != %v", bst.Depth(), v.res)
 		}
@@ -39,9 +42,69 @@ func TestIsBalanced(t *testing.T) {
 	for _, v := range testCases {
 		bst := NewBST()
 		bst.Insert(v.values...)
-		bst.Print()
+		//bst.Print()
 		if bst.IsBalanced() != v.res {
 			t.Errorf("there is a bug :(")
 		}
 	}
+}
+
+func TestSeccessor(t *testing.T) {
+	tests := []struct {
+		values []int
+		res    map[int]int
+	}{
+		{
+			[]int{20, 8, 22, 4, 12, 10, 14},
+			map[int]int{8: 10, 10: 12, 14: 20},
+		},
+	}
+	for _, test := range tests {
+		bst := NewBST()
+		bst.Insert(test.values...)
+		for k, v := range test.res {
+			node := bst.Search(k)
+			if v != node.Seccessor().Value {
+				t.Errorf("%v != %v", v, node.Seccessor().Value)
+			}
+		}
+	}
+}
+
+func TestPredecessor(t *testing.T) {
+	tests := []struct {
+		values []int
+		res    map[int]int
+	}{
+		{
+			[]int{20, 8, 22, 4, 12, 10, 14},
+			map[int]int{8: 4, 10: 8, 14: 12},
+		},
+	}
+	for _, test := range tests {
+		bst := NewBST()
+		bst.Insert(test.values...)
+		for k, v := range test.res {
+			node := bst.Search(k)
+			if v != node.Predecessor().Value {
+				t.Errorf("%v != %v", v, node.Predecessor().Value)
+			}
+		}
+	}
+}
+
+func TestRemove(t *testing.T) {
+	bst := NewBST()
+	bst.Insert(20, 8, 22, 4, 12, 10, 14)
+	bst.Print()
+	bst.Remove(22)
+	fmt.Println("after 22")
+	bst.Print()
+	bst.Remove(12)
+	fmt.Println("after 12")
+	bst.Print()
+	//fmt.Println("root value is:", bst.Search(20).Value)
+	bst.Remove(20)
+	fmt.Println("after all")
+	//bst.Print()
 }

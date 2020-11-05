@@ -23,12 +23,16 @@ func (n *Node) IsLeaf() bool {
 	return n.left == nil && n.right == nil
 }
 
-func (n *Node) IsParent() bool {
+func (n *Node) IsRoot() bool {
 	return n.parent == nil
 }
 
 func (n *Node) IsSubBalanced() bool {
 	return isBalanced(n)
+}
+
+func (n *Node) Remove() {
+	remove(n)
 }
 
 func (n *Node) Left() *Node {
@@ -52,17 +56,11 @@ func (n *Node) SubMax() *Node {
 }
 
 func (n *Node) Seccessor() *Node {
-	if n.right == nil {
-		return nil
-	}
-	return min(n.right)
+	return seccessor(n)
 }
 
 func (n *Node) Predecessor() *Node {
-	if n.left == nil {
-		return nil
-	}
-	return max(n.left)
+	return preDecessor(n)
 }
 
 func (n *Node) SubDepth() int {
@@ -98,6 +96,11 @@ func (b *BST) Insert(values ...int) {
 		}
 		insert(v, b.root)
 	}
+}
+
+func (b *BST) Remove(key int) {
+	n := search(key, b.root)
+	remove(n)
 }
 
 func (b *BST) Search(key int) *Node {
@@ -137,7 +140,32 @@ func (b *BST) Print() {
 	pprint(b.root, 0)
 }
 
-func insert(value int, parent *Node) {
+func insert(value int, root *Node) {
+	var curr, next *Node
+	next = root
+	for next != nil {
+		curr = next
+		if value > next.Value {
+			next = next.right
+		} else if value < next.Value {
+			next = next.left
+		} else {
+			break
+		}
+	}
+	n := new(Node)
+	n.Value = value
+	if value > curr.Value {
+		curr.right = n
+	} else if value < curr.Value {
+		curr.left = n
+	} else {
+		return
+	}
+	n.parent = curr
+}
+
+/* func rinsert(value int, parent *Node) {
 	if value < parent.Value {
 		if parent.left != nil {
 			insert(value, parent.left)
@@ -158,18 +186,46 @@ func insert(value int, parent *Node) {
 		parent.right = n
 	}
 }
-
+*/
 //todo
-/*
-func remove(key int, root *Node) *Node {
-	node := search(key, root)
-	if node == nil {
-		return nil
-	}
-	if node.IsLeaf() {
 
+func remove(node *Node) {
+	//node := search(key, root)
+	if node == nil {
+		return
 	}
-} */
+	isLeft := node.parent.left == node
+	if node.IsLeaf() {
+		if isLeft {
+			node.parent.left = nil
+		} else {
+			node.parent.right = nil
+		}
+		return
+	}
+	if node.left != nil && node.right == nil {
+		if isLeft {
+			node.parent.left = node.left
+		} else {
+			node.parent.right = node.left
+		}
+		node.left.parent = node.parent
+		return
+	}
+	if node.right != nil && node.left == nil {
+		if isLeft {
+			node.parent.left = node.right
+		} else {
+			node.parent.right = node.right
+		}
+		node.right.parent = node.parent
+		return
+	}
+	s := node.Seccessor()
+	remove(s)
+	node.Value = s.Value
+	return
+}
 
 func search(key int, root *Node) *Node {
 	if root == nil || root.Value == key {
@@ -186,6 +242,32 @@ func min(node *Node) *Node {
 	for ; node.left != nil; node = node.left {
 	}
 	return node
+}
+
+func seccessor(node *Node) *Node {
+	if node.right != nil {
+		return min(node.right)
+	}
+	if node.IsRoot() {
+		return nil
+	}
+	curr := node.parent
+	for ; curr != nil && curr.Value < node.Value; curr = curr.parent {
+	}
+	return curr
+}
+
+func preDecessor(node *Node) *Node {
+	if node.left != nil {
+		return max(node.left)
+	}
+	if node.IsRoot() {
+		return nil
+	}
+	curr := node.parent
+	for ; curr != nil && curr.Value > node.Value; curr = curr.parent {
+	}
+	return curr
 }
 
 func max(node *Node) *Node {
