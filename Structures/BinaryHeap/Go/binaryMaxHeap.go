@@ -11,6 +11,10 @@ type MaxHeap struct {
 	maxCapacity int
 }
 
+type arrHolder struct {
+	arr []int
+}
+
 func NewMaxHeap(capacity int) *MaxHeap {
 	heap := &MaxHeap{
 		arr:         make([]int, capacity),
@@ -18,6 +22,45 @@ func NewMaxHeap(capacity int) *MaxHeap {
 		maxCapacity: capacity,
 	}
 	return heap
+}
+
+func (heap *MaxHeap) maxHeapify(n int, root int) {
+	l := left(root)
+	r := right(root)
+	largest := root
+	if l < n && heap.arr[l] > heap.arr[root] {
+		largest = l
+	}
+	if r < n && heap.arr[r] > heap.arr[largest] {
+		largest = r
+	}
+	if largest != root {
+		heap.exchange(root, largest)
+		heap.maxHeapify(n, largest)
+	}
+}
+
+func buildHeap(arr []int,capacity int) *MaxHeap{
+  heap := &MaxHeap{arr: arr, size: len(arr), maxCapacity: capacity}
+  n := heap.size
+  // Build heap (rearrange array)
+  for i := n/2 - 1; i >= 0; i-- {
+    heap.maxHeapify(n, i)
+  }
+  return heap
+}
+
+func heapSort(arr []int, capacity int) []int {
+	heap := buildHeap(arr,capacity)
+  n:=heap.size
+	// One by one extract an element from heap
+	for i := n - 1; i > 0; i-- {
+		// Move current root to end
+		heap.exchange(0, i)
+		// call max heapify on the reduced heap
+		heap.maxHeapify(i, 0)
+	}
+	return heap.arr
 }
 
 func parent(index int) int {
@@ -75,4 +118,10 @@ func main() {
 	heap.Insert(0)
 	heap.Insert(87)
 	heap.printHeap()
+	fmt.Println("maxheapify array : ")
+	array := []int{12, 11, 13, 5, 6, 7}
+	array = heapSort(array , 10)
+  fmt.Println(array)
+  newHeap :=buildHeap(array,10)
+  newHeap.printHeap()
 }
