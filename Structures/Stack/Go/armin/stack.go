@@ -1,3 +1,9 @@
+////////////////////////////////
+//    Author : Armin Goodarzi //
+//    GitHub :                //
+//      github.com/Armingodiz //
+//                            //
+////////////////////////////////
 package stack
 
 import "fmt"

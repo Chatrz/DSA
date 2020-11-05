@@ -3,9 +3,6 @@
 //    GitHub :                //
 //      github.com/Armingodiz //
 //                            //
-//                            //
-//                            //
-//                            //
 ////////////////////////////////
 package maxHeap
 

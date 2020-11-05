@@ -1,3 +1,10 @@
+////////////////////////////////
+//    Author : Armin Goodarzi //
+//    GitHub :                //
+//      github.com/Armingodiz //
+//                            //
+////////////////////////////////
+
 package linkedList
 
 import (
