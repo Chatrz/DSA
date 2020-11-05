@@ -1,4 +1,13 @@
-package main
+////////////////////////////////
+//    Author : Armin Goodarzi //
+//    GitHub :                //
+//      github.com/Armingodiz //
+//                            //
+//                            //
+//                            //
+//                            //
+////////////////////////////////
+package maxHeap
 
 import (
 	"errors"
@@ -9,10 +18,6 @@ type MaxHeap struct {
 	arr         []int
 	size        int
 	maxCapacity int
-}
-
-type arrHolder struct {
-	arr []int
 }
 
 func NewMaxHeap(capacity int) *MaxHeap {
@@ -40,19 +45,19 @@ func (heap *MaxHeap) maxHeapify(n int, root int) {
 	}
 }
 
-func buildHeap(arr []int,capacity int) *MaxHeap{
-  heap := &MaxHeap{arr: arr, size: len(arr), maxCapacity: capacity}
-  n := heap.size
-  // Build heap (rearrange array)
-  for i := n/2 - 1; i >= 0; i-- {
-    heap.maxHeapify(n, i)
-  }
-  return heap
+func buildHeap(arr []int, capacity int) *MaxHeap {
+	heap := &MaxHeap{arr: arr, size: len(arr), maxCapacity: capacity}
+	n := heap.size
+	// Build heap (rearrange array)
+	for i := n/2 - 1; i >= 0; i-- {
+		heap.maxHeapify(n, i)
+	}
+	return heap
 }
 
 func heapSort(arr []int, capacity int) []int {
-	heap := buildHeap(arr,capacity)
-  n:=heap.size
+	heap := buildHeap(arr, capacity)
+	n := heap.size
 	// One by one extract an element from heap
 	for i := n - 1; i > 0; i-- {
 		// Move current root to end
@@ -75,6 +80,10 @@ func right(index int) int {
 	return 2*index + 2
 }
 
+func (heap *MaxHeap) GetMax() int {
+	return heap.arr[0]
+}
+
 func (maxHeap *MaxHeap) Insert(key int) error {
 	if maxHeap.size >= maxHeap.maxCapacity {
 		return errors.New("heap is full !")
@@ -92,6 +101,27 @@ func (maxHeap *MaxHeap) Insert(key int) error {
 	return nil
 }
 
+func (heap *MaxHeap) IncreaseKey(index, newKey int) {
+	heap.arr[index] = newKey
+	for index != 0 && heap.arr[index] > heap.arr[parent(index)] {
+		heap.exchange(index, parent(index))
+		index = parent(index)
+	}
+}
+
+func (heap *MaxHeap) ExtractMax() int {
+	tmp := heap.arr[0]
+	heap.arr[0] = heap.arr[heap.size-1]
+	heap.size -= 1
+	heap.maxHeapify(heap.size, 0)
+	return tmp
+}
+
+func (heap *MaxHeap) DeleteKey(index int){
+  heap.IncreaseKey(index , heap.GetMax())
+  heap.ExtractMax()
+}
+
 func (maxHeap *MaxHeap) exchange(index1, index2 int) {
 	tmp := maxHeap.arr[index1]
 	maxHeap.arr[index1] = maxHeap.arr[index2]
@@ -107,7 +137,8 @@ func (maxHeap *MaxHeap) printHeap() {
 	fmt.Println()
 }
 
-func main() {
+/*
+  func main() {
 	heap := NewMaxHeap(10)
 	heap.Insert(1)
 	heap.Insert(3)
@@ -118,10 +149,18 @@ func main() {
 	heap.Insert(0)
 	heap.Insert(87)
 	heap.printHeap()
-	fmt.Println("maxheapify array : ")
+  fmt.Println("&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&7")
+  heap.DeleteKey(6)
+  heap.printHeap()
+  heap.DeleteKey(0)
+  heap.printHeap()
+  heap.DeleteKey(1)
+  heap.printHeap()
+  fmt.Println("&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&7")
 	array := []int{12, 11, 13, 5, 6, 7}
-	array = heapSort(array , 10)
-  fmt.Println(array)
-  newHeap :=buildHeap(array,10)
-  newHeap.printHeap()
+	array = heapSort(array, 10)
+	fmt.Println(array)
+	newHeap := buildHeap(array, 10)
+	newHeap.printHeap()
 }
+*/
