@@ -1,3 +1,3 @@
-module github.com/sinamna/DSA_Trainings
+module github.com/sinamna/DSA
 
 go 1.15

@@ -11,7 +11,7 @@ package main
 import (
 	"fmt"
 
-	queue "github.com/sinamna/DSA_Trainings/Structures/Queue/Go"
+	queue "github.com/sinamna/DSA/Structures/Queue/Go"
 )
 
 func main() {
