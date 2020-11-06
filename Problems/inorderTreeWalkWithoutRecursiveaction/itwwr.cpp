@@ -1,3 +1,11 @@
+/*
+ * +------------------------------------+
+ * | Author:        hadi abbasi	        |
+ * |                                    |
+ * | Link:          github.com/hawwwdi  |
+ * +------------------------------------+
+ */
+
 #include <iostream>
 #include <stack>
 using namespace std;

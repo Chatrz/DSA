@@ -1,3 +1,11 @@
+/*
+ * +------------------------------------+
+ * | Author:        hadi abbasi	        |
+ * |                                    |
+ * | Link:          github.com/hawwwdi  |
+ * +------------------------------------+
+ */
+
 package q2s
 
 import stack "github.com/sinamna/DSA/Structures/Stack/Go/hadi"
