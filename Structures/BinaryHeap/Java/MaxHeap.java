@@ -1,10 +1,12 @@
 public class MaxHeap {
     private int[] heapArr;
     private int lastEl;
+    // private final int MAX_SIZE;
     public MaxHeap(){
         //creating a heap with maximum size 25
         heapArr=new int[25];
-        lastEl=0;
+        // MAX_SIZE=25;
+        lastEl=-1;
     }
     public MaxHeap(int[] heapArr){
         this.heapArr=heapArr;
@@ -33,7 +35,16 @@ public class MaxHeap {
             maxHeapify(maxEl);
         }
     }
-    //insert 
+    //insert
+    public void insert(int key){
+        //assuming we are inserting in the 25-sized heap
+        if(lastEl>=24){
+            System.out.println("heap overloaded");
+            return;
+        }
+        heapArr[++lastEl]=Integer.MIN_VALUE;
+        increaseKey(lastEl, key);
+    } 
     //delete 
     //heap sort;
     //extract max 
