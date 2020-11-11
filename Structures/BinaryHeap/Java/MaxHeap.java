@@ -13,7 +13,6 @@ public class MaxHeap {
     }
     // create heap from unsorted array
     public void buildMaxHeap(){
-        System.out.println(lastEl);
         for (int i=(int)Math.floor((lastEl-1)/2);i>=0;i--){//watch out for the 0-index based
             maxHeapify(i);
         }
@@ -38,12 +37,21 @@ public class MaxHeap {
     //delete 
     //heap sort;
     //extract max 
+    public int extractMax(){
+        if (lastEl<0)
+            System.out.println("heap is empty");
+        int max=heapArr[0];
+        heapArr[0]=heapArr[lastEl--];
+        maxHeapify(0);
+        return max;
+    }
     //increase key;
     //print heap
     //print array
     public void printArr(){
-        for(int el:heapArr){
-            System.out.print(el+" ");
+        for(int i=0;i<=lastEl;i++){
+            System.out.print(heapArr[i]+ " ");
         }
+        System.out.println();
     }
 }
