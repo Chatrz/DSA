@@ -1,11 +1,9 @@
 public class MaxHeap {
     private int[] heapArr;
     private int lastEl;
-    // private final int MAX_SIZE;
     public MaxHeap(){
         //creating a heap with maximum size 25
         heapArr=new int[25];
-        // MAX_SIZE=25;
         lastEl=-1;
     }
     public MaxHeap(int[] heapArr){
@@ -16,11 +14,11 @@ public class MaxHeap {
     // create heap from unsorted array
     public void buildMaxHeap(){
         for (int i=(int)Math.floor((lastEl-1)/2);i>=0;i--){//watch out for the 0-index based
-            maxHeapify(i);
+            maxHeapify(i,lastEl);
         }
     }
     //heapify
-    private void maxHeapify(int index){
+    private void maxHeapify(int index,int lastEl){
         int leftEl=index*2+1;//in 0-indexed array the left element is in 2*i+
         int rightEl=index*2+2;
         int maxEl=index;
@@ -32,7 +30,7 @@ public class MaxHeap {
             int temp =heapArr[index];
             heapArr[index]=heapArr[maxEl];
             heapArr[maxEl]=temp;
-            maxHeapify(maxEl);
+            maxHeapify(maxEl,lastEl);
         }
     }
     //insert
@@ -45,15 +43,22 @@ public class MaxHeap {
         heapArr[++lastEl]=Integer.MIN_VALUE;
         increaseKey(lastEl, key);
     } 
-    //delete 
     //heap sort;
+    public void sort(){
+        for(int i=lastEl;i>=1;i--){
+            int temp=heapArr[0];
+            heapArr[0]=heapArr[i];
+            heapArr[i]=temp;
+            maxHeapify(0, i-1);
+        }
+    }
     //extract max 
     public int extractMax(){
         if (lastEl<0)
             System.out.println("heap is empty");
         int max=heapArr[0];
         heapArr[0]=heapArr[lastEl--];
-        maxHeapify(0);
+        maxHeapify(0,lastEl);
         return max;
     }
     //increase key;
