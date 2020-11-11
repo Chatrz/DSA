@@ -46,6 +46,21 @@ public class MaxHeap {
         return max;
     }
     //increase key;
+    public void increaseKey(int index, int key){
+        if(heapArr[index]>key){
+            System.out.println("new key is smaller than the previous key.");
+            return;
+        }
+        heapArr[index]=key;
+        int parent=(int)Math.floor((index-1)/2);
+        while (index>=0 && heapArr[parent]<heapArr[index]){
+            int temp =heapArr[parent];
+            heapArr[parent]=heapArr[index];
+            heapArr[index]=temp;
+            index=parent;
+            parent=(int)Math.floor((index-1)/2);
+        }
+    }
     //print heap
     //print array
     public void printArr(){
