@@ -14,16 +14,16 @@ import (
 
 type Color int
 
-const(
-  Black Color = iota
-  Red
+const (
+	Black Color = iota
+	Red
 )
 
 type Node struct {
 	Parent *Node
 	Left   *Node
 	Right  *Node
-  color Color
+	color  Color
 	key    int
 }
 
@@ -31,8 +31,14 @@ type Tree struct {
 	Root *Node
 }
 
-type TreePicture struct {
-	pic string
+func CreateNode(key int) *Node {
+	return &Node{
+		Parent: nil,
+		Left:   nil,
+		Right:  nil,
+		color:  Red,
+		key:    key,
+	}
 }
 
 func CreateTree() *Tree {
@@ -42,13 +48,87 @@ func CreateTree() *Tree {
 	return tree
 }
 
-func (tree *Tree) Insert(data int) {
-	newNode := &Node{
-		Parent: nil,
-		Left:   nil,
-		Right:  nil,
-		key:    data,
+func (node *Node) Search(key int) *Node {
+	if node == nil {
+		fmt.Println("KEY DOES NOT EXIST !")
+		return nil
 	}
+	if node.key == key {
+		return node
+	}
+	if key > node.key {
+		return node.Right.Search(key)
+	} else {
+		return node.Left.Search(key)
+	}
+}
+
+func (node *Node) IsLeaf() bool {
+	if node.Right == nil && node.Left == nil {
+		return true
+	}
+	return false
+}
+
+func (node *Node) IsRightChild() bool {
+	if node.key > node.Parent.key {
+		return true
+	}
+	return false
+}
+
+func (node *Node) getUncle() *Node {
+	if node.Parent.IsRightChild() {
+		return node.Parent.Parent.Left
+	}
+	return node.Parent.Parent.Right
+}
+
+func (node *Node) getGrandParent() *Node {
+	return node.Parent.Parent
+}
+
+func (tree *Tree) Rotate_right(node *Node) {
+	// setting targetNode.right as node.left
+	// node as and targetNode.right
+	targetNode := node.Left
+	node.Left = targetNode.Right
+	node.Left.Parent = node
+	targetNode.Right = node
+	// setting targetNode.parent
+	if node == tree.Root { //node was the root of the tree
+		tree.Root = targetNode
+		targetNode.Parent = nil
+	} else {
+		targetNode.Parent = node.Parent
+		if node.IsRightChild() {
+			node.Parent.Right = targetNode
+		} else {
+			node.Parent.Left = targetNode
+		}
+	}
+	// setting targetNode as node's parent
+	node.Parent = targetNode
+}
+
+func main() {
+	tree := CreateTree()
+	tree.Insert(5)
+	tree.Insert(3)
+	tree.Insert(4)
+	tree.Insert(7)
+	fmt.Println("before right rotation :")
+	tree.DisplayTree()
+	fmt.Println("After right rotation :")
+	tree.Rotate_right(tree.Root)
+	tree.DisplayTree()
+}
+
+////////////////////////////////////////////////////////////////// TODOs :
+//TODO implement insertion
+
+func (tree *Tree) Insert(data int) {
+	newNode := CreateNode(data)
 	if tree.Root == nil {
 		tree.Root = newNode
 	} else {
@@ -74,19 +154,11 @@ func (tree *Tree) Insert(data int) {
 	}
 }
 
-func (node *Node) Search(key int) *Node {
-	if node == nil {
-		fmt.Println("KEY DOES NOT EXIST !")
-		return nil
-	}
-	if node.key == key {
-		return node
-	}
-	if key > node.key {
-		return node.Right.Search(key)
-	} else {
-		return node.Left.Search(key)
-	}
+//TODO: implement deletion
+
+/////////////////////////////////////////////////////////////////// displaying tree :
+type TreePicture struct {
+	pic string
 }
 
 func GetTreePic(res *TreePicture, padding string, pointer string, node *Node) {
@@ -111,21 +183,8 @@ func GetTreePic(res *TreePicture, padding string, pointer string, node *Node) {
 	}
 }
 
-func (tree *Tree)DisplayTree()  {
+func (tree *Tree) DisplayTree() {
 	pic := &TreePicture{pic: ""}
 	GetTreePic(pic, "", "", tree.Root)
 	fmt.Println(pic.pic)
-}
-
-func (node *Node) IsLeaf() bool {
-	if node.Right == nil && node.Left == nil {
-		return true
-	}
-	return false
-}
-func (node *Node) IsRightChild() bool {
-	if node.key > node.Parent.key {
-		return true
-	}
-	return false
 }
