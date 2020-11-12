@@ -1,5 +1,12 @@
 package MaxHeapify
 
+func ToMaxHeap(arr []int) {
+	size := len(arr)
+	for i := (size - 1) / 2; i >= 0; i-- {
+		MaxHeapify(arr, i)
+	}
+}
+
 func MaxHeapify(heap []int, root int) {
 	size := len(heap)
 	left := left(root)
@@ -15,7 +22,6 @@ func MaxHeapify(heap []int, root int) {
 		heap[root], heap[largest] = heap[largest], heap[root]
 		MaxHeapify(heap, largest)
 	}
-
 }
 
 func left(i int) int {
