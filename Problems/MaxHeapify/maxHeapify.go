@@ -7,6 +7,14 @@ func ToMaxHeap(arr []int) {
 	}
 }
 
+func HeapExtractMax(heap []int) (int, []int) {
+	size := len(heap)
+	key := heap[0]
+	heap[0], heap[size-1] = heap[size-1], heap[0]
+	MaxHeapify(heap[:size-1], 0)
+	return key, heap[:size-1]
+}
+
 func MaxHeapify(heap []int, root int) {
 	size := len(heap)
 	left := left(root)
@@ -30,4 +38,8 @@ func left(i int) int {
 
 func right(i int) int {
 	return 2*i + 2
+}
+
+func parent(i int) int {
+	return (i - 1) / 2
 }
