@@ -1,6 +1,13 @@
+/*
+ * +------------------------------------+
+ * | Author:        hadi abbasi	        |
+ * |                                    |
+ * | Link:          github.com/hawwwdi  |
+ * +------------------------------------+
+ */
 package heapsort
 
-import maxheap "github.com/sinamna/DSA/Problems/MaxHeapify"
+import maxheap "github.com/sinamna/DSA/Structures/BinaryHeap/Go/maxHeapify/MaxHeapify"
 
 func Sort(arr []int) {
 	maxheap.ToMaxHeap(arr)

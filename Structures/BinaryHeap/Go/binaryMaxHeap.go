@@ -114,9 +114,9 @@ func (heap *MaxHeap) ExtractMax() int {
 	return tmp
 }
 
-func (heap *MaxHeap) DeleteKey(index int){
-  heap.IncreaseKey(index , heap.GetMax())
-  heap.ExtractMax()
+func (heap *MaxHeap) DeleteKey(index int) {
+	heap.IncreaseKey(index, heap.GetMax())
+	heap.ExtractMax()
 }
 
 func (maxHeap *MaxHeap) exchange(index1, index2 int) {

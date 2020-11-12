@@ -1,3 +1,10 @@
+/*
+ * +------------------------------------+
+ * | Author:        hadi abbasi	        |
+ * |                                    |
+ * | Link:          github.com/hawwwdi  |
+ * +------------------------------------+
+ */
 package maxheap
 
 import "errors"
