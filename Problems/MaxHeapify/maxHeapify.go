@@ -28,6 +28,12 @@ func HeapIncreaseKey(heap []int, key, index int) error {
 	return nil
 }
 
+func MaxHeapInsert(heap []int, key int) []int {
+	heap = append(heap, key)
+	HeapIncreaseKey(heap, key, len(heap)-1)
+	return heap
+}
+
 func MaxHeapify(heap []int, root int) {
 	size := len(heap)
 	left := left(root)
