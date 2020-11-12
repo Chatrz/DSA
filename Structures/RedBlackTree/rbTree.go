@@ -95,6 +95,20 @@ func (tree *Tree) Rotate_right(node *Node) {
 	node.Left = targetNode.Right
 	node.Left.Parent = node
 	targetNode.Right = node
+	setParrentsAfterRotation(tree, node, targetNode)
+}
+
+func (tree *Tree) Rotate_left(node *Node) {
+	// setting targetNode.Left as node.Right
+	// and setting node as targetNode.Left
+	targetNode := node.Right
+	node.Right = targetNode.Left
+	node.Right.Parent = targetNode
+	targetNode.Left = node
+	setParrentsAfterRotation(tree, node, targetNode)
+}
+
+func setParrentsAfterRotation(tree *Tree, node, targetNode *Node) {
 	// setting targetNode.parent
 	if node == tree.Root { //node was the root of the tree
 		tree.Root = targetNode
@@ -122,6 +136,9 @@ func main() {
 	fmt.Println("After right rotation :")
 	tree.Rotate_right(tree.Root)
 	tree.DisplayTree()
+  fmt.Println("After left rotation :")
+  tree.Rotate_left(tree.Root)
+  tree.DisplayTree()
 }
 
 ////////////////////////////////////////////////////////////////// TODOs :
