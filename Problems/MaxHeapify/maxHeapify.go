@@ -1,5 +1,7 @@
 package maxheap
 
+import "errors"
+
 func ToMaxHeap(arr []int) {
 	size := len(arr)
 	for i := (size - 1) / 2; i >= 0; i-- {
@@ -13,6 +15,17 @@ func HeapExtractMax(heap []int) (int, []int) {
 	heap[0], heap[size-1] = heap[size-1], heap[0]
 	MaxHeapify(heap[:size-1], 0)
 	return key, heap[:size-1]
+}
+
+func HeapIncreaseKey(heap []int, key, index int) error {
+	if heap[index] > key {
+		return errors.New("new key is smaller than current key")
+	}
+	heap[index] = key
+	for i := index; i > 0 && heap[i] > heap[parent(i)]; i = parent(i) {
+		heap[parent(i)], heap[i] = heap[i], heap[parent(i)]
+	}
+	return nil
 }
 
 func MaxHeapify(heap []int, root int) {
