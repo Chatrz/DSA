@@ -1,4 +1,4 @@
-package MaxHeapify
+package maxheap
 
 import "testing"
 

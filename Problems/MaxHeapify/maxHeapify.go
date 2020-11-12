@@ -1,4 +1,4 @@
-package MaxHeapify
+package maxheap
 
 func ToMaxHeap(arr []int) {
 	size := len(arr)
