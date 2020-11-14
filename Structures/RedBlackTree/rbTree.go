@@ -13,6 +13,8 @@ import (
 	"strconv"
 )
 
+///////////////////////////////////////// types :
+
 type ColorNode int
 
 const (
@@ -33,6 +35,14 @@ type Tree struct {
 	dummy *Node
 }
 
+type TreePicture struct {
+	pic string
+}
+
+//////////////////////////////////////////////
+
+/////////////////////////////////////// create funcs :
+
 func (tree *Tree) CreateNode(key int) *Node {
 	return &Node{
 		Parent: nil,
@@ -52,6 +62,25 @@ func CreateTree() *Tree {
 	tree.dummy.Color = Black
 	return tree
 }
+
+/////////////////////////////////////////////
+
+////////////////////////////////////////////////////////// getter funcs :
+
+func (node *Node) getUncle() *Node {
+	if node.Parent.IsRightChild() {
+		return node.Parent.Parent.Left
+	}
+	return node.Parent.Parent.Right
+}
+
+func (node *Node) getGrandParent() *Node {
+	return node.Parent.Parent
+}
+
+/////////////////////////////////////////////////////////////////////////
+
+///////////////////////////////////////////////////////////// other funcs :
 
 func (node *Node) Search(tree *Tree, key int) *Node {
 	if node == tree.dummy {
@@ -75,16 +104,9 @@ func (node *Node) IsRightChild() bool {
 	return false
 }
 
-func (node *Node) getUncle() *Node {
-	if node.Parent.IsRightChild() {
-		return node.Parent.Parent.Left
-	}
-	return node.Parent.Parent.Right
-}
+/////////////////////////////////////////////////////////////////////////
 
-func (node *Node) getGrandParent() *Node {
-	return node.Parent.Parent
-}
+//////////////////////////////////////////////////// Rotations funcs :
 
 func (tree *Tree) Rotate_right(node *Node) {
 	// setting targetNode.right as node.left
@@ -123,47 +145,9 @@ func setParrentsAfterRotation(tree *Tree, node, targetNode *Node) {
 	node.Parent = targetNode
 }
 
-func main() {
-	tree := CreateTree()
-	tree.Insert(10)
-	tree.DisplayTree()
-	fmt.Println("######################################")
-	tree.Insert(18)
-	tree.DisplayTree()
-	fmt.Println("######################################")
-	tree.Insert(7)
-	tree.DisplayTree()
-	fmt.Println("######################################")
-	tree.Insert(15)
-	tree.DisplayTree()
-	fmt.Println("######################################")
-	tree.Insert(16)
-	tree.DisplayTree()
-	fmt.Println("######################################")
-	tree.Insert(30)
-	tree.DisplayTree()
-	fmt.Println("######################################")
-	tree.Insert(25)
-	tree.DisplayTree()
-	fmt.Println("######################################")
-	tree.Insert(40)
-	tree.DisplayTree()
-	fmt.Println("######################################")
-	tree.Insert(60)
-	tree.DisplayTree()
-	fmt.Println("######################################")
-	tree.Insert(2)
-	tree.DisplayTree()
-	fmt.Println("######################################")
-	tree.Insert(1)
-	tree.DisplayTree()
-	fmt.Println("######################################")
-	tree.Insert(70)
-	tree.DisplayTree()
-	fmt.Println("######################################")
-}
+////////////////////////////////////////////////////////////////
 
-////////////////////////////////////////////////////////////////// TODOs :
+////////////////////////////////////////////////////////////// insertion :
 
 func (tree *Tree) Insert(data int) {
 	newNode := tree.CreateNode(data)
@@ -231,12 +215,12 @@ func (tree *Tree) fixRbViolations(node *Node) {
 	tree.Root.Color = Black
 }
 
+/////////////////////////////////////////////////////////////////////////////
+
+////////////////////////////////////////////////////////////////// TODOs :
 //TODO: implement deletion
 
 /////////////////////////////////////////////////////////////////// displaying tree :
-type TreePicture struct {
-	pic string
-}
 
 func GetTreePic(tree *Tree, res *TreePicture, padding string, pointer string, node *Node) {
 	if node != tree.dummy {
@@ -269,4 +253,47 @@ func (tree *Tree) DisplayTree() {
 	pic := &TreePicture{pic: ""}
 	GetTreePic(tree, pic, "", "", tree.Root)
 	fmt.Println(pic.pic)
+}
+
+/////////////////////////////////////////////////////////////////////////////////
+
+///////////////////////////////////////////////////////// testing implemention :
+func main() {
+	tree := CreateTree()
+	tree.Insert(10)
+	tree.DisplayTree()
+	fmt.Println("######################################")
+	tree.Insert(18)
+	tree.DisplayTree()
+	fmt.Println("######################################")
+	tree.Insert(7)
+	tree.DisplayTree()
+	fmt.Println("######################################")
+	tree.Insert(15)
+	tree.DisplayTree()
+	fmt.Println("######################################")
+	tree.Insert(16)
+	tree.DisplayTree()
+	fmt.Println("######################################")
+	tree.Insert(30)
+	tree.DisplayTree()
+	fmt.Println("######################################")
+	tree.Insert(25)
+	tree.DisplayTree()
+	fmt.Println("######################################")
+	tree.Insert(40)
+	tree.DisplayTree()
+	fmt.Println("######################################")
+	tree.Insert(60)
+	tree.DisplayTree()
+	fmt.Println("######################################")
+	tree.Insert(2)
+	tree.DisplayTree()
+	fmt.Println("######################################")
+	tree.Insert(1)
+	tree.DisplayTree()
+	fmt.Println("######################################")
+	tree.Insert(70)
+	tree.DisplayTree()
+	fmt.Println("######################################")
 }
