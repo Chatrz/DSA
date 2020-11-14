@@ -9,13 +9,14 @@ package main
 
 import (
 	"fmt"
+	"github.com/fatih/color"
 	"strconv"
 )
 
-type Color int
+type ColorNode int
 
 const (
-	Black Color = iota
+	Black ColorNode = iota
 	Red
 )
 
@@ -23,33 +24,37 @@ type Node struct {
 	Parent *Node
 	Left   *Node
 	Right  *Node
-	color  Color
+	Color  ColorNode
 	key    int
 }
 
 type Tree struct {
-	Root *Node
+	Root  *Node
+	dummy *Node
 }
 
-func CreateNode(key int) *Node {
+func (tree *Tree) CreateNode(key int) *Node {
 	return &Node{
 		Parent: nil,
-		Left:   nil,
-		Right:  nil,
-		color:  Red,
+		Left:   tree.dummy,
+		Right:  tree.dummy,
+		Color:  Red,
 		key:    key,
 	}
 }
 
 func CreateTree() *Tree {
 	tree := &Tree{
-		Root: nil,
+		Root:  nil,
+		dummy: nil,
 	}
+	tree.dummy = tree.CreateNode(-1234)
+	tree.dummy.Color = Black
 	return tree
 }
 
-func (node *Node) Search(key int) *Node {
-	if node == nil {
+func (node *Node) Search(tree *Tree, key int) *Node {
+	if node == tree.dummy {
 		fmt.Println("KEY DOES NOT EXIST !")
 		return nil
 	}
@@ -57,17 +62,10 @@ func (node *Node) Search(key int) *Node {
 		return node
 	}
 	if key > node.key {
-		return node.Right.Search(key)
+		return node.Right.Search(tree, key)
 	} else {
-		return node.Left.Search(key)
+		return node.Left.Search(tree, key)
 	}
-}
-
-func (node *Node) IsLeaf() bool {
-	if node.Right == nil && node.Left == nil {
-		return true
-	}
-	return false
 }
 
 func (node *Node) IsRightChild() bool {
@@ -127,48 +125,110 @@ func setParrentsAfterRotation(tree *Tree, node, targetNode *Node) {
 
 func main() {
 	tree := CreateTree()
-	tree.Insert(5)
-	tree.Insert(3)
-	tree.Insert(4)
+	tree.Insert(10)
+	tree.DisplayTree()
+	fmt.Println("######################################")
+	tree.Insert(18)
+	tree.DisplayTree()
+	fmt.Println("######################################")
 	tree.Insert(7)
-	fmt.Println("before right rotation :")
 	tree.DisplayTree()
-	fmt.Println("After right rotation :")
-	tree.Rotate_right(tree.Root)
+	fmt.Println("######################################")
+	tree.Insert(15)
 	tree.DisplayTree()
-  fmt.Println("After left rotation :")
-  tree.Rotate_left(tree.Root)
-  tree.DisplayTree()
+	fmt.Println("######################################")
+	tree.Insert(16)
+	tree.DisplayTree()
+	fmt.Println("######################################")
+	tree.Insert(30)
+	tree.DisplayTree()
+	fmt.Println("######################################")
+	tree.Insert(25)
+	tree.DisplayTree()
+	fmt.Println("######################################")
+	tree.Insert(40)
+	tree.DisplayTree()
+	fmt.Println("######################################")
+	tree.Insert(60)
+	tree.DisplayTree()
+	fmt.Println("######################################")
+	tree.Insert(2)
+	tree.DisplayTree()
+	fmt.Println("######################################")
+	tree.Insert(1)
+	tree.DisplayTree()
+	fmt.Println("######################################")
+	tree.Insert(70)
+	tree.DisplayTree()
+	fmt.Println("######################################")
 }
 
 ////////////////////////////////////////////////////////////////// TODOs :
-//TODO implement insertion
 
 func (tree *Tree) Insert(data int) {
-	newNode := CreateNode(data)
+	newNode := tree.CreateNode(data)
 	if tree.Root == nil {
 		tree.Root = newNode
+		tree.Root.Color = Black
 	} else {
 		tmp := tree.Root
 		for {
 			holder := tmp
 			if data > tmp.key {
 				tmp = tmp.Right
-				if tmp == nil {
+				if tmp == tree.dummy {
 					holder.Right = newNode
 					newNode.Parent = holder
 					break
 				}
 			} else {
 				tmp = tmp.Left
-				if tmp == nil {
+				if tmp == tree.dummy {
 					holder.Left = newNode
 					newNode.Parent = holder
 					break
 				}
 			}
 		}
+		tree.fixRbViolations(newNode)
 	}
+}
+
+func (tree *Tree) fixRbViolations(node *Node) {
+	for node != tree.Root && node.Color == Red && node.Parent.Color == Red {
+		if !node.Parent.IsRightChild() { // for LL and LR cases :
+			if node.getUncle() != nil && node.getUncle().Color == Red { // case L.1 :
+				node.Parent.Color = Black
+				node.getUncle().Color = Black
+				node.getGrandParent().Color = Red
+				node = node.getGrandParent()
+			} else { // case L.2 & L.3
+				if node.IsRightChild() { // case L.2 = LR
+					node = node.Parent
+					tree.Rotate_left(node)
+				} //case L.3 = LL :
+				node.Parent.Color = Black
+				node.getGrandParent().Color = Red
+				tree.Rotate_right(node.getGrandParent())
+			}
+		} else { // for RR and RL cases :
+			if node.getUncle() != nil && node.getUncle().Color == Red { // case R.1 :
+				node.Parent.Color = Black
+				node.getUncle().Color = Black
+				node.getGrandParent().Color = Red
+				node = node.getGrandParent()
+			} else { // case R.2 & R.3
+				if !node.IsRightChild() { // case R.2 = RL
+					node = node.Parent
+					tree.Rotate_right(node)
+				} //case R.3 = RR :
+				node.Parent.Color = Black
+				node.getGrandParent().Color = Red
+				tree.Rotate_left(node.getGrandParent())
+			}
+		}
+	}
+	tree.Root.Color = Black
 }
 
 //TODO: implement deletion
@@ -178,11 +238,16 @@ type TreePicture struct {
 	pic string
 }
 
-func GetTreePic(res *TreePicture, padding string, pointer string, node *Node) {
-	if node != nil {
+func GetTreePic(tree *Tree, res *TreePicture, padding string, pointer string, node *Node) {
+	if node != tree.dummy {
 		res.pic = res.pic + padding
 		res.pic = res.pic + pointer
-		res.pic = res.pic + strconv.Itoa(node.key)
+		key := strconv.Itoa(node.key)
+		if node.Color == Red {
+			red := color.New(color.FgRed).SprintFunc()
+			key = red(key)
+		}
+		res.pic = res.pic + key
 		res.pic = res.pic + "\n"
 
 		paddingBuilder := padding + "│  "
@@ -195,13 +260,13 @@ func GetTreePic(res *TreePicture, padding string, pointer string, node *Node) {
 			pointerForLeft = "└──"
 		}
 
-		GetTreePic(res, paddingForBoth, pointerForLeft, node.Left)
-		GetTreePic(res, paddingForBoth, pointerForRight, node.Right)
+		GetTreePic(tree, res, paddingForBoth, pointerForLeft, node.Left)
+		GetTreePic(tree, res, paddingForBoth, pointerForRight, node.Right)
 	}
 }
 
 func (tree *Tree) DisplayTree() {
 	pic := &TreePicture{pic: ""}
-	GetTreePic(pic, "", "", tree.Root)
+	GetTreePic(tree, pic, "", "", tree.Root)
 	fmt.Println(pic.pic)
 }
