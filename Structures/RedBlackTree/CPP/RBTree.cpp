@@ -1,21 +1,43 @@
 #include <iostream>
 using namespace std;
+enum Color {red,black};
 class Node{
     public :
     Node* parent;
     Node* left;
     Node* right;
+    Color color;
     int key;
-    Node(int key){
+    Node(int key,Color color){
         this->key=key;
         parent=left=right=NULL;
+        this->color=color;
     }
 };
 class RBTree{
     Node* root;
+    Node* nullNode;
     public:
-    Node* RB_insert(int key){
-
+    RBTree(){
+        root=NULL;
+        nullNode=new Node(-1,black);
+    }
+    void RB_insert(int key){
+      Node* newNode=create_node(key);
+      Node* parent=nullNode;
+      Node* currentNode=root;
+      while (currentNode!=nullNode){
+          parent=currentNode;
+          currentNode= newNode->key>currentNode->key?
+            currentNode->right:currentNode->left;
+      }
+      newNode->parent=parent;
+      if(parent==nullNode)root=newNode;
+      else{
+          if(newNode->key<parent->key)parent->left=newNode;
+          else parent->right=newNode;
+      }
+        RB_insert_fixup(newNode);
     }
     void RB_insert_fixup(Node* x){
 
@@ -30,7 +52,9 @@ class RBTree{
 
     }
     Node* create_node(int key){
-        return new Node(key);
+        Node* newNode=new Node(key,red);
+        newNode->right=newNode->left=nullNode;
+        return newNode;
     }
 };
 
