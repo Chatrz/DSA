@@ -24,11 +24,35 @@ class RBTree{
             parentOfParent->left->color=black;
             return parentOfParent;
         }
-        Node* rotateRight(Node* p,Node* x){
-
+        Node* rotateRight(Node* node){     
+            Node* leftNode=node->left;
+            node->left=leftNode->right;
+            if(leftNode->right!=nullNode)leftNode->right->parent=node;
+            leftNode->parent=node->parent;
+            if(node->parent==nullNode)
+                root=leftNode;
+            else{
+                if(node==node->parent->right)node->parent->right=leftNode;
+                else node->parent->left=leftNode;
+            }
+            leftNode->right=node;
+            node->parent=leftNode;
+            return leftNode;
         }
-        Node* rotateRight(Node* p,Node* x){
-            
+        Node* rotateLeft(Node* node){
+            Node* rightNode=node->right;
+            node->right=rightNode->left;
+            if(rightNode->left!=nullNode)rightNode->left->parent=node;
+            rightNode->parent=node->parent;
+            if(node->parent==nullNode)
+                root=rightNode;
+            else{
+                if(node==node->parent->right)node->parent->right=rightNode;
+                else node->parent->left=rightNode;
+            }
+            rightNode->left=node;
+            node->parent=rightNode;
+            return rightNode;
         }
     public:
         RBTree(){
@@ -66,7 +90,7 @@ class RBTree{
         }
         Node* create_node(int key){
             Node* newNode=new Node(key,red);
-            newNode->right=newNode->left=nullNode;
+            newNode->right=newNode->left=newNode->parent=nullNode;
             return newNode;
         }
 };
