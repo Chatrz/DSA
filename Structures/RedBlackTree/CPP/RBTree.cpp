@@ -76,8 +76,40 @@ class RBTree{
         }
             RB_insert_fixup(newNode);
         }
-        void RB_insert_fixup(Node* x){
-
+        void RB_insert_fixup(Node* node){
+            while(node->parent->color==red){
+                Node* parentNode=node->parent;
+                if(parentNode==parentNode->parent->left){
+                    Node* uncle=parentNode->parent->right;
+                    if(uncle->color=red){
+                        node=flipColors(uncle->parent);//case 1
+                    }else{
+                        if(node==parentNode->right){//case 2
+                            node=parentNode;
+                            rotateLeft(node);
+                        }
+                        //case 3
+                        node->parent->color=black;
+                        node->parent->parent->color=red;
+                        rotateRight(node->parent->parent);
+                    }
+                }
+                else{
+                    Node* uncle=parentNode->parent->left;
+                    if(uncle->color=red){
+                        node=flipColors(uncle->parent);//case 1
+                    }else{
+                        if(node==parentNode->left){//case 2
+                            node=parentNode;
+                            rotateRight(node);
+                        }
+                        //case 3
+                        node->parent->color=black;
+                        node->parent->parent->color=red;
+                        rotateLeft(node->parent->parent);
+                    }
+                }
+            }
         }
         Node* RB_delete(int key){
 
