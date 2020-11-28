@@ -80,7 +80,7 @@ func (node *Node) getGrandParent() *Node {
 
 /////////////////////////////////////////////////////////////////////////
 
-///////////////////////////////////////////////////////////// other funcs :
+///////////////////////////////////////////////////////////// search funcs :
 
 func (node *Node) Search(tree *Tree, key int) *Node {
 	if node == tree.dummy {
@@ -95,13 +95,6 @@ func (node *Node) Search(tree *Tree, key int) *Node {
 	} else {
 		return node.Left.Search(tree, key)
 	}
-}
-
-func (node *Node) IsRightChild() bool {
-	if node.key > node.Parent.key {
-		return true
-	}
-	return false
 }
 
 /////////////////////////////////////////////////////////////////////////
@@ -220,7 +213,136 @@ func (tree *Tree) fixRbViolations(node *Node) {
 ////////////////////////////////////////////////////////////////// TODOs :
 // TODO: implement deletion
 // TODO add other bst func
+func (root *Node) GetMax(tree *Tree) *Node {
+	tmp := root
+	for {
+		holder := tmp
+		tmp = tmp.Right
+		if tmp == tree.dummy {
+			return holder
+		}
+	}
+}
 
+func (root *Node) GetMin(tree *Tree) *Node {
+	tmp := root
+	for {
+		holder := tmp
+		tmp = tmp.Left
+		if tmp == tree.dummy {
+			return holder
+		}
+	}
+}
+
+func (node *Node) GetPredecessor(tree *Tree) *Node {
+	if node.Left != tree.dummy {
+		return node.Left.GetMax(tree)
+	} else {
+		tmp := node
+		tmp2 := tmp.Parent
+		for tmp2 != nil {
+			if tmp != tmp2.Left {
+				break
+			}
+			tmp = tmp2
+			tmp2 = tmp2.Parent
+		}
+		return tmp2
+	}
+}
+
+func (node *Node) GetSuccessor(tree *Tree) *Node {
+	if node.Right != tree.dummy {
+		return node.Right.GetMin(tree)
+	} else {
+		tmp := node
+		tmp2 := tmp.Parent
+		for tmp2 != nil {
+			if tmp != tmp2.Right {
+				break
+			}
+			tmp = tmp2
+			tmp2 = tmp2.Parent
+		}
+		return tmp2
+	}
+}
+func (node *Node) IsLeaf(tree *Tree) bool {
+	if node.Right == tree.dummy && node.Left == tree.dummy {
+		return true
+	}
+	return false
+}
+func (node *Node) IsRightChild() bool {
+	if node.key > node.Parent.key {
+		return true
+	}
+	return false
+}
+
+func (tree *Tree) DeleteUseKey(key int) *Node{
+	node := tree.Root.Search(tree, key)
+	return node.DeleteNode(tree)
+}
+func (node *Node) DeleteNode(tree *Tree) *Node {
+	if node == nil {
+		return nil
+	} else {
+		if node.IsLeaf(tree) { //node has no children
+			if node.IsRightChild() {
+				node.Parent.Left = nil
+			} else {
+				node.Parent.Right = nil
+			}
+			node.Parent = nil
+		} else if node.Right != tree.dummy && node.Left == tree.dummy { //node has one children at right
+			node.Right.Parent = node.Parent
+			if node.IsRightChild() {
+				node.Parent.Right = node.Right
+			} else {
+				node.Parent.Left = node.Right
+			}
+		} else if node.Left != tree.dummy && node.Right == tree.dummy { //node has one children at left
+			node.Left.Parent = node.Parent
+			if node.IsRightChild() {
+				node.Parent.Right = node.Left
+			} else {
+				node.Parent.Left = node.Left
+			}
+		} else { //node has two children
+			sucNod := node.GetSuccessor(tree)
+			fmt.Println(sucNod.key)
+			holder := sucNod.key
+			sucNod.key = node.key
+			node.key = holder
+			fmt.Println(sucNod.key)
+			sucNod.DeleteNode(tree)
+		}
+		return node
+	}
+}
+
+/*
+RB-DELETE(T, z)
+	 if z->left = null or z->right = null
+				then y ← z
+		else y ← TREE-SUCCESSOR(z)
+		if y->left ≠ null
+				then x ← y->left
+		else x ← y->right
+		x->p ← y->p
+		if y->p = null
+				then T->root ← x
+		else if y = y->p->left
+				then y->p->left ← x
+		else y->p->right ← x
+		if y 3≠ z
+				then z->key ← y->key
+		copy y's satellite data into z
+		if y->color = BLACK
+				then RB-DELETE-FIXUP(T, x)
+		return y*/
 /////////////////////////////////////////////////////////////////// displaying tree :
 
 func GetTreePic(tree *Tree, res *TreePicture, padding string, pointer string, node *Node) {
@@ -297,4 +419,7 @@ func main() {
 	tree.Insert(70)
 	tree.DisplayTree()
 	fmt.Println("######################################")
+	fmt.Println(tree.DeleteUseKey(60).key)
+	tree.DisplayTree()
+
 }
