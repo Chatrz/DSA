@@ -99,6 +99,29 @@ func (node *Node) Search(tree *Tree, key int) *Node {
 
 /////////////////////////////////////////////////////////////////////////
 
+/////////////////////////////////////////////////////////////////// check funcs :
+
+func (node *Node) IsLeaf(tree *Tree) bool {
+	if node.Right == tree.dummy && node.Left == tree.dummy {
+		return true
+	}
+	return false
+}
+func (node *Node) IsRightChild() bool {
+	if node.Parent.Right == node {
+		return true
+	}
+	return false
+}
+func (node *Node) ISLeftChild() bool {
+	if node.Parent.Left == node {
+		return true
+	}
+	return false
+}
+
+//////////////////////////////////////////////////////////////
+
 //////////////////////////////////////////////////// Rotations funcs :
 
 func (tree *Tree) Rotate_right(node *Node) {
@@ -106,15 +129,15 @@ func (tree *Tree) Rotate_right(node *Node) {
 	// node as and targetNode.right
 	targetNode := node.Left
 	node.Left = targetNode.Right
-	if targetNode.Right != tree.dummy{
+	if targetNode.Right != tree.dummy {
 		targetNode.Right = node
 	}
 	targetNode.Parent = node.Parent
-	if node.Parent ==nil{
+	if node.Parent == nil {
 		tree.Root = targetNode
-	}else if node == node.Parent.Left{
+	} else if node == node.Parent.Left {
 		node.Parent.Left = targetNode
-	}else{
+	} else {
 		node.Parent.Right = targetNode
 	}
 	targetNode.Right = node
@@ -126,15 +149,15 @@ func (tree *Tree) Rotate_left(node *Node) {
 	// and setting node as targetNode.Left
 	targetNode := node.Right
 	node.Right = targetNode.Left
-	if targetNode.Left != tree.dummy{
+	if targetNode.Left != tree.dummy {
 		targetNode.Left.Parent = node
 	}
 	targetNode.Parent = node.Parent
-	if node.Parent==nil{
+	if node.Parent == nil {
 		tree.Root = targetNode
-	}else if node == node.Parent.Left{
+	} else if node == node.Parent.Left {
 		node.Parent.Left = targetNode
-	}else {
+	} else {
 		node.Parent.Right = targetNode
 	}
 	targetNode.Left = node
@@ -213,9 +236,7 @@ func (tree *Tree) fixRbViolations(node *Node) {
 
 /////////////////////////////////////////////////////////////////////////////
 
-////////////////////////////////////////////////////////////////// TODOs :
-// TODO: implement deletion
-// TODO add other bst func
+////////////////////////////////////////////////////////////////// successor and predecessor :
 func (root *Node) GetMax(tree *Tree) *Node {
 	tmp := root
 	for {
@@ -271,67 +292,14 @@ func (node *Node) GetSuccessor(tree *Tree) *Node {
 		return tmp2
 	}
 }
-func (node *Node) IsLeaf(tree *Tree) bool {
-	if node.Right == tree.dummy && node.Left == tree.dummy {
-		return true
-	}
-	return false
-}
-func (node *Node) IsRightChild() bool {
-	if node.Parent.Right == node {
-		return true
-	}
-	return false
-}
-func (node *Node) ISLeftChild() bool {
-	if node.Parent.Left == node {
-		return true
-	}
-	return false
-}
+/////////////////////////////////////////////////////////////////////////////
 
+/////////////////////////////////////////////////////////////////////// deletions :
 func (tree *Tree) DeleteUseKey(key int) *Node {
 	node := tree.Root.Search(tree, key)
 	return node.DeleteNode(tree)
 }
 
-/*func (node *Node) DeleteNode(tree *Tree) *Node {
-	if node == nil {
-		return nil
-	} else {
-		if node.IsLeaf(tree) { //node has no children
-			if node.IsRightChild() {
-				node.Parent.Left = nil
-			} else {
-				node.Parent.Right = nil
-			}
-			node.Parent = nil
-		} else if node.Right != tree.dummy && node.Left == tree.dummy { //node has one children at right
-			node.Right.Parent = node.Parent
-			if node.IsRightChild() {
-				node.Parent.Right = node.Right
-			} else {
-				node.Parent.Left = node.Right
-			}
-		} else if node.Left != tree.dummy && node.Right == tree.dummy { //node has one children at left
-			node.Left.Parent = node.Parent
-			if node.IsRightChild() {
-				node.Parent.Right = node.Left
-			} else {
-				node.Parent.Left = node.Left
-			}
-		} else { //node has two children
-			sucNod := node.GetSuccessor(tree)
-			fmt.Println(sucNod.key)
-			holder := sucNod.key
-			sucNod.key = node.key
-			node.key = holder
-			fmt.Println(sucNod.key)
-			sucNod.DeleteNode(tree)
-		}
-		return node
-	}
-}*/
 func (node *Node) DeleteNode(tree *Tree) *Node {
 	fmt.Print("deleting  ")
 	fmt.Println(node.key)
@@ -348,27 +316,18 @@ func (node *Node) DeleteNode(tree *Tree) *Node {
 		replacement = temp.Right
 	}
 	replacement.Parent = temp.Parent
-		tree.DisplayTree()
-		fmt.Println(temp.key)
-		fmt.Println(replacement.key)
-		fmt.Println(node.key)
 	if temp.Parent == nil {
 		tree.Root = replacement
 	} else if temp.ISLeftChild() {
 		temp.Parent.Left = replacement
 	} else {
-					tree.DisplayTree()
-		fmt.Println("tsssssssss")
-		fmt.Println(temp.Parent.key)
 		temp.Parent.Right = replacement
-					tree.DisplayTree()
 	}
 	if temp != node {
 		node.key = temp.key
 	}
 	if temp.Color == Black {
 		fmt.Println("needs fixup")
-			tree.DisplayTree()
 		tree.DeleteFixUp(replacement)
 	}
 	return temp
@@ -428,6 +387,7 @@ func (tree *Tree) DeleteFixUp(node *Node) {
 	}
 	node.Color = Black
 }
+////////////////////////////////////////////////////////////////////////////////
 
 /////////////////////////////////////////////////////////////////// displaying tree :
 
@@ -480,49 +440,30 @@ func main() {
 	fmt.Println("######################################")
 	tree.Insert(15)
 	tree.DisplayTree()
-	fmt.Println("father of 15 is : ")
-	fmt.Println(tree.Root.Search(tree,15).Parent.key)
 	fmt.Println("######################################")
 	tree.Insert(16)
 	tree.DisplayTree()
-	fmt.Println("father of 15 is : ")
-	fmt.Println(tree.Root.Search(tree,15).Parent.key)
 	fmt.Println("######################################")
 	tree.Insert(30)
 	tree.DisplayTree()
-	fmt.Println("father of 15 is : ")
-	fmt.Println(tree.Root.Search(tree,15).Parent.key)
 	fmt.Println("######################################")
 	tree.Insert(25)
 	tree.DisplayTree()
-	fmt.Println("father of 15 is : ")
-	fmt.Println(tree.Root.Search(tree,15).Parent.key)
 	fmt.Println("######################################")
 	tree.Insert(40)
 	tree.DisplayTree()
-	fmt.Println("father of 15 is : ")
-	fmt.Println(tree.Root.Search(tree,15).Parent.key)
 	fmt.Println("######################################")
 	tree.Insert(60)
 	tree.DisplayTree()
-	fmt.Println("father of 15 is : ")
-	fmt.Println(tree.Root.Search(tree,15).Parent.key)
 	fmt.Println("######################################")
 	tree.Insert(2)
 	tree.DisplayTree()
-	fmt.Println("father of 15 is : ")
-	fmt.Println(tree.Root.Search(tree,15).Parent.key)
 	fmt.Println("######################################")
 	tree.Insert(1)
 	tree.DisplayTree()
-	fmt.Println("father of 15 is : ")
-	fmt.Println(tree.Root.Search(tree,15).Parent.key)
 	fmt.Println("######################################")
 	tree.Insert(70)
 	tree.DisplayTree()
-	fmt.Println("father of 15 is : ")
-	fmt.Println(tree.Root.Search(tree,15).Parent.key)
-	fmt.Println("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$\n$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$44\n$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$")
 	fmt.Println("######################################")
 	tree.DeleteUseKey(25)
 	tree.DisplayTree()
@@ -543,7 +484,44 @@ func main() {
 	tree.DisplayTree()
 	fmt.Println("######################################")
 	tree.DeleteUseKey(10)
-	fmt.Println(tree.Root.Search(tree,60))
 	tree.DisplayTree()
 
 }
+
+/*func (node *Node) DeleteNode(tree *Tree) *Node {
+	if node == nil {
+		return nil
+	} else {
+		if node.IsLeaf(tree) { //node has no children
+			if node.IsRightChild() {
+				node.Parent.Left = nil
+			} else {
+				node.Parent.Right = nil
+			}
+			node.Parent = nil
+		} else if node.Right != tree.dummy && node.Left == tree.dummy { //node has one children at right
+			node.Right.Parent = node.Parent
+			if node.IsRightChild() {
+				node.Parent.Right = node.Right
+			} else {
+				node.Parent.Left = node.Right
+			}
+		} else if node.Left != tree.dummy && node.Right == tree.dummy { //node has one children at left
+			node.Left.Parent = node.Parent
+			if node.IsRightChild() {
+				node.Parent.Right = node.Left
+			} else {
+				node.Parent.Left = node.Left
+			}
+		} else { //node has two children
+			sucNod := node.GetSuccessor(tree)
+			fmt.Println(sucNod.key)
+			holder := sucNod.key
+			sucNod.key = node.key
+			node.key = holder
+			fmt.Println(sucNod.key)
+			sucNod.DeleteNode(tree)
+		}
+		return node
+	}
+}*/
