@@ -280,12 +280,15 @@ func (node *Node) IsRightChild() bool {
 	}
 	return false
 }
+func (node *Node) ISLeftChild() bool {
+	return !node.IsRightChild()
+}
 
 func (tree *Tree) DeleteUseKey(key int) *Node{
 	node := tree.Root.Search(tree, key)
 	return node.DeleteNode(tree)
 }
-func (node *Node) DeleteNode(tree *Tree) *Node {
+/*func (node *Node) DeleteNode(tree *Tree) *Node {
 	if node == nil {
 		return nil
 	} else {
@@ -321,28 +324,36 @@ func (node *Node) DeleteNode(tree *Tree) *Node {
 		}
 		return node
 	}
+}*/
+func (node *Node) DeleteNode(tree *Tree) *Node {
+	var temp *Node
+	var replacement *Node
+	if node.Left == tree.dummy || node.Right==tree.dummy {
+		temp = node
+	}else{
+		temp = node.GetSuccessor(tree)
+	}
+	if temp.Left != tree.dummy{
+		replacement = temp.Left
+	}else{
+		replacement = temp.Right
+	}
+	replacement.Parent = temp.Parent
+	if temp.Parent== nil{
+		tree.Root = replacement
+	}else if temp.ISLeftChild(){
+		temp.Parent.Left = replacement
+	}else{
+		temp.Parent.Right = replacement
+	}
+	if temp!=node{
+		node.key = temp.key
+	}
+	if temp.Color==Black{
+		fmt.Println("needs fixup")
+	}
+	return temp
 }
-
-/*
-RB-DELETE(T, z)
-	 if z->left = null or z->right = null
-				then y ← z
-		else y ← TREE-SUCCESSOR(z)
-		if y->left ≠ null
-				then x ← y->left
-		else x ← y->right
-		x->p ← y->p
-		if y->p = null
-				then T->root ← x
-		else if y = y->p->left
-				then y->p->left ← x
-		else y->p->right ← x
-		if y 3≠ z
-				then z->key ← y->key
-		copy y's satellite data into z
-		if y->color = BLACK
-				then RB-DELETE-FIXUP(T, x)
-		return y*/
 /////////////////////////////////////////////////////////////////// displaying tree :
 
 func GetTreePic(tree *Tree, res *TreePicture, padding string, pointer string, node *Node) {
@@ -419,7 +430,7 @@ func main() {
 	tree.Insert(70)
 	tree.DisplayTree()
 	fmt.Println("######################################")
-	fmt.Println(tree.DeleteUseKey(60).key)
+	fmt.Println(tree.DeleteUseKey(25).key)
 	tree.DisplayTree()
 
 }
