@@ -54,3 +54,47 @@ func uncle(n *Node) *Node {
 	}
 	return n.parent.parent.left
 }
+
+func leftRotate(t *RBT, n *Node) error {
+	y := n.right
+	// if y == nil {
+	// 	return errors.New("right child is nil")
+	// }
+	n.right = y.left
+	if y.left != nil {
+		y.left.parent = n
+	}
+	if n == t.root {
+		t.root = y
+	} else if n.parent.right == n {
+		n.parent.right = y
+	} else {
+		n.parent.left = y
+	}
+	y.left = n
+	y.parent = n.parent
+	n.parent = y
+	return nil
+}
+
+func rightRotate(t *RBT, n *Node) error {
+	x := n.left
+	// if x == nil {
+	// 	return errors.New("left child is nil")
+	// }
+	n.left = x.right
+	if x.right != nil {
+		x.right.parent = n
+	}
+	if n == t.root {
+		t.root = x
+	} else if n.parent.right == n {
+		n.parent.right = x
+	} else {
+		n.parent.left = x
+	}
+	x.right = n
+	x.parent = n.parent
+	n.parent = x
+	return nil
+}
