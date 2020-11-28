@@ -56,8 +56,9 @@ class RBTree{
         }
     public:
         RBTree(){
-            root=NULL;
             nullNode=new Node(-1,black);
+            root=nullNode;
+
         }
         void RB_insert(int key){
         Node* newNode=create_node(key);
@@ -118,7 +119,14 @@ class RBTree{
 
         }
         Node* BST_search(int key){
-
+            Node* currentNode=root;
+            if(root==nullNode)return root;
+            while(currentNode!=nullNode){
+                if(currentNode->key==key)return currentNode;
+                if(currentNode->key<key)currentNode=currentNode->right;
+                else currentNode=currentNode->left;
+            }
+            return nullNode;
         }
         Node* create_node(int key){
             Node* newNode=new Node(key,red);
