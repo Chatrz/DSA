@@ -66,7 +66,7 @@ func TestOverflow(t *testing.T) {
 
 func TestUnderflow(t *testing.T) {
 	queue := NewQueue(5)
-	err := queue.Enqueue()
+	err := queue.Enqueue(4)
 	if err == nil {
 		t.Error("there is a bug in underflow")
 	}
