@@ -8,6 +8,8 @@
 
 package rbt
 
+import "errors"
+
 type color int8
 
 const (
@@ -33,10 +35,16 @@ func (n *Node) BlackHeight() int {
 
 type RBT struct {
 	root *Node
+	null *Node
 }
 
 func NewRBT() *RBT {
-	rbt := &RBT{}
+	rbt := &RBT{
+		null: &Node{
+			Value: -1,
+			color: Black,
+		},
+	}
 	return rbt
 }
 
@@ -96,5 +104,40 @@ func rightRotate(t *RBT, n *Node) error {
 	x.right = n
 	x.parent = n.parent
 	n.parent = x
+	return nil
+}
+
+func treeInsert(t *RBT, key int) error {
+	node := &Node{
+		Value: key,
+		color: Red,
+		right: t.null,
+		left:  t.null,
+	}
+	if t.root == nil {
+		t.root = node
+		t.root.parent = t.null
+		t.null.left = t.root
+		t.null.right = t.root
+		t.root.color = Black
+		return nil
+	}
+	var curr, next *Node
+	next = t.root
+	for next != nil {
+		curr = next
+		if key > curr.Value {
+			next = curr.right
+		} else if key < curr.Value {
+			next = curr.left
+		} else {
+			return errors.New("key already exists")
+		}
+	}
+	if key > curr.Value {
+		curr.right = node
+		return nil
+	}
+	curr.left = node
 	return nil
 }
