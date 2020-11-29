@@ -179,10 +179,10 @@ func (node *Node) DeleteNode() bool {
 	} else {
 		if node.IsLeaf() { //node has no children
 			if node.IsRightChild() {
-				node.Parent.Left = nil
+				node.Parent.Right = nil
 
 			} else {
-				node.Parent.Right = nil
+				node.Parent.Left = nil
 			}
 			node.Parent = nil
 		} else if node.Right != nil && node.Left == nil { //node has one children at right
