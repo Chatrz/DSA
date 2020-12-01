@@ -61,6 +61,16 @@ class RBTree{
             }
             return currentNode;
         }
+        Node* inorder_successor(Node* node){
+            if (node==nullNode)return nullNode;
+            if(node->right!=nullNode)return minNode(node->right);
+            Node* parent=node->parent;
+            while(parent!=nullNode && node==parent->right){
+                node=parent;
+                parent=parent->parent;
+            }
+            return parent;
+        }
     public:
         RBTree(){
             nullNode=new Node(-1,black);
