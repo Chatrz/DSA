@@ -75,7 +75,6 @@ class RBTree{
         RBTree(){
             nullNode=new Node(-1,black);
             root=nullNode;
-
         }
         void RB_insert(int key){
         Node* newNode=create_node(key);
@@ -136,14 +135,17 @@ class RBTree{
                 return;
             }
             Node* y;//y is the node that gets deleted from tree
-            if(z->right==nullNode || z->left==nullNode){
-                y=z;
-            }else{
-                
+            y=z->right==nullNode || z->left==nullNode?z:this->inorder_successor(z);
+            Node* x=y->left!=nullNode?y->left:y->right;
+            x->parent=y->parent;
+            if(y->parent==nullNode)root=x;
+            else{
+                if(y==y->parent->right)y->parent->right=x;
+                else y->parent->left=x;
             }
-
-            
-
+            if(y!=z)z->key=y->key;
+            if(y->color==black)this->RB_delete_fixup(x);
+            return y;
         }
         void RB_delete_fixup(Node* x){
 
