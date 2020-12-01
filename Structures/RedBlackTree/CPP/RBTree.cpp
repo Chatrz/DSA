@@ -148,7 +148,58 @@ class RBTree{
             return y;
         }
         void RB_delete_fixup(Node* x){
-
+            while(x!=root && x->color==black){
+                if(x==x->parent->left){
+                    Node* brother=x->parent->right;
+                    if(brother->color=red){
+                        brother->color=black;
+                        x->parent->color=red;
+                        this->rotateRight(x->parent);
+                        brother=x->parent->right;
+                    }
+                    if(brother->left->color==black && brother->right->color==black){
+                        brother->color=red;
+                        x=x->parent;
+                    }else{
+                        if(brother->right->color=black){
+                            brother->left->color=black;
+                            brother->color=red;
+                            this->rotateRight(brother);
+                            brother=x->parent->right;
+                        }
+                        brother->color=x->parent->color;
+                        x->parent->color=black;
+                        brother->right->color=black;
+                        this->rotateLeft(x->parent);
+                        x=root;
+                    }
+                }else{
+                    Node* brother=x->parent->left;
+                    if(brother->color=red){
+                        brother->color=black;
+                        x->parent->color=red;
+                        this->rotateLeft(x->parent);
+                        brother=x->parent->left;
+                    }
+                    if(brother->right->color==black && brother->left->color==black){
+                        brother->color=red;
+                        x=x->parent;
+                    }else{
+                        if(brother->left->color=black){
+                            brother->right->color=black;
+                            brother->color=red;
+                            this->rotateLeft(brother);
+                            brother=x->parent->left;
+                        }
+                        brother->color=x->parent->color;
+                        x->parent->color=black;
+                        brother->left->color=black;
+                        this->rotateLeft(x->parent);
+                        x=root;
+                    }
+                }
+                x->color=black;
+            }
         }
         Node* search(int key){
             Node* currentNode=root;
