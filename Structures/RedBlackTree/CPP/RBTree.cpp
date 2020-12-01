@@ -54,6 +54,13 @@ class RBTree{
             node->parent=rightNode;
             return rightNode;
         }
+        Node* minNode(Node* currentNode){
+            if (currentNode==nullNode)return nullNode;
+            while(currentNode->left!=nullNode){
+                currentNode=currentNode->left;
+            }
+            return currentNode;
+        }
     public:
         RBTree(){
             nullNode=new Node(-1,black);
@@ -113,12 +120,25 @@ class RBTree{
             }
         }
         Node* RB_delete(int key){
+            Node* z=search(key); //z is the node that we want to delete
+            if(z==nullNode){
+                cout<<"There is no node with this key";
+                return;
+            }
+            Node* y;//y is the node that gets deleted from tree
+            if(z->right==nullNode || z->left==nullNode){
+                y=z;
+            }else{
+                
+            }
+
+            
 
         }
         void RB_delete_fixup(Node* x){
 
         }
-        Node* BST_search(int key){
+        Node* search(int key){
             Node* currentNode=root;
             if(root==nullNode)return root;
             while(currentNode!=nullNode){
