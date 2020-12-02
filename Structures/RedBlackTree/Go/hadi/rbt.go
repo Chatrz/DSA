@@ -25,10 +25,6 @@ type Node struct {
 	right  *Node
 }
 
-func (n *Node) Uncle() *Node {
-	return uncle(n)
-}
-
 func (n *Node) BlackHeight() int {
 	return 0
 }
@@ -49,13 +45,17 @@ func NewRBT() *RBT {
 }
 
 //Height max = 2log(n+1)
-func (rbt *RBT) Height() int {
+func (t *RBT) Height() int {
 	return 0
 }
 
-func uncle(n *Node) *Node {
-	if n.parent == nil || n.parent.parent == nil {
-		return nil
+func (t *RBT) Insert(key int) error {
+	return rbtInsert(t, key)
+}
+
+func uncle(t *RBT, n *Node) *Node {
+	if n.parent == t.null || n.parent.parent == t.null {
+		return t.null
 	}
 	if n.parent.parent.left == n.parent {
 		return n.parent.parent.right
@@ -69,7 +69,7 @@ func leftRotate(t *RBT, n *Node) error {
 	// 	return errors.New("right child is nil")
 	// }
 	n.right = y.left
-	if y.left != nil {
+	if y.left != t.null {
 		y.left.parent = n
 	}
 	if n == t.root {
@@ -91,7 +91,7 @@ func rightRotate(t *RBT, n *Node) error {
 	// 	return errors.New("left child is nil")
 	// }
 	n.left = x.right
-	if x.right != nil {
+	if x.right != t.null {
 		x.right.parent = n
 	}
 	if n == t.root {
@@ -107,7 +107,51 @@ func rightRotate(t *RBT, n *Node) error {
 	return nil
 }
 
-func treeInsert(t *RBT, key int) error {
+func rbtInsert(t *RBT, key int) error {
+	node, err := treeInsert(t, key)
+	if err != nil {
+		return err
+	}
+	colorFixUp(t, node)
+	return nil
+}
+
+func colorFixUp(t *RBT, n *Node) {
+	if n == t.root {
+		n.color = Black
+		return
+	}
+	if n.parent.color == Black {
+		return
+	}
+	nodeUncle := uncle(t, n)
+	if nodeUncle.color == Red {
+		nodeUncle.color = Black
+		n.parent.color = Black
+		n.parent.parent.color = Red
+	}
+	if nodeUncle.color == Black {
+		if isLeftChild(t, n) && isLeftChild(t, n.parent) {
+			n.parent.color, n.parent.parent.color = n.parent.parent.color, n.parent.color
+			rightRotate(t, n.parent.parent)
+		} else if isRightChild(t, n) && isLeftChild(t, n.parent) {
+			leftRotate(t, n.parent)
+			n.parent.color, n.parent.parent.color = n.parent.parent.color, n.parent.color
+			rightRotate(t, n.parent.parent)
+		} else if isRightChild(t, n) && isRightChild(t, n.parent) {
+			n.parent.color, n.parent.parent.color = n.parent.parent.color, n.parent.color
+			leftRotate(t, n.parent.parent)
+		} else {
+			rightRotate(t, n.parent)
+			n.parent.color, n.parent.parent.color = n.parent.parent.color, n.parent.color
+			leftRotate(t, n.parent.parent)
+		}
+	}
+	colorFixUp(t, n.parent.parent)
+	return
+}
+
+func treeInsert(t *RBT, key int) (*Node, error) {
 	node := &Node{
 		Value: key,
 		color: Red,
@@ -119,25 +163,38 @@ func treeInsert(t *RBT, key int) error {
 		t.root.parent = t.null
 		t.null.left = t.root
 		t.null.right = t.root
-		t.root.color = Black
-		return nil
+		return node, nil
 	}
 	var curr, next *Node
 	next = t.root
-	for next != nil {
+	for next != t.null {
 		curr = next
 		if key > curr.Value {
 			next = curr.right
 		} else if key < curr.Value {
 			next = curr.left
 		} else {
-			return errors.New("key already exists")
+			return nil, errors.New("key already exists")
 		}
 	}
 	if key > curr.Value {
 		curr.right = node
-		return nil
+		return node, nil
 	}
 	curr.left = node
-	return nil
+	return node, nil
+}
+
+func isRightChild(t *RBT, n *Node) bool {
+	if n.parent == t.null {
+		return false
+	}
+	return n.parent.right == n
+}
+
+func isLeftChild(t *RBT, n *Node) bool {
+	if n == t.null {
+		return false
+	}
+	return n.parent.left == n
 }
