@@ -8,7 +8,9 @@
 
 package rbt
 
-import "errors"
+import (
+	"errors"
+)
 
 type color int8
 
@@ -185,6 +187,85 @@ func treeInsert(t *RBT, key int) (*Node, error) {
 	return node, nil
 }
 
+func treeDelete(t *RBT, n *Node) *Node {
+	if isRoot(t, n) {
+		t.root = nil
+		return n
+	}
+	if isLeaf(t, n) {
+		if isRightChild(t, n) {
+			n.parent.right = t.null
+			return n
+		}
+		n.parent.left = t.null
+		return n
+	}
+	if hasOnlyOneChild(t, n) {
+		if hasRightChild(t, n) {
+			if isRightChild(t, n) {
+				n.parent.right = n.right
+			} else {
+				n.parent.left = n.right
+			}
+			n.right.parent = n.parent
+		} else {
+			if isRightChild(t, n) {
+				n.parent.right = n.left
+			} else {
+				n.parent.left = n.left
+			}
+			n.left.parent = n.parent
+		}
+		return n
+	}
+	successor := inorderSeccessor(t, n)
+	n.Value = successor.Value
+	//todo check color
+	return treeDelete(t, successor)
+}
+
+func min(t *RBT, node *Node) *Node {
+	for ; node.left != t.null; node = node.left {
+	}
+	return node
+}
+
+func max(t *RBT, node *Node) *Node {
+	for ; node.right != t.null; node = node.right {
+	}
+	return node
+}
+
+func inorderSeccessor(t *RBT, node *Node) *Node {
+	if node.right != nil {
+		return min(t, node.right)
+	}
+	if node == t.root {
+		return nil
+	}
+	curr := node.parent
+	for ; curr != nil && curr.Value < node.Value; curr = curr.parent {
+	}
+	return curr
+}
+
+func inorderPreDecessor(t *RBT, node *Node) *Node {
+	if node.left != nil {
+		return max(t, node.left)
+	}
+	if node == t.root {
+		return nil
+	}
+	curr := node.parent
+	for ; curr != nil && curr.Value > node.Value; curr = curr.parent {
+	}
+	return curr
+}
+
+func isRoot(t *RBT, n *Node) bool {
+	return t.root == n
+}
+
 func isRightChild(t *RBT, n *Node) bool {
 	if n.parent == t.null {
 		return false
@@ -197,4 +278,20 @@ func isLeftChild(t *RBT, n *Node) bool {
 		return false
 	}
 	return n.parent.left == n
+}
+
+func isLeaf(t *RBT, n *Node) bool {
+	return n.right == t.null && n.left == t.null
+}
+
+func hasRightChild(t *RBT, n *Node) bool {
+	return n.right != t.null
+}
+
+func hasLeftChild(t *RBT, n *Node) bool {
+	return n.left != t.null
+}
+
+func hasOnlyOneChild(t *RBT, n *Node) bool {
+	return (hasRightChild(t, n) && !hasLeftChild(t, n)) || (hasLeftChild(t, n) && !hasRightChild(t, n))
 }
