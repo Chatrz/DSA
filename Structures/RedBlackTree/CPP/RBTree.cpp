@@ -54,10 +54,27 @@ class RBTree{
             node->parent=rightNode;
             return rightNode;
         }
+        Node* minNode(Node* currentNode){
+            if (currentNode==nullNode)return nullNode;
+            while(currentNode->left!=nullNode){
+                currentNode=currentNode->left;
+            }
+            return currentNode;
+        }
+        Node* inorder_successor(Node* node){
+            if (node==nullNode)return nullNode;
+            if(node->right!=nullNode)return minNode(node->right);
+            Node* parent=node->parent;
+            while(parent!=nullNode && node==parent->right){
+                node=parent;
+                parent=parent->parent;
+            }
+            return parent;
+        }
     public:
         RBTree(){
-            root=NULL;
             nullNode=new Node(-1,black);
+            root=nullNode;
         }
         void RB_insert(int key){
         Node* newNode=create_node(key);
@@ -112,13 +129,87 @@ class RBTree{
             }
         }
         Node* RB_delete(int key){
-
+            Node* z=search(key); //z is the node that we want to delete
+            if(z==nullNode){
+                cout<<"There is no node with this key";
+                return;
+            }
+            Node* y;//y is the node that gets deleted from tree
+            y=z->right==nullNode || z->left==nullNode?z:this->inorder_successor(z);
+            Node* x=y->left!=nullNode?y->left:y->right;
+            x->parent=y->parent;
+            if(y->parent==nullNode)root=x;
+            else{
+                if(y==y->parent->right)y->parent->right=x;
+                else y->parent->left=x;
+            }
+            if(y!=z)z->key=y->key;
+            if(y->color==black)this->RB_delete_fixup(x);
+            return y;
         }
         void RB_delete_fixup(Node* x){
-
+            while(x!=root && x->color==black){
+                if(x==x->parent->left){
+                    Node* brother=x->parent->right;
+                    if(brother->color=red){
+                        brother->color=black;
+                        x->parent->color=red;
+                        this->rotateRight(x->parent);
+                        brother=x->parent->right;
+                    }
+                    if(brother->left->color==black && brother->right->color==black){
+                        brother->color=red;
+                        x=x->parent;
+                    }else{
+                        if(brother->right->color=black){
+                            brother->left->color=black;
+                            brother->color=red;
+                            this->rotateRight(brother);
+                            brother=x->parent->right;
+                        }
+                        brother->color=x->parent->color;
+                        x->parent->color=black;
+                        brother->right->color=black;
+                        this->rotateLeft(x->parent);
+                        x=root;
+                    }
+                }else{
+                    Node* brother=x->parent->left;
+                    if(brother->color=red){
+                        brother->color=black;
+                        x->parent->color=red;
+                        this->rotateLeft(x->parent);
+                        brother=x->parent->left;
+                    }
+                    if(brother->right->color==black && brother->left->color==black){
+                        brother->color=red;
+                        x=x->parent;
+                    }else{
+                        if(brother->left->color=black){
+                            brother->right->color=black;
+                            brother->color=red;
+                            this->rotateLeft(brother);
+                            brother=x->parent->left;
+                        }
+                        brother->color=x->parent->color;
+                        x->parent->color=black;
+                        brother->left->color=black;
+                        this->rotateLeft(x->parent);
+                        x=root;
+                    }
+                }
+                x->color=black;
+            }
         }
-        Node* BST_search(int key){
-
+        Node* search(int key){
+            Node* currentNode=root;
+            if(root==nullNode)return root;
+            while(currentNode!=nullNode){
+                if(currentNode->key==key)return currentNode;
+                if(currentNode->key<key)currentNode=currentNode->right;
+                else currentNode=currentNode->left;
+            }
+            return nullNode;
         }
         Node* create_node(int key){
             Node* newNode=new Node(key,red);
