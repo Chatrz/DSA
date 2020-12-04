@@ -4,7 +4,7 @@
 //      github.com/Armingodiz //
 //                            //
 ////////////////////////////////
-package maxHeap
+package main
 
 import (
 	"errors"
@@ -134,30 +134,11 @@ func (maxHeap *MaxHeap) printHeap() {
 	fmt.Println()
 }
 
-/*
+
   func main() {
-	heap := NewMaxHeap(10)
-	heap.Insert(1)
-	heap.Insert(3)
-	heap.Insert(4)
-	heap.Insert(10)
-	heap.Insert(2)
-	heap.Insert(19)
-	heap.Insert(0)
-	heap.Insert(87)
-	heap.printHeap()
-  fmt.Println("&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&7")
-  heap.DeleteKey(6)
-  heap.printHeap()
-  heap.DeleteKey(0)
-  heap.printHeap()
-  heap.DeleteKey(1)
-  heap.printHeap()
-  fmt.Println("&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&7")
-	array := []int{12, 11, 13, 5, 6, 7}
-	array = heapSort(array, 10)
+	array := []int{21,15,17,25,23,30,24,28,13,12,20,19,10}
+	array = heapSort(array, 13)
 	fmt.Println(array)
-	newHeap := buildHeap(array, 10)
+	newHeap := buildHeap(array, 13)
 	newHeap.printHeap()
 }
-*/
