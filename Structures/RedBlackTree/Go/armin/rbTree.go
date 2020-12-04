@@ -8,6 +8,7 @@ package main
 ////////////////////////////////
 
 import (
+	"errors"
 	"fmt"
 	"github.com/fatih/color"
 	"strconv"
@@ -80,7 +81,7 @@ func (node *Node) getGrandParent() *Node {
 
 /////////////////////////////////////////////////////////////////////////
 
-///////////////////////////////////////////////////////////// other funcs :
+///////////////////////////////////////////////////////////// search funcs :
 
 func (node *Node) Search(tree *Tree, key int) *Node {
 	if node == tree.dummy {
@@ -97,14 +98,30 @@ func (node *Node) Search(tree *Tree, key int) *Node {
 	}
 }
 
+/////////////////////////////////////////////////////////////////////////
+
+/////////////////////////////////////////////////////////////////// check funcs :
+
+func (node *Node) IsLeaf(tree *Tree) bool {
+	if node.Right == tree.dummy && node.Left == tree.dummy {
+		return true
+	}
+	return false
+}
 func (node *Node) IsRightChild() bool {
-	if node.key > node.Parent.key {
+	if node.Parent.Right == node {
+		return true
+	}
+	return false
+}
+func (node *Node) ISLeftChild() bool {
+	if node.Parent.Left == node {
 		return true
 	}
 	return false
 }
 
-/////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////
 
 //////////////////////////////////////////////////// Rotations funcs :
 
@@ -113,9 +130,19 @@ func (tree *Tree) Rotate_right(node *Node) {
 	// node as and targetNode.right
 	targetNode := node.Left
 	node.Left = targetNode.Right
-	node.Left.Parent = node
+	if targetNode.Right != tree.dummy {
+		targetNode.Right = node
+	}
+	targetNode.Parent = node.Parent
+	if node.Parent == nil {
+		tree.Root = targetNode
+	} else if node == node.Parent.Left {
+		node.Parent.Left = targetNode
+	} else {
+		node.Parent.Right = targetNode
+	}
 	targetNode.Right = node
-	setParrentsAfterRotation(tree, node, targetNode)
+	node.Parent = targetNode
 }
 
 func (tree *Tree) Rotate_left(node *Node) {
@@ -123,25 +150,18 @@ func (tree *Tree) Rotate_left(node *Node) {
 	// and setting node as targetNode.Left
 	targetNode := node.Right
 	node.Right = targetNode.Left
-	node.Right.Parent = targetNode
-	targetNode.Left = node
-	setParrentsAfterRotation(tree, node, targetNode)
-}
-
-func setParrentsAfterRotation(tree *Tree, node, targetNode *Node) {
-	// setting targetNode.parent
-	if node == tree.Root { //node was the root of the tree
-		tree.Root = targetNode
-		targetNode.Parent = nil
-	} else {
-		targetNode.Parent = node.Parent
-		if node.IsRightChild() {
-			node.Parent.Right = targetNode
-		} else {
-			node.Parent.Left = targetNode
-		}
+	if targetNode.Left != tree.dummy {
+		targetNode.Left.Parent = node
 	}
-	// setting targetNode as node's parent
+	targetNode.Parent = node.Parent
+	if node.Parent == nil {
+		tree.Root = targetNode
+	} else if node == node.Parent.Left {
+		node.Parent.Left = targetNode
+	} else {
+		node.Parent.Right = targetNode
+	}
+	targetNode.Left = node
 	node.Parent = targetNode
 }
 
@@ -217,10 +237,233 @@ func (tree *Tree) fixRbViolations(node *Node) {
 
 /////////////////////////////////////////////////////////////////////////////
 
-////////////////////////////////////////////////////////////////// TODOs :
-// TODO: implement deletion
-// TODO add other bst func
+////////////////////////////////////////////////////////////////// successor and predecessor :
+func (root *Node) GetMax(tree *Tree) *Node {
+	tmp := root
+	for {
+		holder := tmp
+		tmp = tmp.Right
+		if tmp == tree.dummy {
+			return holder
+		}
+	}
+}
 
+func (root *Node) GetMin(tree *Tree) *Node {
+	tmp := root
+	for {
+		holder := tmp
+		tmp = tmp.Left
+		if tmp == tree.dummy {
+			return holder
+		}
+	}
+}
+
+func (node *Node) GetPredecessor(tree *Tree) *Node {
+	if node.Left != tree.dummy {
+		return node.Left.GetMax(tree)
+	} else {
+		tmp := node
+		tmp2 := tmp.Parent
+		for tmp2 != nil {
+			if tmp != tmp2.Left {
+				break
+			}
+			tmp = tmp2
+			tmp2 = tmp2.Parent
+		}
+		return tmp2
+	}
+}
+
+func (node *Node) GetSuccessor(tree *Tree) *Node {
+	if node.Right != tree.dummy {
+		return node.Right.GetMin(tree)
+	} else {
+		tmp := node
+		tmp2 := tmp.Parent
+		for tmp2 != nil {
+			if tmp != tmp2.Right {
+				break
+			}
+			tmp = tmp2
+			tmp2 = tmp2.Parent
+		}
+		return tmp2
+	}
+}
+
+/////////////////////////////////////////////////////////////////////////////
+
+/////////////////////////////////////////////////////////////////////// deletions :
+func (tree *Tree) DeleteUseKey(key int) *Node {
+	node := tree.Root.Search(tree, key)
+	return node.DeleteNode(tree)
+}
+
+func (node *Node) DeleteNode(tree *Tree) *Node {
+	fmt.Print("deleting  ")
+	fmt.Println(node.key)
+	var temp *Node
+	var replacement *Node
+	if node.Left == tree.dummy || node.Right == tree.dummy {
+		temp = node
+	} else {
+		temp = node.GetSuccessor(tree)
+	}
+	if temp.Left != tree.dummy {
+		replacement = temp.Left
+	} else {
+		replacement = temp.Right
+	}
+	replacement.Parent = temp.Parent
+	if temp.Parent == nil {
+		tree.Root = replacement
+	} else if temp.ISLeftChild() {
+		temp.Parent.Left = replacement
+	} else {
+		temp.Parent.Right = replacement
+	}
+	if temp != node {
+		node.key = temp.key
+	}
+	if temp.Color == Black {
+		fmt.Println("needs fixup")
+		tree.DeleteFixUp(replacement)
+	}
+	return temp
+}
+func (tree *Tree) DeleteFixUp(node *Node) {
+	for node != tree.Root && node.Color == Black {
+		if node.ISLeftChild() {
+			sibling := node.Parent.Right
+			//fmt.Print(sibling.Color)
+			if sibling.Color == Red { //case 1
+				sibling.Color = Black         //case 1
+				node.Parent.Color = Red       //case 1
+				tree.Rotate_left(node.Parent) //case 1
+				sibling = node.Parent.Right   //case 1
+			}
+			if sibling.Left.Color == Black && sibling.Right.Color == Black { //case 2
+				sibling.Color = Red // case 2
+				node = node.Parent  // case 2
+			} else { // case 3 ==> case 4
+				if sibling.Right.Color == Black {
+					sibling.Left.Color = Black  // case 3
+					sibling.Color = Red         // case 3
+					tree.Rotate_right(sibling)  // case 3
+					sibling = node.Parent.Right // case 3
+				}
+				sibling.Color = node.Parent.Color // case 4
+				node.Parent.Color = Black         // case 4
+				sibling.Right.Color = Black       // case 4
+				tree.Rotate_left(node.Parent)     // case 4
+				node = tree.Root                  // case 4
+			}
+		} else { /// if node is right child :
+			sibling := node.Parent.Left
+			if sibling.Color == Red { //case 1
+				sibling.Color = Black          //case 1
+				node.Parent.Color = Red        //case 1
+				tree.Rotate_right(node.Parent) //case 1
+				sibling = node.Parent.Left     //case 1
+			}
+			if sibling.Left.Color == Black && sibling.Right.Color == Black { //case 2
+				sibling.Color = Red // case 2
+				node = node.Parent  // case 2
+			} else { // case 3 ==> case 4
+				if sibling.Left.Color == Black {
+					sibling.Right.Color = Black // case 3
+					sibling.Color = Red         // case 3
+					tree.Rotate_left(sibling)   // case 3
+					sibling = node.Parent.Left  // case 3
+				}
+				sibling.Color = node.Parent.Color // case 4
+				node.Parent.Color = Black         // case 4
+				sibling.Left.Color = Black        // case 4
+				tree.Rotate_right(node.Parent)    // case 4
+				node = tree.Root                  // case 4
+			}
+		}
+	}
+	node.Color = Black
+}
+
+////////////////////////////////////////////////////////////////////////////////
+
+//////////////////////////////////////////////// BFS algorithm to walk the tree :
+//////////////////////////////////////////////////////// implemention of queue :
+type Queue struct {
+	queue    []*Node
+	capacity int
+	size     int
+	head     int
+	tail     int
+}
+
+func NewQueue(capacity int) *Queue {
+	q := new(Queue)
+	q.queue = make([]*Node, capacity)
+	q.capacity = capacity
+	q.tail = capacity - 1
+	return q
+}
+
+func (q *Queue) Enqueue(key *Node) error {
+	if q.IsFull() {
+		return errors.New("overflow !")
+	}
+	q.tail = (q.tail + 1) % q.capacity
+	q.queue[q.tail] = key
+	q.size++
+	return nil
+}
+
+func (q *Queue) Dequeue() (*Node, error) {
+	if q.IsEmpty() {
+		return nil, errors.New("underfolow !")
+	}
+	value := q.queue[q.head]
+	q.head = (q.head + 1) % q.capacity
+	q.size--
+	return value, nil
+}
+
+func (q *Queue) IsFull() bool {
+	return q.size == q.capacity
+}
+
+func (q *Queue) IsEmpty() bool {
+	return q.size == 0
+}
+
+//////////////////////////////////////////////////////////// bfs implemention :
+func (tree *Tree) Bfs_walk(n int) {
+	fmt.Println("BFS WALK : ")
+	q := NewQueue(n)
+	tmp := tree.Root
+	// visiting and printing all nodes until first leaf on the left
+	for tmp != tree.dummy {
+		q.Enqueue(tmp.Left)
+		q.Enqueue(tmp.Right)
+		fmt.Print(tmp.key)
+		fmt.Print(" ")
+		tmp, _ = q.Dequeue()
+	}
+	// visit and print leafs of tree (except dummy node of tree )
+	tmp2, err := q.Dequeue()
+	for err == nil {
+		if tmp2 != tree.dummy {
+			fmt.Print(tmp2.key)
+			fmt.Print(" ")
+		}
+		tmp2, err = q.Dequeue()
+	}
+	fmt.Println()
+}
+
+////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////// displaying tree :
 
 func GetTreePic(tree *Tree, res *TreePicture, padding string, pointer string, node *Node) {
@@ -256,45 +499,60 @@ func (tree *Tree) DisplayTree() {
 	fmt.Println(pic.pic)
 }
 
-/////////////////////////////////////////////////////////////////////////////////
-
-///////////////////////////////////////////////////////// testing implemention :
 func main() {
 	tree := CreateTree()
-	tree.Insert(10)
-	tree.DisplayTree()
-	fmt.Println("######################################")
-	tree.Insert(18)
-	tree.DisplayTree()
-	fmt.Println("######################################")
-	tree.Insert(7)
-	tree.DisplayTree()
-	fmt.Println("######################################")
-	tree.Insert(15)
-	tree.DisplayTree()
-	fmt.Println("######################################")
+	//	var input int
 	tree.Insert(16)
-	tree.DisplayTree()
-	fmt.Println("######################################")
-	tree.Insert(30)
-	tree.DisplayTree()
-	fmt.Println("######################################")
+	tree.Insert(33)
+	tree.Insert(21)
+	tree.Insert(17)
+	tree.Insert(13)
 	tree.Insert(25)
-	tree.DisplayTree()
-	fmt.Println("######################################")
+	tree.Insert(12)
+	tree.Insert(19)
+	tree.Insert(26)
 	tree.Insert(40)
+	tree.Insert(22)
+	tree.Insert(24)
 	tree.DisplayTree()
-	fmt.Println("######################################")
-	tree.Insert(60)
-	tree.DisplayTree()
-	fmt.Println("######################################")
-	tree.Insert(2)
-	tree.DisplayTree()
-	fmt.Println("######################################")
-	tree.Insert(1)
-	tree.DisplayTree()
-	fmt.Println("######################################")
-	tree.Insert(70)
-	tree.DisplayTree()
-	fmt.Println("######################################")
+	tree.Bfs_walk(12)
 }
+
+/////////////////////////////////////////////////////////////////////////////////
+/*func (node *Node) DeleteNode(tree *Tree) *Node {
+	if node == nil {
+		return nil
+	} else {
+		if node.IsLeaf(tree) { //node has no children
+			if node.IsRightChild() {
+				node.Parent.Left = nil
+			} else {
+				node.Parent.Right = nil
+			}
+			node.Parent = nil
+		} else if node.Right != tree.dummy && node.Left == tree.dummy { //node has one children at right
+			node.Right.Parent = node.Parent
+			if node.IsRightChild() {
+				node.Parent.Right = node.Right
+			} else {
+				node.Parent.Left = node.Right
+			}
+		} else if node.Left != tree.dummy && node.Right == tree.dummy { //node has one children at left
+			node.Left.Parent = node.Parent
+			if node.IsRightChild() {
+				node.Parent.Right = node.Left
+			} else {
+				node.Parent.Left = node.Left
+			}
+		} else { //node has two children
+			sucNod := node.GetSuccessor(tree)
+			fmt.Println(sucNod.key)
+			holder := sucNod.key
+			sucNod.key = node.key
+			node.key = holder
+			fmt.Println(sucNod.key)
+			sucNod.DeleteNode(tree)
+		}
+		return node
+	}
+}*/
