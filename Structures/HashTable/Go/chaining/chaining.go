@@ -1,4 +1,10 @@
-package main
+////////////////////////////////
+//    Author : Armin Goodarzi //
+//    GitHub :                //
+//      github.com/Armingodiz //
+//                            //
+////////////////////////////////
+package chaining
 
 import (
 	"fmt"
