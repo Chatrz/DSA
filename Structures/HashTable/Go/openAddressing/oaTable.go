@@ -59,6 +59,18 @@ func (table *HashTable) Insert(key, value int) error {
 	}
 }
 
+func (table *HashTable) Search(key int) *HashNode {
+	hashIndex := table.hashCode(key)
+	for table.Array[hashIndex] != nil {
+		if table.Array[hashIndex].Key == key {
+			return table.Array[hashIndex]
+		}
+		hashIndex += 1
+		hashIndex %= table.Capacity
+	}
+  return nil
+}
+
 func (table *HashTable) Display() {
 	for i := 0; i < table.Capacity; i++ {
 		fmt.Print("for slot ")
@@ -72,6 +84,7 @@ func (table *HashTable) Display() {
 func main() {
 	table := NewHashTable(10)
 	table.Insert(10, 20)
-  table.Insert(20, 21)
+	table.Insert(20, 21)
 	table.Display()
+  fmt.Println(table.Search(20))
 }
