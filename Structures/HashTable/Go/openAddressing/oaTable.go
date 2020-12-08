@@ -75,15 +75,17 @@ func (table *HashTable) Search(key int) *HashNode {
 	return nil
 }
 
-/*func (table *HashTable) Delete(key int) error {
+func (table *HashTable) Delete(key int) error {
 	hashIndex := table.hashCode(key)
 	for table.Array[hashIndex] != nil {
 		if table.Array[hashIndex].Key == key {
-
+			table.Array[hashIndex] = table.Dummy
+			return nil
 		}
-		hashIndex = hashCodePrime(hashIndex)
+		hashIndex = table.hashCodePrime(hashIndex)
 	}
-}*/
+	return errors.New("key not found ! ")
+}
 
 func (table *HashTable) Display() {
 	for i := 0; i < table.Capacity; i++ {
@@ -95,10 +97,20 @@ func (table *HashTable) Display() {
 	}
 }
 
-func main() {
+/*func main() {
 	table := NewHashTable(10)
 	table.Insert(10, 20)
 	table.Insert(20, 21)
+  table.Insert(30, 31)
+  table.Insert(40, 41)
+  table.Insert(50, 51)
+  table.Insert(60, 61)
+  table.Insert(70, 71)
+  table.Insert(80, 81)
+  table.Insert(90, 91)
+  table.Insert(100,1001)
 	table.Display()
-	fmt.Println(table.Search(20))
-}
+  table.Delete(30)
+  table.Display()
+	fmt.Println(table.Search(40))
+}*/
