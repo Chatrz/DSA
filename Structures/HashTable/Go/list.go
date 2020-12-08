@@ -64,8 +64,9 @@ func (list *LinkedList) Delete(index int) *Node {
 	if node == nil {
 		return nil
 	} else {
-		list.Size = list.Size - 1
-		if node.Next == nil { //node is tail of list
+		if node.Next == nil && node.Prev == nil { // it is the only node
+			list.Head = nil
+		} else if node.Next == nil { //node is tail of list
 			list.Tail = node.Prev
 			node.Prev.Next = nil
 		} else if node.Prev == nil { //nod is head of list
@@ -75,6 +76,7 @@ func (list *LinkedList) Delete(index int) *Node {
 			node.Next.Prev = node.Prev
 			node.Prev.Next = node.Next
 		}
+		list.Size = list.Size - 1
 		return node
 	}
 }
@@ -97,12 +99,9 @@ func (list *LinkedList) Search(index int) *Node {
 	}
 	for node != list.Tail {
 		node = node.Next
-		if node.Key.key == index {
+		if node == nil || node.Key.key == index {
 			return node
 		}
 	}
-	/*if list.Tail.Key.key == index {
-		return list.Tail
-	}*/
 	return nil
 }
