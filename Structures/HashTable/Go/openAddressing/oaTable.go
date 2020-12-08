@@ -2,7 +2,7 @@ package main
 
 import (
 	"errors"
-//	"fmt"
+	"fmt"
 )
 
 type HashNode struct {
@@ -59,8 +59,19 @@ func (table *HashTable) Insert(key, value int) error {
 	}
 }
 
+func (table *HashTable) Display() {
+	for i := 0; i < table.Capacity; i++ {
+		fmt.Print("for slot ")
+		fmt.Print(i)
+		fmt.Print(" : ")
+		fmt.Println(table.Array[i])
+		fmt.Println("###########################################")
+	}
+}
+
 func main() {
 	table := NewHashTable(10)
-  table.Insert(10,20)
-
+	table.Insert(10, 20)
+  table.Insert(20, 21)
+	table.Display()
 }
