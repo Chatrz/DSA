@@ -40,6 +40,12 @@ func (table *HashTable) hashCode(key int) int {
 	return key % table.Capacity
 }
 
+func (table *HashTable) hashCodePrime(hashIndex int) int {
+	hashIndex += 1
+	hashIndex %= table.Capacity
+	return hashIndex
+}
+
 func (table *HashTable) Insert(key, value int) error {
 	if table.Size == table.Capacity {
 		return errors.New("hash table is full !")
@@ -47,8 +53,7 @@ func (table *HashTable) Insert(key, value int) error {
 	node := NewHashNode(key, value)
 	hashIndex := table.hashCode(key)
 	for table.Array[hashIndex] != nil && table.Array[hashIndex] != table.Dummy {
-		hashIndex += 1
-		hashIndex %= table.Capacity
+		hashIndex = table.hashCodePrime(hashIndex)
 	}
 	if table.Array[hashIndex] == nil || table.Array[hashIndex] == table.Dummy {
 		table.Array[hashIndex] = node
@@ -65,11 +70,20 @@ func (table *HashTable) Search(key int) *HashNode {
 		if table.Array[hashIndex].Key == key {
 			return table.Array[hashIndex]
 		}
-		hashIndex += 1
-		hashIndex %= table.Capacity
+		hashIndex = table.hashCodePrime(hashIndex)
 	}
-  return nil
+	return nil
 }
+
+/*func (table *HashTable) Delete(key int) error {
+	hashIndex := table.hashCode(key)
+	for table.Array[hashIndex] != nil {
+		if table.Array[hashIndex].Key == key {
+
+		}
+		hashIndex = hashCodePrime(hashIndex)
+	}
+}*/
 
 func (table *HashTable) Display() {
 	for i := 0; i < table.Capacity; i++ {
@@ -86,5 +100,5 @@ func main() {
 	table.Insert(10, 20)
 	table.Insert(20, 21)
 	table.Display()
-  fmt.Println(table.Search(20))
+	fmt.Println(table.Search(20))
 }
