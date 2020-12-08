@@ -12,81 +12,81 @@ import (
 )
 
 type Node struct {
-	key  interface{}
-	next *Node
-	prev *Node
+	Key  interface{}
+	Next *Node
+	Prev *Node
 }
 
 type LinkedList struct {
-	size int
-	head *Node
-	tail *Node
+	Size int
+	Head *Node
+	Tail *Node
 }
 
 func CreateLinkedList() *LinkedList {
 	list := LinkedList{
-		size: 0,
-		head: nil,
-		tail: nil,
+		Size: 0,
+		Head: nil,
+		Tail: nil,
 	}
 	return &list
 }
 
 func (list *LinkedList) AddFront(key interface{}) {
-	if list.size == 0 {
+	if list.Size == 0 {
 		list.firstInitialize(key)
-	} else if list.size == 1 {
+	} else if list.Size == 1 {
 		node := &Node{
-			key:  key,
-			prev: list.head,
-			next: nil,
+			Key:  key,
+			Prev: list.Head,
+			Next: nil,
 		}
-		list.head.next = node
-		list.tail = node
+		list.Head.Next = node
+		list.Tail = node
 	} else {
 		node := &Node{
-			key:  key,
-			prev: list.tail,
-			next: nil,
+			Key:  key,
+			Prev: list.Tail,
+			Next: nil,
 		}
-		list.tail.next = node
-		list.tail = node
+		list.Tail.Next = node
+		list.Tail = node
 	}
-	list.size = list.size + 1
+	list.Size = list.Size + 1
 }
 
 func (list *LinkedList) AddBack(key interface{}) {
-	if list.size == 0 {
+	if list.Size == 0 {
 		list.firstInitialize(key)
-	} else if list.size == 1 {
+	} else if list.Size == 1 {
 		node := &Node{
-			key:  key,
-			prev: nil,
-			next: list.head,
+			Key:  key,
+			Prev: nil,
+			Next: list.Head,
 		}
-		list.head.prev = node
-		list.tail = list.head
-		list.head = node
+		list.Head.Prev = node
+		list.Tail = list.Head
+		list.Head = node
 	} else {
 		node := &Node{
-			key:  key,
-			prev: nil,
-			next: list.head,
+			Key:  key,
+			Prev: nil,
+			Next: list.Head,
 		}
-		list.head.prev = node
-		list.head = node
+		list.Head.Prev = node
+		list.Head = node
 	}
-	list.size = list.size + 1
+	list.Size = list.Size + 1
 }
 
 // adding first element to linked list
 func (list *LinkedList) firstInitialize(key interface{}) {
 	node := &Node{
-		key:  key,
-		prev: nil,
-		next: nil,
+		Key:  key,
+		Prev: nil,
+		Next: nil,
 	}
-	list.head = node
+	list.Head = node
 }
 
 func (list *LinkedList) Delete(index int) *Node {
@@ -94,44 +94,42 @@ func (list *LinkedList) Delete(index int) *Node {
 	if node == nil {
 		return nil
 	} else {
-		list.size = list.size - 1
-		if node.next == nil { //node is tail of list
-			list.tail = node.prev
-			node.prev.next = nil
-		} else if node.prev == nil { //nod is head of list
-			list.head = node.next
-			node.next.prev = nil
+		if node.Next == nil && node.Prev == nil { node is the only node
+			list.Head  = nil
+		} else if node.Next == nil { //node is tail of list
+			list.Tail = node.Prev
+			node.Prev.Next = nil
+		} else if node.Prev == nil { //nod is head of list
+			list.Head = node.Next
+			node.Next.Prev = nil
 		} else {
-			node.next.prev = node.prev
-			node.prev.next = node.next
+			node.Next.Prev = node.Prev
+			node.Prev.Next = node.Next
 		}
+		list.Size = list.Size - 1
 		return node
 	}
 }
 
 func (list *LinkedList) Display() {
-	rooter := list.head
-	fmt.Print("HEAD OF LIST : ")
-	for {
-		fmt.Println(rooter.key)
-		rooter = rooter.next
-		if rooter.next == nil {
-			fmt.Print("TAIL OF LIST : ")
-			fmt.Println(rooter.key)
-			break
-		}
+	rooter := list.Head
+	fmt.Print("list is :   ")
+	for rooter != nil {
+		fmt.Print(rooter.Key)
+		fmt.Print("  ")
+		rooter = rooter.Next
 	}
-
+	fmt.Println()
 }
 
 func (list *LinkedList) Search(index int) *Node {
-	if index < 0 || index > list.size {
+	if index < 0 || index > list.Size {
 		fmt.Println("INVALID INDEX !")
 		return nil
 	} else {
-		node := list.head
+		node := list.Head
 		for i := 0; i < index-1; i++ {
-			node = node.next
+			node = node.Next
 		}
 		return node
 	}
