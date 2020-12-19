@@ -5,30 +5,33 @@ import (
 )
 
 type AdjacentItem struct {
-	EndPoint *Vertex
-	Weight   int
-	Next     *AdjacentItem
+	EndPoint   *Vertex
+	StartPoint *Vertex
+	Weight     int
+	Next       *AdjacentItem
 }
 
-func NewAdjacentItem(endPoint *Vertex, weight int) *AdjacentItem {
+func NewAdjacentItem(endPoint, startPoint *Vertex, weight int) *AdjacentItem {
 	return &AdjacentItem{
-		EndPoint: endPoint,
-		Weight:   weight,
-		Next:     nil,
+		EndPoint:   endPoint,
+		StartPoint: startPoint,
+		Weight:     weight,
+		Next:       nil,
 	}
 }
 
-func (g *Graph) GetAdjacencyList() map[*Vertex]*AdjacentItem {
+// directed value determines if adjacenyList must be directed or not
+func (g *Graph) GetAdjacencyList(directed bool) map[*Vertex]*AdjacentItem {
 	list := make(map[*Vertex]*AdjacentItem)
 	for _, vertex := range g.Vertices {
 		counter := 0
 		for _, edge := range vertex.Edges {
-			if edge.Start == vertex {
+			if edge.Start == vertex || !directed { // if directed == > it depends on vertex to be starting point but if it is undirected == > it is true anyway
 				if counter == 0 {
-					list[vertex] = NewAdjacentItem(edge.End, edge.Weight)
+					list[vertex] = NewAdjacentItem(edge.End, edge.Start, edge.Weight)
 					counter++
 				} else {
-					list[vertex].AddFront(NewAdjacentItem(edge.End, edge.Weight))
+					list[vertex].AddFront(NewAdjacentItem(edge.End, edge.Start, edge.Weight))
 				}
 			}
 		}
@@ -51,7 +54,11 @@ func (g *Graph) PrintAdjacentList(list map[*Vertex]*AdjacentItem) {
 		temp := list[v]
 		for temp != nil {
 			fmt.Print(" ( ")
-			fmt.Print(temp.EndPoint.Key)
+			if temp.StartPoint == v {
+				fmt.Print(temp.EndPoint.Key)
+			} else {
+				fmt.Print(temp.StartPoint.Key)
+			}
 			fmt.Print(" , ")
 			fmt.Print(temp.Weight)
 			fmt.Print(" ) ")

@@ -15,6 +15,7 @@ func (g *Graph) Dfs() {
 
 	for _, vertex := range g.Vertices {
 		if status[vertex] == 0 { // vertex is unvisited
+      fmt.Println("tsssss")
 			g.Dfs_visit(status, vertex)
 		}
 	}
@@ -28,6 +29,8 @@ func (g *Graph) Dfs_visit(status map[*Vertex]int, vertex *Vertex) {
 	for temp != nil {
 		if status[temp.EndPoint] == 0 {
 			g.Dfs_visit(status, temp.EndPoint)
+		} else if status[temp.StartPoint] == 0 {
+			g.Dfs_visit(status, temp.StartPoint)
 		}
 		temp = temp.Next
 	}

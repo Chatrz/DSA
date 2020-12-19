@@ -101,20 +101,11 @@ func (g *Graph) PrintEdgesList() {
 	fmt.Println()
 }
 
-func main() {
+/*func main() {
 	g := NewGraph(12)
-	g.InsertVertex(0)
-	g.InsertVertex(1)
-	g.InsertVertex(9)
-	g.InsertVertex(8)
-	g.InsertVertex(10)
-	g.InsertVertex(11)
-	g.InsertVertex(7)
-	g.InsertVertex(6)
-	g.InsertVertex(5)
-	g.InsertVertex(3)
-	g.InsertVertex(4)
-	g.InsertVertex(2)
+	for i := 0; i < 12; i++ {
+		g.InsertVertex(i)
+	}
 	g.InsertEdge(1, 0, 1)
 	g.InsertEdge(0, 9, 1)
 	g.InsertEdge(9, 8, 1)
@@ -129,12 +120,11 @@ func main() {
 	g.InsertEdge(3, 5, 1)
 	g.InsertEdge(3, 2, 1)
 	g.InsertEdge(3, 4, 1)
-
 	matrix := g.GatAdjacencyMatrix()
 	g.printMatrix(matrix)
-	list := g.GetAdjacencyList()
+	list := g.GetAdjacencyList(true)
 	g.AdjacenyList = list
 	g.PrintAdjacentList(list)
 	g.PrintEdgesList()
 	g.Dfs()
-}
+}*/
