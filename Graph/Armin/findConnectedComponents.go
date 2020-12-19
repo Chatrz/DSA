@@ -8,7 +8,7 @@ import (
 var groupNumber int
 var groups [][]int
 
-func main() {
+/*func main() {
 	g := NewGraph(18)
 	for i := 0; i < 18; i++ {
 		g.InsertVertex(i)
@@ -36,7 +36,7 @@ func main() {
 	g.AdjacenyList = list
 	g.Dfs1()
 	fmt.Println(groups)
-}
+}*/
 
 // some little changes to dfs algorithm to solve this problem :
 
