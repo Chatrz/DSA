@@ -5,6 +5,8 @@ import (
 	"fmt"
 )
 
+// TODO : adding shortest path finder with bfs .
+
 func (g *Graph) BfsWalk(start *Vertex) {
   fmt.Println("BFS WALK : ")
 	status := make(map[*Vertex]bool) // true == > visited ,false == > unvisited
