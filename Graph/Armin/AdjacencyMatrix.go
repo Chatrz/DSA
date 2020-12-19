@@ -19,7 +19,7 @@ func (g *Graph) GatAdjacencyMatrix() map[int]map[int]int {
 }
 
 func (g *Graph) printMatrix(matrix map[int]map[int]int) {
-  fmt.Print("    ")
+	fmt.Print("    ")
 	for _, vertex := range g.Vertices {
 		fmt.Print(vertex.Key)
 		fmt.Print("  ")
@@ -30,7 +30,7 @@ func (g *Graph) printMatrix(matrix map[int]map[int]int) {
 		fmt.Print("  ")
 		for _, vertex2 := range g.Vertices {
 			fmt.Print(matrix[vertex.Key][vertex2.Key])
-      fmt.Print("   ")
+			fmt.Print("   ")
 		}
 		fmt.Println()
 	}

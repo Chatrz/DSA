@@ -95,4 +95,6 @@ func main() {
 	g.InsertEdge(10, 43, 15)
 	matrix := g.GatAdjacencyMatrix()
 	g.printMatrix(matrix)
+	list := g.GetAdjacencyList()
+	g.PrintAdjacentList(list)
 }
