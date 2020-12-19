@@ -6,7 +6,7 @@ import (
 )
 
 type Vertex struct {
-	Key   interface{}
+	Key   int
 	Edges []*Edge
 }
 
@@ -22,7 +22,7 @@ type Graph struct {
 	Capacity int
 }
 
-func NewVertex(key interface{}) *Vertex {
+func NewVertex(key int) *Vertex {
 	return &Vertex{
 		Key:   key,
 		Edges: []*Edge{},
@@ -45,7 +45,7 @@ func NewGraph(capacity int) *Graph {
 	}
 }
 
-func (g *Graph) InsertVertex(key interface{}) {
+func (g *Graph) InsertVertex(key int) {
 	if len(g.Vertices) >= g.Capacity {
 		fmt.Println("GRAPH IS FULL ! ")
 	} else {
@@ -53,7 +53,7 @@ func (g *Graph) InsertVertex(key interface{}) {
 	}
 }
 
-func (g *Graph) InsertEdge(index1, index2 interface{}, weight int) error {
+func (g *Graph) InsertEdge(index1, index2 int, weight int) error {
 	var start *Vertex
 	var end *Vertex
 	for _, vertex := range g.Vertices {
@@ -89,6 +89,10 @@ func main() {
 	g := NewGraph(10)
 	g.InsertVertex(10)
 	g.InsertVertex(23)
+	g.InsertVertex(43)
+	g.InsertVertex(53)
 	g.InsertEdge(10, 23, 5)
-	fmt.Println(g.Edges[0].Weight)
+	g.InsertEdge(10, 43, 15)
+	matrix := g.GatAdjacencyMatrix()
+	g.printMatrix(matrix)
 }
