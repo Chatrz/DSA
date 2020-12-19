@@ -85,6 +85,21 @@ func (g *Graph) checkEdgeExistence(start, end *Vertex, weight int) bool {
 	return false
 }
 
+
+func (g *Graph) PrintEdgesList() {
+	fmt.Println("Edges List : ")
+	for _, edge := range g.Edges {
+		fmt.Print(" ( ")
+		fmt.Print(edge.Start.Key)
+		fmt.Print(" , ")
+		fmt.Print(edge.End.Key)
+		fmt.Print(" , ")
+		fmt.Print(edge.Weight)
+		fmt.Print(" )  ")
+	}
+	fmt.Println()
+}
+
 func main() {
 	g := NewGraph(10)
 	g.InsertVertex(10)
@@ -97,4 +112,5 @@ func main() {
 	g.printMatrix(matrix)
 	list := g.GetAdjacencyList()
 	g.PrintAdjacentList(list)
+	g.PrintEdgesList()
 }
