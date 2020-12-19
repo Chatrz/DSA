@@ -21,10 +21,12 @@ func NewAdjacentItem(endPoint *Vertex, weight int) *AdjacentItem {
 func (g *Graph) GetAdjacencyList() map[*Vertex]*AdjacentItem {
 	list := make(map[*Vertex]*AdjacentItem)
 	for _, vertex := range g.Vertices {
-		for i, edge := range vertex.Edges {
+    counter:= 0
+		for _, edge := range vertex.Edges {
 			if edge.Start == vertex {
-				if i == 0 {
+				if counter == 0 {
 					list[vertex] = NewAdjacentItem(edge.End, edge.Weight)
+          counter++
 				} else {
 					list[vertex].AddFront(NewAdjacentItem(edge.End, edge.Weight))
 				}

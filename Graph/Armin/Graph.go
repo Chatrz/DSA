@@ -17,9 +17,10 @@ type Edge struct {
 }
 
 type Graph struct {
-	Vertices []*Vertex
-	Edges    []*Edge
-	Capacity int
+	Vertices     []*Vertex
+	Edges        []*Edge
+	AdjacenyList map[*Vertex]*AdjacentItem
+	Capacity     int
 }
 
 func NewVertex(key int) *Vertex {
@@ -39,9 +40,10 @@ func NewEdge(start, end *Vertex, weight int) *Edge {
 
 func NewGraph(capacity int) *Graph {
 	return &Graph{
-		Vertices: []*Vertex{},
-		Edges:    []*Edge{},
-		Capacity: capacity,
+		Vertices:     []*Vertex{},
+		Edges:        []*Edge{},
+		AdjacenyList: nil,
+		Capacity:     capacity,
 	}
 }
 
@@ -85,7 +87,6 @@ func (g *Graph) checkEdgeExistence(start, end *Vertex, weight int) bool {
 	return false
 }
 
-
 func (g *Graph) PrintEdgesList() {
 	fmt.Println("Edges List : ")
 	for _, edge := range g.Edges {
@@ -106,11 +107,16 @@ func main() {
 	g.InsertVertex(23)
 	g.InsertVertex(43)
 	g.InsertVertex(53)
-	g.InsertEdge(10, 23, 5)
-	g.InsertEdge(10, 43, 15)
+	g.InsertEdge(10, 23, 1)
+	g.InsertEdge(10, 43, 1)
+	g.InsertEdge(43, 23, 1)
+	g.InsertEdge(23, 53, 1)
+	g.InsertEdge(53, 10, 1)
 	matrix := g.GatAdjacencyMatrix()
 	g.printMatrix(matrix)
 	list := g.GetAdjacencyList()
+	g.AdjacenyList = list
 	g.PrintAdjacentList(list)
 	g.PrintEdgesList()
+	g.Dfs()
 }
