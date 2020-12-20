@@ -1,14 +1,11 @@
 package main
 
 import (
-	"errors"
 	"fmt"
 )
 
-// TODO : adding shortest path finder with bfs .
-
 func (g *Graph) BfsWalk(start *Vertex) {
-  fmt.Println("BFS WALK : ")
+	fmt.Println("BFS WALK : ")
 	status := make(map[*Vertex]bool) // true == > visited ,false == > unvisited
 	// Mark all the vertices as not visited
 	for _, v := range g.Vertices {
@@ -35,50 +32,30 @@ func (g *Graph) BfsWalk(start *Vertex) {
 	}
 }
 
-// customized implemention of queue for bfs algorithm :
-type Queue struct {
-	queue    []*Vertex
-	capacity int
-	size     int
-	head     int
-	tail     int
-}
-
-func NewQueue(capacity int) *Queue {
-	q := new(Queue)
-	q.queue = make([]*Vertex, capacity)
-	q.capacity = capacity
-	q.tail = capacity - 1
-	return q
-}
-
-func (q *Queue) Enqueue(key *Vertex) error {
-	if q.IsFull() {
-		return errors.New("queue overflow error")
+/*
+func main() {
+	g := NewGraph(12)
+	for i := 0; i < 12; i++ {
+		g.InsertVertex(i)
 	}
-	q.tail = (q.tail + 1) % q.capacity
-	q.queue[q.tail] = key
-	q.size++
-	return nil
+	g.InsertEdge(1, 0, 1)
+	g.InsertEdge(0, 9, 1)
+	g.InsertEdge(9, 8, 1)
+	g.InsertEdge(8, 1, 1)
+	g.InsertEdge(8, 7, 1)
+	g.InsertEdge(7, 10, 1)
+	g.InsertEdge(10, 11, 1)
+	g.InsertEdge(11, 7, 1)
+	g.InsertEdge(7, 3, 1)
+	g.InsertEdge(6, 7, 1)
+	g.InsertEdge(5, 6, 1)
+	g.InsertEdge(3, 5, 1)
+	g.InsertEdge(3, 2, 1)
+	g.InsertEdge(3, 4, 1)
+	// we use undirected adjacent list for this question by passing false as "directed" value to set graph adjacent list
+	list := g.GetAdjacencyList(false)
+	g.AdjacenyList = list
+  g.PrintAdjacentList(list)
+  g.BfsWalk(g.Vertices[0])
 }
-
-func (q *Queue) Dequeue() (*Vertex, error) {
-	if q.IsEmpty() {
-		return nil, errors.New("queue underfolow error")
-	}
-	value := q.queue[q.head]
-	q.head = (q.head + 1) % q.capacity
-	q.size--
-	return value, nil
-}
-
-func (q *Queue) IsFull() bool {
-	return q.size == q.capacity
-}
-
-func (q *Queue) IsEmpty() bool {
-	return q.size == 0
-}
-
-// main implementation is from my dear friend hadi abbasi ==>  github.com/hawwwdi
-////////////////////////////////////////////////////////////////////
+*/
