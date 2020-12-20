@@ -4,6 +4,12 @@ import (
 	"fmt"
 )
 
+// we can use Bfs algorithm for finding shortes path and the implementation would look like dijkstra algorithm but instead of using close neighber ( greedy approach)
+// we would check all the neighbors using queue .
+
+// more information in == > https://cp-algorithms.com/graph/breadth-first-search.html
+
+
 func (g *Graph) BfsWalk(start *Vertex) {
 	fmt.Println("BFS WALK : ")
 	status := make(map[*Vertex]bool) // true == > visited ,false == > unvisited

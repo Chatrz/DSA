@@ -5,7 +5,7 @@ import (
 )
 
 // undirected version inpired from == > https://www.youtube.com/watch?v=pVfj6mxhdMw
-// directed version needed changes came in line **45** of this implementation. 
+// directed version needed changes came in line **45** of this implementation.
 
 func (g *Graph) DijkstraUndirected(startingPoint *Vertex) (map[*Vertex]int, map[*Vertex]*Vertex) {
 	status := make(map[*Vertex]bool)        // true == > visited ,false == > unvisited
