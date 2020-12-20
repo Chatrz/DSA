@@ -5,3 +5,7 @@
 		
 		usefull for future review : 
 			https://www.tutorialspoint.com/graph_theory/graph_theory_trees.htm		
+
+
+
+![Alt text](/relative/path/to/Dfs-usage(maybeToDo).png?raw=true "DFS")
