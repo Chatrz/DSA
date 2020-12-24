@@ -131,22 +131,21 @@ func colorFixUp(t *RBT, n *Node) {
 		nodeUncle.color = Black
 		n.parent.color = Black
 		n.parent.parent.color = Red
-	}
-	if nodeUncle.color == Black {
+	} else {
 		if isLeftChild(t, n) && isLeftChild(t, n.parent) {
 			n.parent.color, n.parent.parent.color = n.parent.parent.color, n.parent.color
 			rightRotate(t, n.parent.parent)
 		} else if isRightChild(t, n) && isLeftChild(t, n.parent) {
 			leftRotate(t, n.parent)
 			n.parent.color, n.parent.parent.color = n.parent.parent.color, n.parent.color
-			rightRotate(t, n.parent.parent)
+			rightRotate(t, n.parent)
 		} else if isRightChild(t, n) && isRightChild(t, n.parent) {
 			n.parent.color, n.parent.parent.color = n.parent.parent.color, n.parent.color
 			leftRotate(t, n.parent.parent)
 		} else {
 			rightRotate(t, n.parent)
 			n.parent.color, n.parent.parent.color = n.parent.parent.color, n.parent.color
-			leftRotate(t, n.parent.parent)
+			leftRotate(t, n.parent)
 		}
 	}
 	colorFixUp(t, n.parent.parent)
