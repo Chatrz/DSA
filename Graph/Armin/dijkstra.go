@@ -138,6 +138,7 @@ func PrintPath(startVertex, destVertex *Vertex, prev map[*Vertex]*Vertex) {
 	fmt.Println()
 }
 
+<<<<<<< HEAD
 /*
 15 21
 1 2
@@ -165,6 +166,11 @@ func PrintPath(startVertex, destVertex *Vertex, prev map[*Vertex]*Vertex) {
 func main() {
 	g := NewGraph(15)
 	for i := 1; i <= 15; i++ { // 0 ==A , 1 == B , 2 == C , 3 == D , 4 == E
+=======
+/*func main() {
+	g := NewGraph(5)
+	for i := 0; i < 5; i++ { // 0 ==A , 1 == B , 2 == C , 3 == D , 4 == E
+>>>>>>> armin
 		g.InsertVertex(i)
 	}
 	g.InsertEdge(1, 2, 1)
@@ -192,4 +198,4 @@ func main() {
 	path, prev := g.DijkstraUndirected(g.Vertices[0])
 	printDijsktraResult(path, prev)
 	PrintPath(g.Vertices[0], g.Vertices[1], prev)
-}
+}*/
