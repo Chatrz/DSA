@@ -18,9 +18,14 @@ func (g *Graph)DFSUtil( v *Vertex, visited map[*Vertex]bool,connectedComponents 
     }
 }
 
-Graph Graph::getTranspose()
-{
-    Graph g(V);
+func (g *Graph)getTranspose(int size) *Graph{
+    reverssedGraph := NewGraph(size)
+    for _,v := range g.Vertices {
+      reverssedGraph.InsertVertex(v.Key)
+    }
+    for _,e := range g.Edges {
+      reverssedGraph.InsertEdge(e.Start,e.End,e.Weight)
+    }
     for (int v = 0; v < V; v++)
     {
         // Recur for all the vertices adjacent to this vertex
