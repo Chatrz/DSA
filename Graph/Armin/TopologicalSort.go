@@ -1,7 +1,7 @@
 package main
 
 import (
-	"fmt"
+	//"fmt"
 )
 
 ///////////// function to check if a directed gragh is cyclic or not , this algorithm is based on DFS
@@ -82,7 +82,7 @@ func (g *Graph) GetTopList() *Stack {
 	return stack
 }
 
-func main() {
+/*func main() {
 	g := NewGraph(6)
 	for i := 0; i < 6; i++ {
 		g.InsertVertex(i)
@@ -104,4 +104,4 @@ func main() {
 		fmt.Print(" ")
 	}
 	fmt.Println()
-}
+}*/

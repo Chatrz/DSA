@@ -1,91 +1,125 @@
 package main
 
-import ()
+import (
+	"fmt"
+)
+/// this version of code inspired from == > https://www.geeksforgeeks.org/strongly-connected-components/
 
-func (g *Graph)DFSUtil( v *Vertex, visited map[*Vertex]bool,connectedComponents []*Vertex) {
-    // Mark the current node as visited and print it
-    visited[v] = true
-    connectedComponents = append(connectedComponents,v)
-    // Recur for all the vertices adjacent to this vertex
-    temp := g.AdjacenyList[v]
-    for temp != nil {
-      if temp.StartPoint == v {
-        if !visited[temp.EndPoint]{
-          g.DFSUtil(temp.EndPoint,visited,connectedComponents)
-        }
-      }
-      temp = temp.Next
-    }
+var stack *Stack
+var connectedComponents []*Vertex
+
+func (g *Graph) DFSUtil(v *Vertex, visited map[*Vertex]bool) {
+	// Mark the current node as visited and print it
+	visited[v] = true
+	fmt.Println(v.Key)
+	// Recur for all the vertices adjacent to this vertex
+	temp := g.AdjacenyList[v]
+	for temp != nil {
+		if temp.StartPoint == v {
+			if !visited[temp.EndPoint] {
+				g.DFSUtil(temp.EndPoint, visited)
+			}
+		}
+		temp = temp.Next
+	}
 }
 
-func (g *Graph)getTranspose(int size) *Graph{
-    reverssedGraph := NewGraph(size)
-    for _,v := range g.Vertices {
-      reverssedGraph.InsertVertex(v.Key)
-    }
-    for _,e := range g.Edges {
-      reverssedGraph.InsertEdge(e.Start,e.End,e.Weight)
-    }
-    for (int v = 0; v < V; v++)
-    {
-        // Recur for all the vertices adjacent to this vertex
-        list<int>::iterator i;
-        for(i = adj[v].begin(); i != adj[v].end(); ++i)
-        {
-            g.adj[*i].push_back(v);
-        }
-    }
-    return g;
+func (g *Graph) getVertex(key int) *Vertex {
+	for _, v := range g.Vertices {
+		if v.Key == key {
+			return v
+		}
+	}
+	return nil
 }
 
-void Graph::fillOrder(int v, bool visited[], stack<int> &Stack)
-{
-    // Mark the current node as visited and print it
-    visited[v] = true;
-
-    // Recur for all the vertices adjacent to this vertex
-    list<int>::iterator i;
-    for(i = adj[v].begin(); i != adj[v].end(); ++i)
-        if(!visited[*i])
-            fillOrder(*i, visited, Stack);
-
-    // All vertices reachable from v are processed by now, push v
-    Stack.push(v);
+func (g *Graph) getTranspose(size int) *Graph {
+	reverssedGraph := NewGraph(size)
+	for _, v := range g.Vertices {
+		reverssedGraph.Vertices = append(reverssedGraph.Vertices, v)
+	}
+	for _, e := range g.Edges {
+		reverssedGraph.InsertEdge(e.End.Key, e.Start.Key, e.Weight)
+	}
+	return reverssedGraph
 }
 
-void Graph::printSCCs()
-{
-    stack<int> Stack;
+func (g *Graph) fillOrder(v *Vertex, visited map[*Vertex]bool) {
+	// Mark the current node as visited
+	visited[v] = true
 
-    // Mark all the vertices as not visited (For first DFS)
-    bool *visited = new bool[V];
-    for(int i = 0; i < V; i++)
-        visited[i] = false;
+	// Recur for all the vertices adjacent to this vertex
+	temp := g.AdjacenyList[v]
+	for temp != nil {
+		if temp.StartPoint == v {
+			if !visited[temp.EndPoint] {
+				g.fillOrder(temp.EndPoint, visited)
+			}
+		}
+		temp = temp.Next
+	}
+	// All vertices reachable from v are processed by now, push v
+  fmt.Print("PUSHHH  ")
+  fmt.Println(v.Key)
+	stack.Push(v)
+}
 
-    // Fill vertices in stack according to their finishing times
-    for(int i = 0; i < V; i++)
-        if(visited[i] == false)
-            fillOrder(i, visited, Stack);
+func (g *Graph) printSCCs(size int) {
+	stack = CreateStack()
+	// Mark all the vertices as not visited (For first DFS)
+	visited := make(map[*Vertex]bool)
+	for _, v := range g.Vertices {
+		visited[v] = false
+	}
 
-    // Create a reversed graph
-    Graph gr = getTranspose();
+	// Fill vertices in stack according to their finishing times
+	for _, v := range g.Vertices {
+		if !visited[v] {
+			g.fillOrder(v, visited)
+		}
+	}
 
-    // Mark all the vertices as not visited (For second DFS)
-    for(int i = 0; i < V; i++)
-        visited[i] = false;
+	// Create a reversed graph
+	reverssedGraph := g.getTranspose(size)
+	reverssedGraph.AdjacenyList = reverssedGraph.GetAdjacencyList(false)
+	reverssedGraph.PrintAdjacentList(reverssedGraph.AdjacenyList)
 
-    // Now process all vertices in order defined by Stack
-    while (Stack.empty() == false)
-    {
-        // Pop a vertex from stack
-        int v = Stack.top();
-        Stack.pop();
+	// Mark all the vertices as not visited (For second DFS)
+	visitedReversed := make(map[*Vertex]bool)
+	for _, v := range reverssedGraph.Vertices {
+		visitedReversed[v] = false
+	}
 
-        // Print Strongly connected component of the popped vertex
-        if (visited[v] == false)
-        {
-            gr.DFSUtil(v, visited);
-            cout << endl;
-        }
-    }
+	// Now process all vertices in order defined by Stack
+	for _, v := range stack.stack {
+		fmt.Println(v.Key)
+	}
+	fmt.Println("@@@@@@@@@@@@@@@@@@@@@@@@@")
+	for !stack.IsEmpty() {
+
+		// Pop a vertex from stack
+		v := reverssedGraph.getVertex(stack.Pop().Key)
+		fmt.Print("STRONGLY CONNECTED TO   ")
+		fmt.Println(v.Key)
+		// Print Strongly connected component of the popped vertex
+		if !visitedReversed[v] {
+			connectedComponents = []*Vertex{}
+			reverssedGraph.DFSUtil(v, visitedReversed)
+			fmt.Println("#######################")
+		}
+	}
+}
+
+func main() {
+	g := NewGraph(5)
+	for i := 0; i < 5; i++ {
+		g.InsertVertex(i)
+	}
+	g.InsertEdge(1, 0, 1)
+	g.InsertEdge(0, 3, 1)
+	g.InsertEdge(0, 2, 1)
+	g.InsertEdge(2, 1, 1)
+	g.InsertEdge(3, 4, 1)
+	g.AdjacenyList = g.GetAdjacencyList(false)
+	g.printSCCs(5)
 }
