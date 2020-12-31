@@ -4,6 +4,7 @@ import (
 	"fmt"
 )
 
+///////////// function to check if a directed gragh is cyclic or not , this algorithm is based on DFS
 func (g *Graph) IsCyclic() bool {
 	// Mark all the vertices as not visited and not part of recursion
 	// stack
