@@ -30,6 +30,10 @@ func TestToMaxHeapify(t *testing.T) {
 			[]int{1, 2, 3, 4, 5},
 			[]int{5, 4, 3, 1, 2},
 		},
+		{
+			[]int{21, 15, 17, 25, 23, 30, 24, 28, 13, 12, 20, 19, 10},
+			[]int{30, 28, 24, 25, 23, 19, 21, 15, 13, 12, 20, 17, 10},
+		},
 	}
 	for _, test := range tests {
 		ToMaxHeap(test.given)
