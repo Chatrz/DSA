@@ -25,6 +25,17 @@ class Graph{
             }
         }
         void print_adj_matrix(){
-            
+            for (int i=0;i<v;i++){
+                vector<int> temp_vect(v,0);
+                vector<int>::iterator iter;
+                cout<< i <<"- ";
+                for(iter = adjList[i].begin(); iter!=adjList[i].end();iter++){
+                    temp_vect[*iter]=1;
+                }
+                for(iter = adjList[i].begin(); iter!=adjList[i].end();iter++){
+                    cout<<*iter;
+                }
+                cout<<endl;
+            }
         }
 };
