@@ -1,5 +1,5 @@
 /**************************************************************************************  
-     Dijkstra on set for sparse graphs - O(MlogM). Slower than heap version
+     Dijkstra on set for sparse graphs - O(MlogM). Slower than heap version.
 **************************************************************************************/
 
 #include <iostream>
