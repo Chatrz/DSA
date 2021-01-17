@@ -47,33 +47,35 @@
   * [Splay Tree](https://github.com/sinamna/DSA/tree/amirhossein/Data%20Structures/Trees/SplayTree/CPP)
 
 ### [Graph Theory](https://github.com/sinamna/DSA/tree/amirhossein/Graph%20Theory)
-  * [Armin](https://github.com/sinamna/DSA/tree/amirhossein/Graph%20Theory/Armin)
   * [BFS](https://github.com/sinamna/DSA/tree/amirhossein/Graph%20Theory/BFS)
-  * [Bellman Ford](https://github.com/sinamna/DSA/tree/amirhossein/Graph%20Theory/BellmenFord/CPP)
+  * [Bellman Ford](https://github.com/sinamna/DSA/tree/amirhossein/Graph%20Theory/BellmenFord)
   * [DFS](https://github.com/sinamna/DSA/tree/amirhossein/Graph%20Theory/DFS)
-  * [Dijkstra](https://github.com/sinamna/DSA/tree/amirhossein/Graph%20Theory/Dijkstra/CPP)
+  * [Dijkstra](https://github.com/sinamna/DSA/tree/amirhossein/Graph%20Theory/Dijkstra)
   * [Floyd Warshall](https://github.com/sinamna/DSA/tree/amirhossein/Graph%20Theory/FloydWarshall)
-  * [Kruskal](https://github.com/sinamna/DSA/tree/amirhossein/Graph%20Theory/Kruskal/CPP)
-  * [Prim](https://github.com/sinamna/DSA/tree/amirhossein/Graph%20Theory/Prim/CPP)
-  * [Toplogical Sort](https://github.com/sinamna/DSA/tree/amirhossein/Graph%20Theory/ToolsForBuildingGraph/Python)
-  * [Graph Tools](https://github.com/sinamna/DSA/tree/amirhossein/Graph%20Theory/ToplogicalSort/CPP)
+  * [Kruskal](https://github.com/sinamna/DSA/tree/amirhossein/Graph%20Theory/Kruskal)
+  * [Prim](https://github.com/sinamna/DSA/tree/amirhossein/Graph%20Theory/Prim)
+  * [Toplogical Sort](https://github.com/sinamna/DSA/tree/amirhossein/Graph%20Theory/ToolsForBuildingGraph)
+  * [Graph Tools](https://github.com/sinamna/DSA/tree/amirhossein/Graph%20Theory/ToplogicalSort)
 
 ### [Sortings Algorithms](https://github.com/sinamna/DSA/tree/amirhossein/Sortings%20Algorithms)
   * [Bubble Sort](https://github.com/sinamna/DSA/tree/amirhossein/Sortings%20Algorithms/BubbleSort)
-  * [Heap Sort](https://github.com/sinamna/DSA/tree/amirhossein/Sortings%20Algorithms/HeapSort/Go)
+  * [Heap Sort](https://github.com/sinamna/DSA/tree/amirhossein/Sortings%20Algorithms/HeapSort)
   * [Insertion Sort](https://github.com/sinamna/DSA/tree/amirhossein/Sortings%20Algorithms/InsertionSort)
   * [Merge Sort](https://github.com/sinamna/DSA/tree/amirhossein/Sortings%20Algorithms/MergeSort)
-  * [Radix Sort](https://github.com/sinamna/DSA/tree/amirhossein/Sortings%20Algorithms/RadixSort/CPP)
+  * [Radix Sort](https://github.com/sinamna/DSA/tree/amirhossein/Sortings%20Algorithms/RadixSort)
   * [Selection Sort](https://github.com/sinamna/DSA/tree/amirhossein/Sortings%20Algorithms/SelectionSort)
 
 ### [Searchings Algorithms](https://github.com/sinamna/DSA/tree/amirhossein/Searchings%20Algorithms)
   * [Binary Search](https://github.com/sinamna/DSA/tree/amirhossein/Searchings%20Algorithms/BinarySearch)
-  * [Fibonacci Search](https://github.com/sinamna/DSA/tree/amirhossein/Searchings%20Algorithms/FibonacciSearch/C)
+  * [Fibonacci Search](https://github.com/sinamna/DSA/tree/amirhossein/Searchings%20Algorithms/FibonacciSearch)
   * [Jump Search](https://github.com/sinamna/DSA/tree/amirhossein/Searchings%20Algorithms/JumpSearch)
   * [Linear Search](https://github.com/sinamna/DSA/tree/amirhossein/Searchings%20Algorithms/LinearSearch)
 
 ### [Home works (Fall 2020 - Spring 2021)](https://github.com/sinamna/DSA/tree/amirhossein/Homeworks%20(Fall%2099))
   <p> Our course homeworks with solutions. </p>
+  
+### [Problems & Solutions](https://github.com/sinamna/DSA/tree/master/Problems%20%26%20Solutions)
+  <p> Diffrenet problems that we solved with algorithms and data structures used in repository. </p>
 
 ## Resources 
 * [MIT Introduction to Algorithms](https://www.youtube.com/playlist?list=PLUl4u3cNGP61Oq3tWYp6V_F-5jb5L2iHb) (video)
