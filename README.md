@@ -17,7 +17,7 @@
   git clone https://github.com/sinamna/DSA.git
   ```
   
-  If you want you can donwload the project <i>.zip</i> file from the <b>green bottom with "Code" on it</b> on the side.
+  If you want you can donwload the project <i>.zip</i> file from the <b>green button with "Code" on it</b> on the side.
 </p>
 
 ## Content References
