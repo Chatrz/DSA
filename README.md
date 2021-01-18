@@ -32,14 +32,14 @@
 
 * #### [Tables](https://github.com/sinamna/DSA/tree/amirhossein/Data%20Structures/Tables)
   * [Hash Table](https://github.com/sinamna/DSA/tree/amirhossein/Data%20Structures/Tables/HashTable)
-  * [Sparse Table](https://github.com/sinamna/DSA/tree/amirhossein/Data%20Structures/Tables/SparseTable/CPP)
+  * [Sparse Table](https://github.com/sinamna/DSA/tree/amirhossein/Data%20Structures/Tables/SparseTable)
 
 * #### [Trees](https://github.com/sinamna/DSA/tree/amirhossein/Data%20Structures/Trees)
-  * [AVL Tree](https://github.com/sinamna/DSA/tree/amirhossein/Data%20Structures/Trees/AVLTree/CPP)
+  * [AVL Tree](https://github.com/sinamna/DSA/tree/amirhossein/Data%20Structures/Trees/AVLTree)
   * [Binary Heap Tree](https://github.com/sinamna/DSA/tree/amirhossein/Data%20Structures/Trees/BinaryHeapTree)
   * [Binary Search Tree](https://github.com/sinamna/DSA/tree/amirhossein/Data%20Structures/Trees/BinarySearchTree)
   * [Binary Tree](https://github.com/sinamna/DSA/tree/amirhossein/Data%20Structures/Trees/BinaryTree)
-  * [Cartesian Tree](https://github.com/sinamna/DSA/tree/amirhossein/Data%20Structures/Trees/CartesianTree/CPP)
+  * [Cartesian Tree](https://github.com/sinamna/DSA/tree/amirhossein/Data%20Structures/Trees/CartesianTree)
   * [Fenwick Tree](https://github.com/sinamna/DSA/tree/amirhossein/Data%20Structures/Trees/FenwickTree/CPP)
   * [Fibonacci Heap Tree](https://github.com/sinamna/DSA/tree/amirhossein/Data%20Structures/Trees/FibonacciHeapTree/CPP)
   * [Red Black Tree](https://github.com/sinamna/DSA/tree/amirhossein/Data%20Structures/Trees/RedBlackTree)
