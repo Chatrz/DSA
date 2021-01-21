@@ -1,6 +1,10 @@
 # DSA ( Data Structures & Algorithms )
 
-<p>
+<p align="center">
+  <img src="https://github.com/sinamna/DSA/blob/master/logo.webp" width=600 />
+</p>
+
+<p align="center">
   A playground for <b>Data structures and Algorithms</b>.<br />
   My friends and I decided to build a source for all of our problems and homeworks in our <i>2020-2021 Data Structures And Algorithms Course</i>. <br />
   In here we represent all of the problems we hit throuth this course and data structures and algorithms that we used to solve them. <br />
