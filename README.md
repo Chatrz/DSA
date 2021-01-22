@@ -1,6 +1,10 @@
 # DSA ( Data Structures & Algorithms )
 
-<p>
+<p align="center">
+  <img src="https://github.com/sinamna/DSA/blob/master/logo.webp" width=600 />
+</p>
+
+<p align="center">
   A playground for <b>Data structures and Algorithms</b>.<br />
   My friends and I decided to build a source for all of our problems and homeworks in our <i>2020-2021 Data Structures And Algorithms Course</i>. <br />
   In here we represent all of the problems we hit throuth this course and data structures and algorithms that we used to solve them. <br />
@@ -17,7 +21,7 @@
   git clone https://github.com/sinamna/DSA.git
   ```
   
-  If you want you can donwload the project <i>.zip</i> file from the <b>green bottom with "Code" on it</b> on the side.
+  If you want you can donwload the project <i>.zip</i> file from the <b>green button with "Code" on it</b> on the side.
 </p>
 
 ## Content References
@@ -32,48 +36,50 @@
 
 * #### [Tables](https://github.com/sinamna/DSA/tree/amirhossein/Data%20Structures/Tables)
   * [Hash Table](https://github.com/sinamna/DSA/tree/amirhossein/Data%20Structures/Tables/HashTable)
-  * [Sparse Table](https://github.com/sinamna/DSA/tree/amirhossein/Data%20Structures/Tables/SparseTable/CPP)
+  * [Sparse Table](https://github.com/sinamna/DSA/tree/amirhossein/Data%20Structures/Tables/SparseTable)
 
 * #### [Trees](https://github.com/sinamna/DSA/tree/amirhossein/Data%20Structures/Trees)
-  * [AVL Tree](https://github.com/sinamna/DSA/tree/amirhossein/Data%20Structures/Trees/AVLTree/CPP)
+  * [AVL Tree](https://github.com/sinamna/DSA/tree/amirhossein/Data%20Structures/Trees/AVLTree)
   * [Binary Heap Tree](https://github.com/sinamna/DSA/tree/amirhossein/Data%20Structures/Trees/BinaryHeapTree)
   * [Binary Search Tree](https://github.com/sinamna/DSA/tree/amirhossein/Data%20Structures/Trees/BinarySearchTree)
   * [Binary Tree](https://github.com/sinamna/DSA/tree/amirhossein/Data%20Structures/Trees/BinaryTree)
-  * [Cartesian Tree](https://github.com/sinamna/DSA/tree/amirhossein/Data%20Structures/Trees/CartesianTree/CPP)
-  * [Fenwick Tree](https://github.com/sinamna/DSA/tree/amirhossein/Data%20Structures/Trees/FenwickTree/CPP)
-  * [Fibonacci Heap Tree](https://github.com/sinamna/DSA/tree/amirhossein/Data%20Structures/Trees/FibonacciHeapTree/CPP)
+  * [Cartesian Tree](https://github.com/sinamna/DSA/tree/amirhossein/Data%20Structures/Trees/CartesianTree)
+  * [Fenwick Tree](https://github.com/sinamna/DSA/tree/amirhossein/Data%20Structures/Trees/FenwickTree)
+  * [Fibonacci Heap Tree](https://github.com/sinamna/DSA/tree/amirhossein/Data%20Structures/Trees/FibonacciHeapTree)
   * [Red Black Tree](https://github.com/sinamna/DSA/tree/amirhossein/Data%20Structures/Trees/RedBlackTree)
-  * [Segment Tree](https://github.com/sinamna/DSA/tree/amirhossein/Data%20Structures/Trees/SegmentTree/CPP)
-  * [Splay Tree](https://github.com/sinamna/DSA/tree/amirhossein/Data%20Structures/Trees/SplayTree/CPP)
+  * [Segment Tree](https://github.com/sinamna/DSA/tree/amirhossein/Data%20Structures/Trees/SegmentTree)
+  * [Splay Tree](https://github.com/sinamna/DSA/tree/amirhossein/Data%20Structures/Trees/SplayTree)
 
 ### [Graph Theory](https://github.com/sinamna/DSA/tree/amirhossein/Graph%20Theory)
-  * [Armin](https://github.com/sinamna/DSA/tree/amirhossein/Graph%20Theory/Armin)
   * [BFS](https://github.com/sinamna/DSA/tree/amirhossein/Graph%20Theory/BFS)
-  * [Bellman Ford](https://github.com/sinamna/DSA/tree/amirhossein/Graph%20Theory/BellmenFord/CPP)
+  * [Bellman Ford](https://github.com/sinamna/DSA/tree/amirhossein/Graph%20Theory/BellmenFord)
   * [DFS](https://github.com/sinamna/DSA/tree/amirhossein/Graph%20Theory/DFS)
-  * [Dijkstra](https://github.com/sinamna/DSA/tree/amirhossein/Graph%20Theory/Dijkstra/CPP)
+  * [Dijkstra](https://github.com/sinamna/DSA/tree/amirhossein/Graph%20Theory/Dijkstra)
   * [Floyd Warshall](https://github.com/sinamna/DSA/tree/amirhossein/Graph%20Theory/FloydWarshall)
-  * [Kruskal](https://github.com/sinamna/DSA/tree/amirhossein/Graph%20Theory/Kruskal/CPP)
-  * [Prim](https://github.com/sinamna/DSA/tree/amirhossein/Graph%20Theory/Prim/CPP)
-  * [Toplogical Sort](https://github.com/sinamna/DSA/tree/amirhossein/Graph%20Theory/ToolsForBuildingGraph/Python)
-  * [Graph Tools](https://github.com/sinamna/DSA/tree/amirhossein/Graph%20Theory/ToplogicalSort/CPP)
+  * [Kruskal](https://github.com/sinamna/DSA/tree/amirhossein/Graph%20Theory/Kruskal)
+  * [Prim](https://github.com/sinamna/DSA/tree/amirhossein/Graph%20Theory/Prim)
+  * [Toplogical Sort](https://github.com/sinamna/DSA/tree/amirhossein/Graph%20Theory/ToolsForBuildingGraph)
+  * [Graph Tools](https://github.com/sinamna/DSA/tree/amirhossein/Graph%20Theory/ToplogicalSort)
 
 ### [Sortings Algorithms](https://github.com/sinamna/DSA/tree/amirhossein/Sortings%20Algorithms)
   * [Bubble Sort](https://github.com/sinamna/DSA/tree/amirhossein/Sortings%20Algorithms/BubbleSort)
-  * [Heap Sort](https://github.com/sinamna/DSA/tree/amirhossein/Sortings%20Algorithms/HeapSort/Go)
+  * [Heap Sort](https://github.com/sinamna/DSA/tree/amirhossein/Sortings%20Algorithms/HeapSort)
   * [Insertion Sort](https://github.com/sinamna/DSA/tree/amirhossein/Sortings%20Algorithms/InsertionSort)
   * [Merge Sort](https://github.com/sinamna/DSA/tree/amirhossein/Sortings%20Algorithms/MergeSort)
-  * [Radix Sort](https://github.com/sinamna/DSA/tree/amirhossein/Sortings%20Algorithms/RadixSort/CPP)
+  * [Radix Sort](https://github.com/sinamna/DSA/tree/amirhossein/Sortings%20Algorithms/RadixSort)
   * [Selection Sort](https://github.com/sinamna/DSA/tree/amirhossein/Sortings%20Algorithms/SelectionSort)
 
 ### [Searchings Algorithms](https://github.com/sinamna/DSA/tree/amirhossein/Searchings%20Algorithms)
   * [Binary Search](https://github.com/sinamna/DSA/tree/amirhossein/Searchings%20Algorithms/BinarySearch)
-  * [Fibonacci Search](https://github.com/sinamna/DSA/tree/amirhossein/Searchings%20Algorithms/FibonacciSearch/C)
+  * [Fibonacci Search](https://github.com/sinamna/DSA/tree/amirhossein/Searchings%20Algorithms/FibonacciSearch)
   * [Jump Search](https://github.com/sinamna/DSA/tree/amirhossein/Searchings%20Algorithms/JumpSearch)
   * [Linear Search](https://github.com/sinamna/DSA/tree/amirhossein/Searchings%20Algorithms/LinearSearch)
 
 ### [Home works (Fall 2020 - Spring 2021)](https://github.com/sinamna/DSA/tree/amirhossein/Homeworks%20(Fall%2099))
   <p> Our course homeworks with solutions. </p>
+  
+### [Problems & Solutions](https://github.com/sinamna/DSA/tree/master/Problems%20%26%20Solutions)
+  <p> Diffrenet problems that we solved with algorithms and data structures used in repository. </p>
 
 ## Resources 
 * [MIT Introduction to Algorithms](https://www.youtube.com/playlist?list=PLUl4u3cNGP61Oq3tWYp6V_F-5jb5L2iHb) (video)
