@@ -1,7 +1,16 @@
 # DSA ( Data Structures & Algorithms )
 
 <p align="center">
-  <img src="https://github.com/sinamna/DSA/blob/master/logo.webp" width=600 />
+  <img src="https://github.com/sinamna/DSA/blob/master/logo.jpg" width=700 />
+</p>
+
+<p align="center">
+  <img src="https://camo.githubusercontent.com/13e18ab9046dbfdf25bb7a0448ec88710166b5ec85f3cd1b57efe2a9aa4ccdd6/68747470733a2f2f6564656e742e6769746875622e696f2f537570657254696e7949636f6e732f696d616765732f7376672f676f2e737667" width=40 />
+  <img src="https://camo.githubusercontent.com/9496882abd182958bcea4238ab44f7eb8928d7a4144c150f18f6c55ceb9b4490/68747470733a2f2f6564656e742e6769746875622e696f2f537570657254696e7949636f6e732f696d616765732f7376672f6a6176617363726970742e737667" width=40 />
+  <img src="https://camo.githubusercontent.com/a870803f30db1d15495072fa9e946a7fa6a6fc1a47fe12324aaf7509c410fc4a/68747470733a2f2f6564656e742e6769746875622e696f2f537570657254696e7949636f6e732f696d616765732f7376672f6a6176612e737667" width=40 />
+  <img src="https://camo.githubusercontent.com/aa96ee3a3352c9c3c2161d3e95698d0885a277ab85d617fe77912627d37a3959/68747470733a2f2f6564656e742e6769746875622e696f2f537570657254696e7949636f6e732f696d616765732f7376672f707974686f6e2e737667" width=40 />
+  <img src="https://camo.githubusercontent.com/1141fa873ae7371cd6b723fef0cd57ca14923123983844571416854b7f5e8fb6/68747470733a2f2f6564656e742e6769746875622e696f2f537570657254696e7949636f6e732f696d616765732f7376672f63706c7573706c75732e737667" width=40 />
+  <img src="https://camo.githubusercontent.com/e4fdf8e13eef67214e92d2a93622403f33c552427d2f0bc0a92b670adcad1e08/68747470733a2f2f6564656e742e6769746875622e696f2f537570657254696e7949636f6e732f696d616765732f7376672f636f696c2e737667" width=40 />
 </p>
 
 <p align="center">
@@ -74,6 +83,7 @@
   * [Fibonacci Search](https://github.com/sinamna/DSA/tree/amirhossein/Searchings%20Algorithms/FibonacciSearch)
   * [Jump Search](https://github.com/sinamna/DSA/tree/amirhossein/Searchings%20Algorithms/JumpSearch)
   * [Linear Search](https://github.com/sinamna/DSA/tree/amirhossein/Searchings%20Algorithms/LinearSearch)
+  * [Interpolation Search](https://github.com/sinamna/DSA/tree/master/Searchings%20Algorithms/InterpolationSearch)
 
 ### [Home works (Fall 2020 - Spring 2021)](https://github.com/sinamna/DSA/tree/amirhossein/Homeworks%20(Fall%2099))
   <p> Our course homeworks with solutions. </p>
