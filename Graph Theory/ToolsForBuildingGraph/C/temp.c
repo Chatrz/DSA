@@ -16,26 +16,6 @@ struct Graph
     struct node** adjLists;
 };
 
-// DFS algo
-void DFS(struct Graph* graph, int vertex) 
-{
-    struct node* adjList = graph->adjLists[vertex];
-    struct node* temp = adjList;
-
-    graph->visited[vertex] = 1;
-
-    while (temp != NULL) 
-    {
-        int connectedVertex = temp->vertex;
-        if (graph->visited[connectedVertex] == 0) 
-        {
-            DFS(graph, connectedVertex);
-        }
-        temp = temp->next;
-    }
-}
-
-
 struct node* createNode(int v) 
 {
     struct node* newNode = malloc(sizeof(struct node));
@@ -88,7 +68,6 @@ void printGraph(struct Graph* graph)
     }
 }
 
-
 int main() 
 {
     struct Graph* graph = createGraph(4);
@@ -96,10 +75,6 @@ int main()
     addEdge(graph, 0, 2);
     addEdge(graph, 1, 2);
     addEdge(graph, 2, 3);
-
     printGraph(graph);
-
-    DFS(graph, 2);
-
     return 0;
 }
