@@ -52,6 +52,7 @@
   * [Binary Heap Tree](https://github.com/sinamna/DSA/tree/amirhossein/Data%20Structures/Trees/BinaryHeapTree)
   * [Binary Search Tree](https://github.com/sinamna/DSA/tree/amirhossein/Data%20Structures/Trees/BinarySearchTree)
   * [Binary Tree](https://github.com/sinamna/DSA/tree/amirhossein/Data%20Structures/Trees/BinaryTree)
+  * [B-Tree](https://github.com/sinamna/DSA/tree/amirhossein/Data%20Structures/Trees/BTree)
   * [Cartesian Tree](https://github.com/sinamna/DSA/tree/amirhossein/Data%20Structures/Trees/CartesianTree)
   * [Fenwick Tree](https://github.com/sinamna/DSA/tree/amirhossein/Data%20Structures/Trees/FenwickTree)
   * [Fibonacci Heap Tree](https://github.com/sinamna/DSA/tree/amirhossein/Data%20Structures/Trees/FibonacciHeapTree)
