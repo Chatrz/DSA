@@ -79,6 +79,7 @@
   * [Merge Sort](https://github.com/sinamna/DSA/tree/amirhossein/Sortings%20Algorithms/MergeSort)
   * [Radix Sort](https://github.com/sinamna/DSA/tree/amirhossein/Sortings%20Algorithms/RadixSort)
   * [Selection Sort](https://github.com/sinamna/DSA/tree/amirhossein/Sortings%20Algorithms/SelectionSort)
+  * [Shell Sort](https://github.com/sinamna/DSA/tree/amirhossein/Sortings%20Algorithms/ShellSort)
 
 ### [Searchings Algorithms](https://github.com/sinamna/DSA/tree/amirhossein/Searchings%20Algorithms)
   * [Binary Search](https://github.com/sinamna/DSA/tree/amirhossein/Searchings%20Algorithms/BinarySearch)
