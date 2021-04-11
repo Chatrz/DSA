@@ -15,7 +15,7 @@ It is a simple Java application and it only requires JDK 11 on your machine.
 **1. Clone the application**
 
 ```bash
-git clone https://github.com/malkfilipp/maze-runner.git
+git clone https://github.com/Chatrz/DSA/Maze Project/
 cd maze-runner
 ```
 
