@@ -48,6 +48,7 @@
   * [Sparse Table](https://github.com/Chatrz/DSA/tree/amirhossein/Data%20Structures/Tables/SparseTable)
 
 * #### [Trees](https://github.com/Chatrz/DSA/tree/amirhossein/Data%20Structures/Trees)
+  * [2D Range Tree](https://github.com/Chatrz/DSA/tree/master/Data%20Structures/Trees/2DRangeTree)
   * [AVL Tree](https://github.com/Chatrz/DSA/tree/amirhossein/Data%20Structures/Trees/AVLTree)
   * [Binary Heap Tree](https://github.com/Chatrz/DSA/tree/amirhossein/Data%20Structures/Trees/BinaryHeapTree)
   * [Binary Search Tree](https://github.com/Chatrz/DSA/tree/amirhossein/Data%20Structures/Trees/BinarySearchTree)
